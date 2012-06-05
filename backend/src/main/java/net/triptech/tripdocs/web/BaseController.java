@@ -54,15 +54,6 @@ public abstract class BaseController {
     }
 
     /**
-     * The result count increments.
-     *
-     * @return the integer[]
-     */
-    protected Integer[] resultCounts() {
-        return new Integer[] { 50, 100, 200 };
-    }
-
-    /**
      * Gets the translated message.
      *
      * @param code the code
@@ -86,7 +77,7 @@ public abstract class BaseController {
      * @param request the request
      * @return the person
      */
-    protected final Person loadUser(final HttpServletRequest request) {
+    protected final Person getUser(final HttpServletRequest request) {
 
         Person user = null;
 
@@ -102,8 +93,13 @@ public abstract class BaseController {
     }
 
 
+    @ModelAttribute("user")
+    public Person getCurrentUser(final HttpServletRequest request) {
+        return getUser(request);
+    }
+
     @ModelAttribute("preferences")
-    public Preferences loadPreferences() {
+    public Preferences getPreferences() {
         return Preferences.load();
     }
 

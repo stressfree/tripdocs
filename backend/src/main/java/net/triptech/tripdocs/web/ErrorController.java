@@ -14,13 +14,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@RequestMapping("/")
+@RequestMapping("/error")
 @Controller
-public class HomepageController extends BaseController {
+public class ErrorController extends BaseController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String index() {
-        return "homepage";
+    public String error() {
+        return "uncaughtException";
+    }
+
+    @RequestMapping(value = "/resourceNotFound", method = RequestMethod.GET)
+    public String resourceNotFound() {
+        return "resourceNotFound";
+    }
+
+    @RequestMapping(value = "/dataAccessFailure", method = RequestMethod.GET)
+    public String dataAccessFailure() {
+        return "dataAccessFailure";
+    }
+
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+    public String accessDenied() {
+        return "accessDenied";
+    }
+
+    @RequestMapping(value = "/accountDisabled", method = RequestMethod.GET)
+    public String accountDisabled() {
+        return "accountDisabled";
     }
 
 }

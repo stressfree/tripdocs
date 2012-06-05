@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd                 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd                 http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context-3.1.xsd
+                http://www.springframework.org/schema/mvc
+                http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
     <!-- The controllers are autodetected POJOs labeled with the @Controller annotation. -->
     <context:component-scan base-package="net.triptech.tripdocs" use-default-filters="false">
@@ -11,8 +21,8 @@
     <mvc:annotation-driven/>
 
 
-    <!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources -->
-    <mvc:resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
+    <!-- Handles HTTP GET requests for /static/** by efficiently serving up static resources -->
+    <mvc:resources location="/WEB-INF/static/" mapping="/static/**" cache-period="28800" />
 
     <!-- Allows for mapping the DispatcherServlet to "/" by forwarding static resource
     requests to the container's default Servlet -->
@@ -22,14 +32,6 @@
     <mvc:interceptors>
         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
     </mvc:interceptors>
-
-    <!-- Selects a static view for rendering without the need for an explicit controller -->
-    <mvc:view-controller path="/login"/>
-    <mvc:view-controller path="/uncaughtException"/>
-    <mvc:view-controller path="/resourceNotFound"/>
-    <mvc:view-controller path="/dataAccessFailure"/>
-    <mvc:view-controller path="/accessDenied"/>
-    <mvc:view-controller path="/accountDisabled"/>
 
     <!-- Resolves localized messages*.properties and application.properties files in the application to allow for internationalization.
     The messages*.properties files translate Roo generated messages which are part of the admin interface, the
@@ -55,7 +57,7 @@
 
     <!-- Enable this for integration of file upload functionality -->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver"/>
-<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
   </bean>
     <bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer" id="tilesConfigurer">
