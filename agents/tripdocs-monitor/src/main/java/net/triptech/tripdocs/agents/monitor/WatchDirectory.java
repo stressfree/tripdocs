@@ -38,8 +38,14 @@ public class WatchDirectory {
     /** The keys. */
     private final Map<WatchKey, Path> keys;
 
-    /** The recursive. */
-    private final boolean recursive;
+    /** The aws access key. */
+    final String awsAccessKey;
+
+    /** The aws secret key. */
+    final String awsSecretKey;
+
+    /** The s3 bucket. */
+    final String s3Bucket;
 
     /** The trace. */
     private boolean trace = true;
@@ -105,21 +111,22 @@ public class WatchDirectory {
      * Creates a WatchService and registers the given directory.
      *
      * @param dir the dir
-     * @param recursive the recursive
+     * @param awsAccessKeyVal the aws access key val
+     * @param awsSecretKeyVal the aws secret val
+     * @param s3BucketVal the s3 bucket val
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    WatchDirectory(final Path dir, final boolean recursive) throws IOException {
+    WatchDirectory(final Path dir, final String awsAccessKeyVal,
+            final String awsSecretKeyVal, final String s3BucketVal) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey, Path>();
-        this.recursive = recursive;
+        this.awsAccessKey = awsAccessKeyVal;
+        this.awsSecretKey = awsSecretKeyVal;
+        this.s3Bucket = s3BucketVal;
 
-        if (recursive) {
-            logger.info(new Formatter().format("Scanning %s ...", dir).out());
-            this.registerAll(dir);
-            logger.info("All directories registered");
-        } else {
-            this.register(dir);
-        }
+        logger.info(new Formatter().format("Scanning %s ...", dir).out());
+        this.registerAll(dir);
+        logger.info("All directories registered");
 
         // enable trace after initial registration
         this.trace = true;
@@ -131,7 +138,7 @@ public class WatchDirectory {
     void processEvents() {
          Path dir = null;
          for (;;) {
-             // wait for key to be signalled
+             // wait for key to be signaled
              final WatchKey key;
              try {
                  key = this.watcher.take();
@@ -163,18 +170,29 @@ public class WatchDirectory {
                  logger.info(new Formatter().format(
                          "%s: %s", event.kind().name(), child).out());
 
-                 // If a directory is created, and watching recursively, then
-                 // register it and its sub-directories
-                 if (this.recursive && (kind == StandardWatchEventKinds.ENTRY_CREATE)) {
+                 if (kind == StandardWatchEventKinds.ENTRY_CREATE
+                         || kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                      try {
                          BasicFileAttributes attr = Files.readAttributes(
                                  child, BasicFileAttributes.class);
+
                          if (attr.isDirectory()) {
+                             // If a directory is created, and watching recursively, then
+                             // register it and its sub-directories.
                              this.registerAll(child);
                          }
-                     }
-                     catch (final IOException x) {
-                         // ignore to keep sample readbale
+
+                         if (attr.isRegularFile()) {
+                             // If a regular file upload it to S3.
+                             String url = S3Uploader.upload(child, s3Bucket,
+                                     awsAccessKey, awsSecretKey);
+
+                             logger.info("File uploaded to: " + url);
+                         }
+                     } catch (IOException x) {
+                         logger.error("Error reading path attributes: " + x.getMessage());
+                     } catch (S3UploadException s3e) {
+                         logger.error("Error uploading to S3: " + s3e.getMessage());
                      }
                  }
 
