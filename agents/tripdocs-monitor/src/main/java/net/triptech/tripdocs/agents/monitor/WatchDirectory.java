@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2012 David Harrison, Triptech Ltd.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the GNU Public License v3.0
+ * which accompanies this distribution, and is available at
+ * http://www.gnu.org/licenses/gpl.html
+ *
+ * Contributors:
+ *     David Harrison, Triptech Ltd - initial API and implementation
+ ******************************************************************************/
 package net.triptech.tripdocs.agents.monitor;
 
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
@@ -38,17 +48,8 @@ public class WatchDirectory {
     /** The keys. */
     private final Map<WatchKey, Path> keys;
 
-    /** The aws access key. */
-    final String awsAccessKey;
-
-    /** The aws secret key. */
-    final String awsSecretKey;
-
-    /** The s3 bucket. */
-    final String s3Bucket;
-
-    /** The trace. */
-    private boolean trace = true;
+    /** The upload thread. */
+    private final UploadThread uploadThread;
 
     /**
      * Cast.
@@ -58,7 +59,7 @@ public class WatchDirectory {
      * @return the watch event
      */
     @SuppressWarnings("unchecked")
-    static <T> WatchEvent<T> cast(final WatchEvent<?> event) {
+    private static <T> WatchEvent<T> cast(final WatchEvent<?> event) {
         return (WatchEvent<T>) event;
     }
 
@@ -68,20 +69,19 @@ public class WatchDirectory {
      * @param dir the dir
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    void register(final Path dir) throws IOException {
-        final WatchKey key = dir.register(this.watcher,
+    private void register(final Path dir) throws IOException {
+        WatchKey key = dir.register(this.watcher,
                 StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE,
                 StandardWatchEventKinds.ENTRY_MODIFY);
-        if (this.trace) {
-            final Path prev = this.keys.get(key);
-            if (prev == null) {            	;
-                logger.info(new Formatter().format("Registering: %s", dir).out());
-            } else {
-                if (!dir.equals(prev)) {
-                    logger.debug(new Formatter().format(
-                            "Updating: %s -> %s", prev, dir).out());
-                }
+
+        Path prev = this.keys.get(key);
+        if (prev == null) {            	;
+            logger.info(new Formatter().format("Registering: %s", dir).out());
+        } else {
+            if (!dir.equals(prev)) {
+                logger.debug(new Formatter().format(
+                        "Updating: %s -> %s", prev, dir).out());
             }
         }
         this.keys.put(key, dir);
@@ -120,16 +120,14 @@ public class WatchDirectory {
             final String awsSecretKeyVal, final String s3BucketVal) throws IOException {
         this.watcher = FileSystems.getDefault().newWatchService();
         this.keys = new HashMap<WatchKey, Path>();
-        this.awsAccessKey = awsAccessKeyVal;
-        this.awsSecretKey = awsSecretKeyVal;
-        this.s3Bucket = s3BucketVal;
+
+        this.uploadThread = new UploadThread(
+                awsAccessKeyVal, awsSecretKeyVal, s3BucketVal);
+        this.uploadThread.start();
 
         logger.info(new Formatter().format("Scanning %s ...", dir).out());
         this.registerAll(dir);
         logger.info("All directories registered");
-
-        // enable trace after initial registration
-        this.trace = true;
     }
 
     /**
@@ -183,28 +181,31 @@ public class WatchDirectory {
                          }
 
                          if (attr.isRegularFile()) {
-                             // If a regular file upload it to S3.
-                             String url = S3Uploader.upload(child, s3Bucket,
-                                     awsAccessKey, awsSecretKey);
-
-                             logger.info("File uploaded to: " + url);
+                             // If a regular file add it to the upload watcher.
+                             logger.info("Regular file changed, adding '"
+                                     + child.toString()
+                                     + "' to upload thread");
+                             this.uploadThread.addFile(child.toString());
                          }
+
                      } catch (IOException x) {
                          logger.error("Error reading path attributes: " + x.getMessage());
-                     } catch (S3UploadException s3e) {
-                         logger.error("Error uploading to S3: " + s3e.getMessage());
                      }
                  }
 
                  // if event is DELETE ...
                  if (kind == StandardWatchEventKinds.ENTRY_DELETE) {
                      WatchKey ckey = null;
+
+                     this.uploadThread.removeFile(child.toString());
+
                      for (final Entry<WatchKey, Path> e : this.keys.entrySet()) {
                          if (e.getValue().equals(child)) {
                              ckey = e.getKey();
                              break;
                          }
                      }
+
                      // ... and child is a directory and it is effectively deleted.
                      if ((ckey != null) && Files.notExists(child, NOFOLLOW_LINKS)) {
                          logger.info(new Formatter().format(
