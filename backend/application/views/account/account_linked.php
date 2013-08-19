@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head', array('title' => lang('linked_page_name'))); ?>
-
-</head>
-<body>
+<?php echo $this->load->view('head', array('title' => lang('linked_page_name'))); ?>
 
 <?php echo $this->load->view('header'); ?>
 
@@ -139,5 +133,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-</body>
-</html>
+<?php echo $this->load->view('foot'); ?>

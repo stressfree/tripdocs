@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head', array('title' => sprintf(lang('connect_with_x'), lang('connect_openid')))); ?>
-
-</head>
-<body>
+<?php echo $this->load->view('head', array('title' => sprintf(lang('connect_with_x'), lang('connect_openid')))); ?>
 
 <?php echo $this->load->view('header'); ?>
 
@@ -55,3 +49,5 @@
 </div>
 
 <?php echo $this->load->view('footer'); ?>
+
+<?php echo $this->load->view('foot'); ?>

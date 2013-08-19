@@ -14,12 +14,16 @@ class Home extends CI_Controller {
 
 	function index()
 	{
-		maintain_ssl();
+		// Enable SSL?
+		maintain_ssl($this->config->item("ssl_enabled"));
 
-		if ($this->authentication->is_signed_in())
+		// Redirect unauthenticated users to signin page
+		if ( ! $this->authentication->is_signed_in())
 		{
-			$data['account'] = $this->account_model->get_by_id($this->session->userdata('account_id'));
+			redirect('account/sign_in/?continue='.urlencode(base_url().'account/account_profile'));
 		}
+
+		$data['account'] = $this->account_model->get_by_id($this->session->userdata('account_id'));
 
 		$this->load->view('home', isset($data) ? $data : NULL);
 	}

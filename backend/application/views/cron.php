@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head'); ?>
-
-</head>
-<body>
+<?php echo $this->load->view('head'); ?>
 
 <div class="container">
     <p>Cron ran successfully</p>
 </div>
 
-</body>
-</html>
+<?php echo $this->load->view('foot'); ?>

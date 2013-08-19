@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head', array('title' => lang('connect_create_account'))); ?>
+<?php echo $this->load->view('head', array('title' => lang('connect_create_account'))); ?>
 
-</head>
-<body>
 <?php echo $this->load->view('header'); ?>
+
 <div class="container">
     <div class="row">
         <div class="span12">
@@ -54,6 +50,7 @@
         <div class="clearfix"></div>
     </div>
 </div>
+
 <?php echo $this->load->view('footer'); ?>
-</body>
-</html>
+
+<?php echo $this->load->view('foot'); ?>

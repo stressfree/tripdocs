@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head'); ?>
-
-</head>
-<body>
+<?php echo $this->load->view('head'); ?>
 
 <?php echo $this->load->view('header'); ?>
 
@@ -109,5 +103,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-</body>
-</html>
+<?php echo $this->load->view('foot'); ?>

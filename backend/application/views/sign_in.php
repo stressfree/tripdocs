@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<?php echo $this->load->view('head', array('title' => lang('sign_in_page_name'))); ?>
-
-</head>
-<body>
+<?php echo $this->load->view('head', array('title' => lang('sign_in_page_name'))); ?>
 
 <?php echo $this->load->view('header'); ?>
 
@@ -92,7 +86,6 @@
         <!-- /span6 -->
     </div>
 
-	<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('footer'); ?>
 
-</body>
-</html>
+<?php echo $this->load->view('foot'); ?>
