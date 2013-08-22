@@ -1,0 +1,24 @@
+body {
+    background: $body-bg;
+    color: $white;
+    font-family: 'Arial', sans-serif;
+    font-size: 62.5%;
+    line-height: 1.4;
+}
+
+div {
+    &.container {
+        background: $container-bg;
+        margin: $gutter;
+    }
+    &.container-inner {
+        margin: 0 2 * $gutter;
+        padding: $gutter 0;
+    }
+}
+
+h1 {
+    font-family: 'Museo';
+    font-weight: 700;
+    font-size: 3em;
+}

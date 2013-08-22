@@ -37,21 +37,24 @@ class Connect_create extends CI_Controller {
 		if ( ! $this->session->userdata('connect_create')) redirect('');
 
 		$data['connect_create'] = $this->session->userdata('connect_create');
-
+		
+		if ( !isset($data['connect_create'][1]['fullname']))
+		{
+    		if ( isset($data['connect_create'][1]['firstname']) && isset($data['connect_create'][1]['lastname']))
+    		{
+        	    $data['connect_create'][1]['fullname'] = $data['connect_create'][1]['firstname'] . ' ' . $data['connect_create'][1]['lastname'];
+    		}    		
+		}
+		
 		// Setup form validation
 		$this->form_validation->set_error_delimiters('<span class="field_error">', '</span>');
-		$this->form_validation->set_rules(array(array('field' => 'connect_create_username', 'label' => 'lang:connect_create_username', 'rules' => 'trim|required|alpha_numeric|min_length[2]|max_length[16]'), array('field' => 'connect_create_email', 'label' => 'lang:connect_create_email', 'rules' => 'trim|required|valid_email|max_length[160]')));
+		$this->form_validation->set_rules(array(array('field' => 'connect_create_fullname', 'label' => 'lang:connect_create_fullname', 'rules' => 'trim|required|max_length[160]'), array('field' => 'connect_create_email', 'label' => 'lang:connect_create_email', 'rules' => 'trim|required|valid_email|max_length[160]')));
 
 		// Run form validation
 		if ($this->form_validation->run())
 		{
-			// Check if username already exist
-			if ($this->username_check($this->input->post('connect_create_username', TRUE)) === TRUE)
-			{
-				$data['connect_create_username_error'] = lang('connect_create_username_taken');
-			}
 			// Check if email already exist
-			elseif ($this->email_check($this->input->post('connect_create_email'), TRUE) === TRUE)
+			if ($this->email_check($this->input->post('connect_create_email'), TRUE) === TRUE)
 			{
 				$data['connect_create_email_error'] = lang('connect_create_email_exist');
 			}
@@ -61,10 +64,13 @@ class Connect_create extends CI_Controller {
 				$this->session->unset_userdata('connect_create');
 
 				// Create user
-				$user_id = $this->account_model->create($this->input->post('connect_create_username', TRUE), $this->input->post('connect_create_email', TRUE));
+				$user_id = $this->account_model->create($this->generateUsername(), $this->input->post('connect_create_email', TRUE));
+
+                $accountDetails = array();                
+                $accountDetails['fullname'] = $this->input->post('connect_create_fullname', TRUE);
 
 				// Add user details
-				$this->account_details_model->update($user_id, $data['connect_create'][1]);
+				$this->account_details_model->update($user_id, $accountDetails);
 
 				// Connect third party account to user
 				switch ($data['connect_create'][0]['provider'])
@@ -87,18 +93,18 @@ class Connect_create extends CI_Controller {
 
 		$this->load->view('account/connect_create', isset($data) ? $data : NULL);
 	}
-
+	
 	/**
-	 * Check if a username exist
+	 *
+	 * Generate a random username
 	 *
 	 * @access public
-	 * @param string
-	 * @return bool
+	 * @return string
 	 */
-	function username_check($username)
-	{
-		return $this->account_model->get_by_username($username) ? TRUE : FALSE;
-	}
+    function generateUsername()
+    {
+        return hash('ripemd160', $_SERVER['SERVER_NAME'] . '_' . time());
+    }
 
 	/**
 	 * Check if an email exist

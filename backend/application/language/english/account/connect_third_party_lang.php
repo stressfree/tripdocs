@@ -18,11 +18,13 @@ $lang['connect_click_button'] = 'To proceed, click the following button.';
 
 $lang['connect_create_account'] = 'Create Account';
 $lang['connect_create_username'] = 'Username';
+$lang['connect_create_fullname'] = 'Name';
 $lang['connect_create_email'] = 'Email';
-$lang['connect_create_heading'] = 'Confirm your account information';
-$lang['connect_create_button'] = 'Complete';
+$lang['connect_create_heading'] = 'Your preferred contact details';
+$lang['connect_create_introduction'] = 'Please provide your preferred name and email address should we need to contact you in the future.';
+$lang['connect_create_button'] = 'Submit';
 $lang['connect_create_username_taken'] = 'This Username is already taken.';
-$lang['connect_create_email_exist'] = 'This Email is already registered.';
+$lang['connect_create_email_exist'] = 'This email is already registered. Maybe you have already logged in with a different account?';
 
 $lang['connect_enter_your'] = 'Enter your %s';
 $lang['connect_openid_url'] = 'OpenID URL';

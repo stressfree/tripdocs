@@ -1,0 +1,31 @@
+@import "compass/css3";
+@import "compass/utilities";
+@import "compass/support";
+
+@font-face {
+    font-family: 'Museo';
+    src: url('../fonts/Museo500-Regular-webfont.eot');
+    src: url('../fonts/Museo500-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Museo500-Regular-webfont.woff') format('woff'),
+         url('../fonts/Museo500-Regular-webfont.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Museo';
+    src: url('../fonts/Museo300-Regular-webfont.eot');
+    src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Museo300-Regular-webfont.woff') format('woff'),
+         url('../fonts/Museo300-Regular-webfont.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+$body-bg: #838583;
+$container-bg: #343534;
+$white: #fff;
+
+@import "frameless";
+
+@import "core";

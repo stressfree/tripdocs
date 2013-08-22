@@ -2,4 +2,5 @@
 #Ignore log files of any kind
 log-*.php
 .DS_Store
+.sass-cache
 application/cache/*
