@@ -6,10 +6,10 @@
 |--------------------------------------------------------------------------
 */
 $lang['sign_in_page_name'] = 'Sign In';
-$lang['sign_in_welcome_heading'] = 'Welcome to Tripdocs';
+$lang['sign_in_welcome_heading'] = 'About Tripdocs';
 $lang['sign_in_welcome'] = '<p>Tripdocs is a blah</p><p>It does blah</p>';
 $lang['sign_in_heading'] = 'Sign in with your Account';
-$lang['sign_in_third_party_heading'] = 'Sign in with your account from';
+$lang['sign_in_third_party_heading'] = 'Sign in with your account from:';
 $lang['sign_in_with'] = 'Sign In with %s';
 $lang['sign_in_help'] = 'Some help regarding logging in';
 

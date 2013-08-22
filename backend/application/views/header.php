@@ -6,7 +6,7 @@
                     <h3><?php echo anchor('', lang('website_title')); ?></h3>
                 </div>
                 
-                <div class="usermenu">
+                <div class="user-menu">
                     <ul>
                     <?php if ($this->authentication->is_signed_in()) : ?>
                         <li><span><?php echo $account->email; ?></span></li>
@@ -14,6 +14,12 @@
                     <?php else : ?>
                         <li><?php echo anchor('account/sign_in', lang('website_sign_in')); ?></li>
                     <?php endif; ?>
+                    </ul>
+                </div>
+                
+                <div class="navigation-menu">
+                    <ul>
+                        <li><?php echo anchor('', lang('website_welcome'), 'class="selected"'); ?></li>
                     </ul>
                 </div>
             </div>

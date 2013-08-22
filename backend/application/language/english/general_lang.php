@@ -7,6 +7,7 @@
 */
 $lang['website_title'] = 'Tripdocs';
 $lang['website_copyright'] = 'Triptech Ltd, 123F Dominion Rd, Auckland, NZ. All rights reserved.';
+$lang['website_welcome'] = 'Welcome';
 $lang['website_welcome_username'] = 'Welcome, %s.';
 $lang['website_account'] = 'Account Settings';
 $lang['website_profile'] = 'Manage Profile';

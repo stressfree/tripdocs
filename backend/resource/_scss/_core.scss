@@ -3,22 +3,141 @@ body {
     color: $white;
     font-family: 'Arial', sans-serif;
     font-size: 62.5%;
-    line-height: 1.4;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Museo';
+    font-weight: 500;
 }
 
 div {
-    &.container {
-        background: $container-bg;
-        margin: $gutter;
+    &.container {        
+        background: url('../img/logo.png') -40px -22px no-repeat $container-bg;
+        margin: $gutter/2;
     }
-    &.container-inner {
-        margin: 0 2 * $gutter;
-        padding: $gutter 0;
+    
+    &.header {
+        border-bottom: $border;
+        height: $title-height + $navigation-menu-height;
     }
-}
-
-h1 {
-    font-family: 'Museo';
-    font-weight: 700;
-    font-size: 3em;
+    
+    &.title {
+        float: left;
+        height: $title-height;
+        margin: 0 0 0 60px;
+        width: $cols4;
+        
+        h3 {
+            font-size: 3.6em;
+            font-weight: 300;
+            line-height: $title-height;
+            
+            a {
+                color: $white;
+                text-decoration: none;
+            }
+        }
+    }
+    
+    &.user-menu {
+        font-size: 1.4em;
+        float: right;
+        margin: 0 $gutter 0 0;
+        padding: $gutter/2 0;
+        
+        ul {
+            list-style: none;
+            
+            li {
+                color: $grey;
+                display: inline;
+                
+                a {
+                    color: $lightestgrey;
+                    text-decoration: none;
+                    
+                    &:hover {
+                        color: $white;
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+    
+    &.navigation-menu {
+        font-size: 1.4em;
+        font-weight: 700;
+        padding: $title-height 0 0 0;
+        margin: 0 0 0 $cols4;
+        
+        ul {
+            border-left: $border;
+            border-top: $border;          
+            height: $navigation-menu-height;
+            
+            li {
+                border-right: $border;
+                float: left;
+                height: $navigation-menu-height - 1;
+                list-style: none;
+                
+                a {
+                    display: block;
+                    height: $navigation-menu-height - 1;
+                    line-height: $navigation-menu-height - 1;
+                    padding: 0 $gutter;
+                    text-decoration: none;
+                    
+                    &.selected {
+                        background: $black;
+                        color: $lightgrey;
+                        cursor: default;
+                    }
+                }
+            }
+        }
+    }
+    
+    &.content {
+        clear: both;
+        padding: $gutter $gutter/2;
+    }
+    
+    &.welcome-introduction-inner, &.login-thirdparty-inner {
+        font-size: 1.4em;
+        margin: 0 $gutter/2;
+        padding: $gutter/2 0;
+    }
+    
+    &.welcome-introduction {
+        font-family: 'Museo';
+        font-weight: 300;
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+    
+    &.login-thirdparty {
+        background: $brandcolour2;
+        color: $black;
+        @include border-radius(5px);
+        
+        h1 {
+            font-size: 1.4em;
+            margin: 0 0 0.2em 0;
+        }
+    }
+    
+    &.content-footer {
+        clear: both;
+    }
+    
+    &.footer {
+        border-top: $border;
+        color: $grey;
+        font-size: 1.2em;
+        margin: 0 $gutter/2;
+        padding: $gutter 0 $gutter * 2 0;
+    }
 }

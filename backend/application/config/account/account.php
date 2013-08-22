@@ -44,7 +44,7 @@ $config['openid_yahoo_discovery_endpoint'] = 'http://www.yahoo.com/';
 | Third Party Auth
 |--------------------------------------------------------------------------
 */
-$config['third_party_auth_providers'] = array('google', 'yahoo', 'openid');
+$config['third_party_auth_providers'] = array('google', 'yahoo', 'facebook', 'twitter');
 $config['openid_what_is_url'] = 'http://openidexplained.com/';
 
 /*

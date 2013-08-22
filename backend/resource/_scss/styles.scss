@@ -8,7 +8,7 @@
     src: url('../fonts/Museo500-Regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/Museo500-Regular-webfont.woff') format('woff'),
          url('../fonts/Museo500-Regular-webfont.ttf') format('truetype');
-    font-weight: 700;
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -18,14 +18,42 @@
     src: url('../fonts/Museo300-Regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/Museo300-Regular-webfont.woff') format('woff'),
          url('../fonts/Museo300-Regular-webfont.ttf') format('truetype');
-    font-weight: 400;
+    font-weight: 300;
     font-style: normal;
 }
 
 $body-bg: #838583;
-$container-bg: #343534;
+$container-bg: #3a3a3c;
+$darkgrey: #333;
+$grey: #9b9b9b;
+$lightgrey: #ccc;
+$lightestgrey: #eee;
 $white: #fff;
+$black: #000;
+$brandcolour1: #5abfcf;
+$brandcolour2: #93d1de;
+$brandcolour3: #25adcb;
+$border: 1px solid #535353;
+
+$title-height: 78px;
+$navigation-menu-height: 30px;
 
 @import "frameless";
 
 @import "core";
+
+@media screen and (min-width: $cols8 + 2*$gutter) {
+    @import "tablet7inch";
+}
+
+@media screen and (min-width: $cols10 + $gutter/2) {
+    @import "tablet10inch";
+}
+
+@media screen and (min-width: $cols14) {
+    @import "desktop";
+}
+
+@media screen and (min-width: $cols20) {
+    @import "widescreen";
+}

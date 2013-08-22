@@ -1,0 +1,6 @@
+div {
+    &.container {
+        margin: $gutter/2 auto;      
+        width: $cols8;
+    }
+}
