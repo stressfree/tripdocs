@@ -1,6 +1,39 @@
+label, input, select, textarea, button {
+    font-size: 1.2em;
+}
+
+input {
+    &.text {
+        padding: 0.3em 0.5em;
+        width: auto;
+    }
+}
+
+button, input.submit {
+    padding: 0.3em 1em;
+    width: auto;
+}
+
 div {
-    &.container {
-        margin: $gutter/2 auto;      
+    &.content-inner, &.footer-inner {   
         width: $cols8;
+    }
+    
+    &.header-inner {
+        width: $cols5;
+    }
+    
+    &.login-thirdparty {        
+        ul {
+            width: ($third-party-button-size * 4) + (10px * 4)
+        }
+    }
+}
+
+body.authenticated {
+    div {
+        &.header-inner {
+            width: $cols8;
+        }
     }
 }

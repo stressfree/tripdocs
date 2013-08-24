@@ -7,11 +7,11 @@
 */
 $lang['sign_in_page_name'] = 'Sign In';
 $lang['sign_in_welcome_heading'] = 'About Tripdocs';
-$lang['sign_in_welcome'] = '<p>Tripdocs is a blah</p><p>It does blah</p>';
+$lang['sign_in_welcome'] = '<p>Tripdocs is where Triptech clients can securely access and provide feedback on projects that are currently under development.</p><p>Stay tuned, as we have some great plans for Tripdocs, and this is just the beginning.</p>';
 $lang['sign_in_heading'] = 'Sign in with your Account';
-$lang['sign_in_third_party_heading'] = 'Sign in with your account from:';
+$lang['sign_in_third_party_heading'] = 'Sign in with one of the following services:';
 $lang['sign_in_with'] = 'Sign In with %s';
-$lang['sign_in_help'] = 'Some help regarding logging in';
+$lang['sign_in_help'] = 'On selecting one of the above services your browser will be redirected the third-party service. After signing in to the service you will be asked to approve Tripdocs request to access basic account information such as your name and email address.';
 
 $lang['sign_in_username_email'] = 'Username / Email';
 $lang['sign_in_password'] = 'Password';

@@ -1,0 +1,21 @@
+div {    
+    &.title {
+        background: url('../img/logo@2x.png') 0 -23px no-repeat;
+        background-size: 89px 120px;
+    }
+    
+    &.login-thirdparty {
+        li {
+            &.third_party {
+                a {
+                    span {
+                        background-image: url('../img/auth-logos@2x.png');
+                        background-size: 304px 50px;
+                    }
+                }
+            }
+        }
+    }    
+}
+    
+    

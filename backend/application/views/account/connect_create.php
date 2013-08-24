@@ -18,11 +18,11 @@
                 <div class="field-label">
                     <?php echo form_label(lang('connect_create_fullname'), 'connect_create_fullname'); ?>
                 </div>
-                <div class="field-value">
-    				<?php echo form_input(array('name' => 'connect_create_fullname', 'id' => 'connect_create_fullname', 'value' => set_value('connect_create_fullname') ? set_value('connect_create_fullname') : (isset($connect_create[1]['fullname']) ? $connect_create[1]['fullname'] : ''), 'maxlength' => '160')); ?>
-    				<?php echo form_error('connect_create_fullname'); ?>
+                <?php echo form_error('connect_create_fullname'); ?>
+                <div class="field-value <?php if (isset($connect_create_fullname_error)) : ?>field-error<?php endif; ?>">
+    				<?php echo form_input(array('name' => 'connect_create_fullname', 'id' => 'connect_create_fullname', 'value' => set_value('connect_create_fullname') ? set_value('connect_create_fullname') : (isset($connect_create[1]['fullname']) ? $connect_create[1]['fullname'] : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
     				<?php if (isset($connect_create_fullname_error)) : ?>
-                    <span class="field-error"><?php echo $connect_create_fullname_error; ?></span>
+                    <span class="help-text"><?php echo $connect_create_fullname_error; ?></span>
     				<?php endif; ?>
                 </div>
             </div>
@@ -31,11 +31,11 @@
                 <div class="field-label">
                     <?php echo form_label(lang('connect_create_email'), 'connect_create_email'); ?>
                 </div>
-                <div class="field-value">
-    				<?php echo form_input(array('name' => 'connect_create_email', 'id' => 'connect_create_email', 'value' => set_value('connect_create_email') ? set_value('connect_create_email') : (isset($connect_create[0]['email']) ? $connect_create[0]['email'] : ''), 'maxlength' => '160')); ?>
-    				<?php echo form_error('connect_create_email'); ?>
+                <?php echo form_error('connect_create_email'); ?>
+                <div class="field-value <?php if (isset($connect_create_email_error)) : ?>field-error<?php endif; ?>">
+    				<?php echo form_input(array('name' => 'connect_create_email', 'id' => 'connect_create_email', 'value' => set_value('connect_create_email') ? set_value('connect_create_email') : (isset($connect_create[0]['email']) ? $connect_create[0]['email'] : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
     				<?php if (isset($connect_create_email_error)) : ?>
-                    <span class="field-error"><?php echo $connect_create_email_error; ?></span>
+                    <span class="help-text"><?php echo $connect_create_email_error; ?></span>
     				<?php endif; ?>
                 </div>
             </div>

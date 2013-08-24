@@ -6,7 +6,8 @@
 |--------------------------------------------------------------------------
 */
 $lang['website_title'] = 'Tripdocs';
-$lang['website_copyright'] = 'Triptech Ltd, 123F Dominion Rd, Auckland, NZ. All rights reserved.';
+$lang['website_copyright_head'] = 'Triptech Ltd, 123F Dominion Rd, Auckland, NZ. All rights reserved.';
+$lang['website_copyright_foot'] = '&copy; <a href="http://www.triptech.net">Triptech Ltd</a> 2013';
 $lang['website_welcome'] = 'Welcome';
 $lang['website_welcome_username'] = 'Welcome, %s.';
 $lang['website_account'] = 'Account Settings';

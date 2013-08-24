@@ -1,5 +1,5 @@
 body {
-    background: $body-bg;
+    background: $darkgrey;
     color: $white;
     font-family: 'Arial', sans-serif;
     font-size: 62.5%;
@@ -7,26 +7,80 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+    color: $lightgrey;
     font-family: 'Museo';
     font-weight: 500;
 }
 
-div {
-    &.container {        
-        background: url('../img/logo.png') -40px -22px no-repeat $container-bg;
-        margin: $gutter/2;
+p {
+    margin: 0 0 1em 0;
+}
+
+input, select, textarea, button {
+    font-size: 16pt;
+    font-family: 'Arial', sans-serif;
+}
+
+input {
+    &.text {
+        background: $white;
+        border: 1px solid $darkestgrey;
+        @include border-radius(2px);
+        color: $darkestgrey;
+        padding: 0.2em 0;
+        width: 100%;
+        
+        &:focus {
+            background: $focuscolour;
+        }
     }
+}
+
+button, input.submit {
+    background: $brandcolour1;
+    @include background-image(linear-gradient(top, $brandcolour1 47%,$brandcolour3 100%));
+    @include border-radius(3px);
+    @include box-shadow(rgba($black, 1) 0 0 3px);
+    border: 1px solid $grey;
+    padding: 0.3em 0;
+    width: 100%;
     
+    &:hover {
+        background: $brandcolour2;
+        @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour3 100%));
+        border: 1px solid $lightgrey;
+        cursor: pointer; 
+    }
+}
+
+label {
+    color: $lightgrey;
+    font-family: 'Museo';
+    font-size: 16pt;
+    font-weight: 300;
+}
+
+div {
+    &.header-inner, &.content-inner, &.footer-inner {
+        margin: 0 auto;        
+    }
+       
     &.header {
         border-bottom: $border;
-        height: $title-height + $navigation-menu-height;
+    }
+    
+    &.header-inner {
+        height: $title-height;
+        width: $cols4;
     }
     
     &.title {
+        background: url('../img/logo.png') 0 -23px no-repeat;
         float: left;
-        height: $title-height;
-        margin: 0 0 0 60px;
-        width: $cols4;
+        height: $title-height + 30;
+        padding: 0 0 0 100px;
+        position: absolute;
+        width: $cols4 - 100;
         
         h3 {
             font-size: 3.6em;
@@ -52,6 +106,7 @@ div {
             li {
                 color: $grey;
                 display: inline;
+                padding: 0 0 0 1em;
                 
                 a {
                     color: $lightestgrey;
@@ -66,67 +121,152 @@ div {
         }
     }
     
-    &.navigation-menu {
-        font-size: 1.4em;
-        font-weight: 700;
-        padding: $title-height 0 0 0;
-        margin: 0 0 0 $cols4;
-        
-        ul {
-            border-left: $border;
-            border-top: $border;          
-            height: $navigation-menu-height;
-            
-            li {
-                border-right: $border;
-                float: left;
-                height: $navigation-menu-height - 1;
-                list-style: none;
-                
-                a {
-                    display: block;
-                    height: $navigation-menu-height - 1;
-                    line-height: $navigation-menu-height - 1;
-                    padding: 0 $gutter;
-                    text-decoration: none;
-                    
-                    &.selected {
-                        background: $black;
-                        color: $lightgrey;
-                        cursor: default;
-                    }
-                }
-            }
-        }
-    }
-    
     &.content {
+        background: $darkestgrey;
         clear: both;
-        padding: $gutter $gutter/2;
+        font-size: 1.4em;
+        padding: $gutter * 2 $gutter/2;
     }
     
     &.welcome-introduction-inner, &.login-thirdparty-inner {
-        font-size: 1.4em;
         margin: 0 $gutter/2;
-        padding: $gutter/2 0;
     }
     
     &.welcome-introduction {
         font-family: 'Museo';
         font-weight: 300;
         font-size: 1.2em;
-        line-height: 1.6;
+    }
+    
+    &.welcome-introduction-inner {
+        padding: $gutter/2 0 0 0;
     }
     
     &.login-thirdparty {
         background: $brandcolour2;
-        color: $black;
         @include border-radius(5px);
+        margin: $gutter 0 0 0; 
         
         h1 {
-            font-size: 1.4em;
+            color: $darkestgrey;
+            font-size: 1.2em;
             margin: 0 0 0.2em 0;
+            padding: 0.2em 0 0 0;
         }
+        
+        ul {
+            margin: 1.2em auto 0 auto;
+            width: ($third-party-button-size * 2) + (10px * 2)
+        }
+        
+        li {
+            &.third_party {
+                @include box-shadow(rgba($darkgrey, 0.4) 0 0 10px);
+                @include border-radius(5px);
+                float: left;
+                font-size: 0.7em;
+                list-style: none;
+                margin: 0 0 5px 5px;
+                
+                a {
+                    border: 1px solid $grey;
+                    @include border-radius(5px);
+                    color: $white;
+                    display: block;
+                    height: $third-party-button-size;
+                    text-align: center;
+                    text-decoration: none;
+                    width: $third-party-button-size;
+                    
+                    &:hover {
+                        border: 1px solid $lightgrey;
+                    }
+                    
+                    span {
+                        background-image: url('../img/auth-logos.png');
+                        background-repeat: no-repeat;
+                        display: block;
+                        height: $third-party-button-size - ($third-party-button-size - 21);
+                        padding: $third-party-button-size - 21 0 0 0;                        
+                        width: $third-party-button-size;
+                    }
+                }
+            }
+            
+            &.google {                
+                a {
+                    background-color: #366aed;
+                    @include background-image(linear-gradient(top, #366aed 47%,#2b42bf 100%));
+                    
+                    &:hover {
+                        background-color: #4b7bf4;
+                        @include background-image(linear-gradient(top, #4b7bf4 47%,#2b42bf 100%));
+                    }
+                    
+                    span {
+                        background-position: 19px 0;
+                    }
+                }
+            }
+            
+            &.yahoo {                
+                a {
+                    background-color: #65348d;
+                    @include background-image(linear-gradient(top, #65348d 47%,#471a6c 100%));
+                    
+                    &:hover {
+                        background-color: #804aac;
+                        @include background-image(linear-gradient(top, #804aac 47%,#471a6c 100%));
+                    }
+                    span {
+                        background-position: -151px 0;
+                    }
+                }
+            }
+            
+            &.facebook {
+                a {
+                    background-color: #2d3f8D;
+                    @include background-image(linear-gradient(top, #2d3f8D 47%,#1d3477 100%));
+                    
+                    &:hover {
+                        background-color: #4a5db3;
+                        @include background-image(linear-gradient(top, #4a5db3 47%,#1d3477 100%));
+                    }
+                    
+                    span {
+                        background-position: -233px 0;
+                    }
+                }
+            }
+            
+            &.twitter {
+                a {
+                    background-color: #24bef8;
+                    @include background-image(linear-gradient(top, #24bef8 47%,#159ed2 100%));
+                    
+                    &:hover {
+                        background-color: #58d1ff;
+                        @include background-image(linear-gradient(top, #58d1ff 47%,#159ed2 100%));
+                    }
+                    
+                    span {
+                        background-position: -61px 0;
+                    }
+                }
+            }
+        }
+    }
+    
+    &.login-thirdparty-inner {
+        padding: $gutter/2 0;
+    }
+    
+    &.login-help {
+        color: $darkestgrey;
+        clear: left;
+        font-size: 0.9em;
+        padding: 2em 0 0 0;
     }
     
     &.content-footer {
@@ -137,7 +277,63 @@ div {
         border-top: $border;
         color: $grey;
         font-size: 1.2em;
-        margin: 0 $gutter/2;
         padding: $gutter 0 $gutter * 2 0;
+    }
+    
+    &.footer-inner {
+        margin: 0 auto;
+        
+        p {
+            margin: 0 $gutter/2;
+        }
+        
+        a {
+            color: $grey;
+            text-decoration: none;
+            
+            &:hover {
+                color: $white;
+                text-decoration: underline;
+            }
+        }  
+    }
+    
+    &.field-row {
+        clear: left;
+        margin: 0 0 1em 0; 
+    }
+    
+    &.form-controls {
+        clear: left;
+        padding: 0.4em 0 0 0;
+        margin: 0 0 1.5em 0;
+    }
+    
+    &.field-error {
+        input.text {
+            background: $errorcolour;
+            border: 1px solid $brandcolour2;
+            @include border-bottom-left-radius(0px);
+            @include border-bottom-right-radius(0px);   
+            
+            &:focus {
+                background: $focuscolour;
+            }         
+        }
+    
+        span.help-text {
+            color: $brandcolour2;
+            display: block;
+            padding: 0.5em;        
+        }
+    }
+}
+
+
+body.authenticated {
+    div {
+        &.header-inner {
+            width: 100%;
+        }
     }
 }

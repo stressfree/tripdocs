@@ -1,16 +1,25 @@
 div {
-    &.container {   
+    &.content-inner, &.footer-inner {   
         width: $cols10;
     }
     
     &.welcome-introduction {
         float: left;
+        margin: $gutter + 2 0 0 0;
         width: $cols4 - $gutter/2;
     }
     
     &.login-thirdparty {
         float: left;
-        margin: 0 0 0 $gutter;
+        margin: $gutter 0 $gutter $gutter;
         width: $cols6 - $gutter/2;
+    }
+}
+
+body.authenticated {
+    div {
+        &.header-inner {
+            width: $cols10;
+        }
     }
 }

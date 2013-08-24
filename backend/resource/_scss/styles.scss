@@ -22,9 +22,8 @@
     font-style: normal;
 }
 
-$body-bg: #838583;
-$container-bg: #3a3a3c;
-$darkgrey: #333;
+$darkestgrey: #292828;
+$darkgrey: #3a3a3c;
 $grey: #9b9b9b;
 $lightgrey: #ccc;
 $lightestgrey: #eee;
@@ -33,10 +32,12 @@ $black: #000;
 $brandcolour1: #5abfcf;
 $brandcolour2: #93d1de;
 $brandcolour3: #25adcb;
+$focuscolour: #ddf2f7;
+$errorcolour: #f7f7dd;
 $border: 1px solid #535353;
 
-$title-height: 78px;
-$navigation-menu-height: 30px;
+$title-height: 74px;
+$third-party-button-size: 70px;
 
 @import "frameless";
 
@@ -56,4 +57,11 @@ $navigation-menu-height: 30px;
 
 @media screen and (min-width: $cols20) {
     @import "widescreen";
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min--moz-device-pixel-ratio: 2),
+       only screen and (-o-min-device-pixel-ratio: 2/1),
+       only screen and (min-device-pixel-ratio: 2) {
+       @import "retina";
 }
