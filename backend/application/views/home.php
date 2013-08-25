@@ -2,103 +2,81 @@
 
 <?php echo $this->load->view('header'); ?>
 
-<div class="container">
-    <div class="row">
-        <div class="span12">
+<?php if ($this->authentication->is_signed_in()) : ?>
+<div class="subdomains">
 
-            <!-- Main hero unit for a primary marketing message or call to action -->
-            <div class="hero-unit" style="position: relative;">
-                <div class="ribbon-wrapper-green">
-                    <div class="ribbon-green">v2.0.1</div>
-                </div>
+</div>
 
-                <h1>Welcome to <?php echo lang('website_title'); ?></h1>
-
-                <p>This is the homepage for your web-app. You can use this as a starting point for creating with A3M and building the rest of your site.
-
-                    If you like this project, please help contribute with <b>bug fixes &amp; enhancements</b> on <a href="https://github.com/donjakobo/A3M">GitHub</a>.
-                </p>
-
-                <p><a class="btn btn-primary btn-large pull-right" href="https://github.com/donjakobo/A3M"><i class="icon-wrench icon-white"></i> Fork it &raquo;
-                </a><br/></p>
-            </div>
-
-        </div>
-
-        <div class="offset1 span5">
-            <h3>How do I
-                <small>customize this stuff?</small>
-            </h3>
-
-            <script src="<?php echo RES_DIR?>/bootstrap/js/holder.js"></script>
-            <!-- Used for 64x64 placeholder boxes -->
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Managing your controllers</h4>
-                    <code>/applications/controllers/</code>
-                </div>
-            </div>
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Managing your views</h4>
-                    <code>/applications/views/</code>
-                </div>
-            </div>
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Homepage changes</h4>
-                    <code>/applications/views/home.php</code>
-                </div>
-            </div>
-        </div>
-
-        <div class="offset1 span5">
-            <h3>Where are
-                <small>the Images, Icons &amp; CSS ?</small>
-            </h3>
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Your stylesheets are here</h4>
-                    <code>/<?php echo RES_DIR?>/css/</code>
-                </div>
-            </div>
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Images live here</h4>
-                    <code>/<?php echo RES_DIR?>/img/</code>
-                </div>
-            </div>
-
-            <div class="media">
-                <a class="pull-left" href="#"><img class="media-object" data-src="holder.js/64x64"></a>
-
-                <div class="media-body">
-                    <h4 class="media-heading">Twitter Bootstrap
-                        <small><a href="http://twitter.github.com/bootstrap/" title="Go-to Bootstrap site"><i class="icon-share"></i></a></small>
-                    </h4>
-                    <code>/<?php echo RES_DIR?>/bootstrap/</code>
-                </div>
-            </div>
-
-        </div>
-
+<div class="user-details">
+    <div class="contact-details">
+        <h3><?php echo lang('home_contact'); ?></h3>
+        <p class="account-name"><?php echo $account_details->fullname; ?></p>
+        <p class="account-email"><?php echo $account->email; ?></p>
     </div>
-    <!-- /end row -->
+    
+    <div class="linked-accounts">
+        <h3><?php echo lang('home_linked_accounts'); ?></h3>
+        <ul>
+        <?php if ($facebook_links) : ?>
+			<?php foreach ($facebook_links as $facebook_link) : ?>
+                <li class="facebook">
+                    <?php echo anchor('http://facebook.com/profile.php?id='.$facebook_link->facebook_id, lang('connect_facebook'), array('target' => '_blank', 'title' => 'http://facebook.com/profile.php?id='.$facebook_link->facebook_id)); ?>
+                    
+					<?php if ($num_of_linked_accounts > 1) : ?>
+						<?php echo form_open('account/account_linked'); ?>
+						<?php echo form_fieldset(); ?>
+						<?php echo form_hidden('facebook_id', $facebook_link->facebook_id); ?>
+						<?php echo form_button(array('type' => 'submit', 'content' => lang('connect_remove'))); ?>
+						<?php echo form_fieldset_close(); ?>
+						<?php echo form_close(); ?>
+                    <?php endif; ?>
+                </li>
+				<?php endforeach; ?>
+			<?php endif; ?>
+
+		<?php if ($twitter_links) : ?>
+			<?php foreach ($twitter_links as $twitter_link) : ?>
+                <li class="twitter">
+                    <?php echo anchor('http://twitter.com/'.$twitter_link->twitter->screen_name, lang('connect_twitter') . ' (' . $twitter_link->twitter->screen_name . ')', array('target' => '_blank', 'title' => 'http://twitter.com/'.$twitter_link->twitter->screen_name)); ?>
+                    
+                    <?php if ($num_of_linked_accounts > 1) : ?>
+						<?php echo form_open('account/account_linked'); ?>
+						<?php echo form_fieldset(); ?>
+						<?php echo form_hidden('twitter_id', $twitter_link->twitter_id); ?>
+						<?php echo form_button(array('type' => 'submit', 'class' => 'btn', 'content' => lang('connect_remove'))); ?>
+						<?php echo form_fieldset_close(); ?>
+						<?php echo form_close(); ?>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+		<?php if ($openid_links) : ?>
+			<?php foreach ($openid_links as $openid_link) : ?>
+                <li class="<?php echo $openid_link->provider; ?>">
+                    <?php echo lang('connect_' . $openid_link->provider); ?>
+                    <?php if ($num_of_linked_accounts > 1) : ?>
+						<?php echo form_open('account/account_linked'); ?>
+						<?php echo form_fieldset(); ?>
+						<?php echo form_hidden('openid', $openid_link->openid); ?>
+						<?php echo form_button(array('type' => 'submit', 'class' => 'btn', 'content' => lang('connect_remove'))); ?>
+						<?php echo form_fieldset_close(); ?>
+						<?php echo form_close(); ?>
+                    <?php endif; ?>
+                </li>
+                <?php endforeach; ?>
+			<?php endif; ?>
+		<?php endif; ?>
+    </div>
+</div>
+
+<div class="linked-accounts-add">
+    <h3><?php echo lang('home_add_linked_account') ?></h3>
+    <ul class="third_party">
+        <?php foreach ($this->config->item('third_party_auth_providers') as $provider) : ?>
+        <li class="third_party <?php echo $provider; ?>"><?php echo anchor('account/connect_'.$provider, lang('connect_' . $provider), array('title' => sprintf(lang('connect_with_x'), lang('connect_'.$provider)))); ?></li>
+        <?php endforeach; ?>
+    </ul>
 </div>
 
 <?php echo $this->load->view('footer'); ?>

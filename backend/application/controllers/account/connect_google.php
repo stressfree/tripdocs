@@ -48,8 +48,8 @@ class Connect_google extends CI_Controller {
 						// Run sign in routine
 						$this->authentication->sign_in($user->account_id);
 					}
-					$user->account_id === $this->session->userdata('account_id') ? $this->session->set_flashdata('linked_error', sprintf(lang('linked_linked_with_this_account'), lang('connect_google'))) : $this->session->set_flashdata('linked_error', sprintf(lang('linked_linked_with_another_account'), lang('connect_google')));
-					redirect('account/account_linked');
+					$user->account_id === $this->session->userdata('account_id') ? $this->session->set_flashdata('flash_error', sprintf(lang('linked_linked_with_this_account'), lang('connect_google'))) : $this->session->set_flashdata('flash_error', sprintf(lang('linked_linked_with_another_account'), lang('connect_google')));
+					redirect('');
 				}
 				// The user has not connect google to a3m
 				else
@@ -85,15 +85,15 @@ class Connect_google extends CI_Controller {
 					{
 						// Connect google to a3m
 						$this->account_openid_model->insert($response->getDisplayIdentifier(), $this->session->userdata('account_id'));
-						$this->session->set_flashdata('linked_info', sprintf(lang('linked_linked_with_your_account'), lang('connect_google')));
-						redirect('account/account_linked');
+						$this->session->set_flashdata('flash_info', sprintf(lang('linked_linked_with_your_account'), lang('connect_google')));
+						redirect('');
 					}
 				}
 			}
 			// Auth_OpenID_CANCEL or Auth_OpenID_FAILURE or anything else
 			else
 			{
-				$this->authentication->is_signed_in() ? redirect('account/account_linked') : redirect('account/sign_up');
+				$this->authentication->is_signed_in() ? redirect('') : redirect('account/sign_up');
 			}
 		}
 

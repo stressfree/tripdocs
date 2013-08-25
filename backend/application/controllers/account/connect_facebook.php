@@ -37,8 +37,8 @@ class Connect_facebook extends CI_Controller {
 					$this->authentication->sign_in($user->account_id);
 				}
 
-				$user->account_id === $this->session->userdata('account_id') ? $this->session->set_flashdata('linked_error', sprintf(lang('linked_linked_with_this_account'), lang('connect_facebook'))) : $this->session->set_flashdata('linked_error', sprintf(lang('linked_linked_with_another_account'), lang('connect_facebook')));
-				redirect('account/account_linked');
+				$user->account_id === $this->session->userdata('account_id') ? $this->session->set_flashdata('flash_error', sprintf(lang('linked_linked_with_this_account'), lang('connect_facebook'))) : $this->session->set_flashdata('flash_error', sprintf(lang('linked_linked_with_another_account'), lang('connect_facebook')));
+				redirect('');
 			}
 			// The user has not connect facebook to a3m
 			else
@@ -63,8 +63,8 @@ class Connect_facebook extends CI_Controller {
 				{
 					// Connect facebook to a3m
 					$this->account_facebook_model->insert($this->session->userdata('account_id'), $this->facebook_lib->user['id']);
-					$this->session->set_flashdata('linked_info', sprintf(lang('linked_linked_with_your_account'), lang('connect_facebook')));
-					redirect('account/account_linked');
+					$this->session->set_flashdata('flash_info', sprintf(lang('linked_linked_with_your_account'), lang('connect_facebook')));
+					redirect('');
 				}
 			}
 		}
