@@ -1,6 +1,6 @@
 <?php echo $this->load->view('head', array('title' => sprintf(lang('connect_with_x'), lang('connect_openid')))); ?>
 
-<?php echo $this->load->view('header'); ?>
+<?php echo $this->load->view('header', array('current' => 'account/connect_openid')); ?>
 
 <div class="container">
     <div class="row">
@@ -50,4 +50,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-<?php echo $this->load->view('foot'); ?>
+<?php echo $this->load->view('foot', array('javascript' => true)); ?>

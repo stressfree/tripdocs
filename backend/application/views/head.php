@@ -18,4 +18,4 @@
     <link rel="apple-touch-icon-precomposed" href="<?php echo base_url().RES_DIR; ?>/img/apple-touch-icon-57x57-precomposed.png">
     <link rel="stylesheet" href="<?php echo base_url().RES_DIR; ?>/css/styles.css" type="text/css" />
 </head>
-<body <?php if ($this->authentication->is_signed_in()) : ?>class="authenticated"<?php endif; ?>>
+<body class="<?php echo ($this->authentication->is_signed_in()) ? 'authenticated' : 'not-authenticated'; ?>">

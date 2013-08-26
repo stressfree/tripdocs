@@ -1,6 +1,6 @@
 <?php echo $this->load->view('head', array('title' => lang('sign_in_page_name'))); ?>
 
-<?php echo $this->load->view('header'); ?>
+<?php echo $this->load->view('header', array('current' => 'sign_in')); ?>
 
 <div class="welcome-introduction">
     <div class="welcome-introduction-inner">
@@ -26,4 +26,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-<?php echo $this->load->view('foot'); ?>
+<?php echo $this->load->view('foot', array('javascript' => false)); ?>

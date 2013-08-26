@@ -1,6 +1,6 @@
 <?php echo $this->load->view('head', array('title' => lang('settings_page_name'))); ?>
 
-<?php echo $this->load->view('header'); ?>
+<?php echo $this->load->view('header', array('current' => 'account/account_settings')); ?>
 
 <div class="container">
 <div class="row">
@@ -222,4 +222,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-<?php echo $this->load->view('foot'); ?>
+<?php echo $this->load->view('foot', array('javascript' => true)); ?>

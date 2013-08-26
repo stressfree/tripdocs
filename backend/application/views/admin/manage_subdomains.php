@@ -1,13 +1,9 @@
 <?php echo $this->load->view('head', array('title' => lang('subdomains_page_name'))); ?>
 
-<?php echo $this->load->view('header'); ?>
+<?php echo $this->load->view('header', array('current' => 'admin/manage_subdomains')); ?>
 
 <div class="container">
   <div class="row">
-
-    <div class="span2">
-      <?php echo $this->load->view('account/account_menu', array('current' => 'manage_subdomains')); ?>
-    </div>
 
     <div class="span10">
 
@@ -61,4 +57,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-<?php echo $this->load->view('foot'); ?>
+<?php echo $this->load->view('foot', array('javascript' => true)); ?>

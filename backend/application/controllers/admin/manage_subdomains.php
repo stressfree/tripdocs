@@ -16,7 +16,7 @@ class Manage_subdomains extends CI_Controller {
     $this->load->helper(array('date', 'language', 'account/ssl', 'url'));
     $this->load->library(array('account/authentication', 'account/authorization', 'form_validation', 'typography'));
     $this->load->model(array('account/account_model', 'tripdocs/acl_subdomain_model'));
-    $this->load->language(array('general', 'admin/manage_subdomains', 'account/account_settings', 'account/account_profile', 'account/sign_up', 'account/account_password'));
+    $this->load->language(array('general', 'admin/manage_subdomains'));
   }
 
   /**

@@ -1,6 +1,6 @@
 <?php echo $this->load->view('head'); ?>
 
-<?php echo $this->load->view('header'); ?>
+<?php echo $this->load->view('header', array('current' => 'home')); ?>
 
 <?php if ($this->authentication->is_signed_in()) : ?>
 <div class="subdomains">
@@ -81,4 +81,4 @@
 
 <?php echo $this->load->view('footer'); ?>
 
-<?php echo $this->load->view('foot'); ?>
+<?php echo $this->load->view('foot', array('javascript' => true)); ?>
