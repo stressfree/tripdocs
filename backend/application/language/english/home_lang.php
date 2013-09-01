@@ -5,9 +5,12 @@
 | Home
 |--------------------------------------------------------------------------
 */
+$lang['home_subdomains'] = 'Review zones';
+$lang['home_subdomains_empty'] = 'You currently have not been granted access to any review zones.';
 $lang['home_contact'] = 'Contact details';
 $lang['home_linked_accounts'] = 'Linked accounts';
-$lang['home_add_linked_account'] = 'Link another account to sign in with';
+$lang['home_add_linked_account_link'] = 'Add another account';
+$lang['home_add_linked_account'] = 'Sign in with an additional account';
 
 
 /* End of file home_lang.php */

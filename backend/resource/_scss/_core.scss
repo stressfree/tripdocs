@@ -7,9 +7,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: $lightgrey;
+    color: $grey;
     font-family: 'Museo';
     font-weight: 500;
+    margin: 0 0 0.2em 0;
 }
 
 p {
@@ -115,7 +116,7 @@ div {
                     text-decoration: none;
                     
                     &:hover {
-                        color: $white;
+                        color: $hovercolour;
                         text-decoration: underline;
                     }
                 }
@@ -149,7 +150,7 @@ div {
                     width: $cols2 + $gutter;
                     
                     &:hover {
-                        color: $white;
+                        color: $hovercolour;
                         text-decoration: underline;
                     }
                 }
@@ -176,7 +177,7 @@ div {
                         width: auto;
                         
                         &:hover {
-                            color: $white;
+                            color: $hovercolour;
                             text-decoration: underline;
                         }
                     }
@@ -208,7 +209,7 @@ div {
                             cursor: pointer;
                             
                             &:hover {
-                                color: $white;
+                                color: $hovercolour;
                                 text-decoration: underline;
                             }
                         }
@@ -238,7 +239,7 @@ div {
         padding: $gutter * 2 $gutter/2;
     }
     
-    &.welcome-introduction-inner, &.login-thirdparty-inner {
+    &.welcome-introduction-inner, &.login-thirdparty-inner, &.linked-accounts-add-inner {
         margin: 0 $gutter/2;
     }
     
@@ -252,12 +253,12 @@ div {
         padding: $gutter/2 0 0 0;
     }
     
-    &.login-thirdparty {
-        background: $brandcolour2;
+    &.login-thirdparty, &.linked-accounts-add {
+        background: $hovercolour;
         @include border-radius(5px);
         margin: $gutter 0 0 0; 
         
-        h1 {
+        h1, h3 {
             color: $darkestgrey;
             font-size: 1.2em;
             margin: 0 0 0.2em 0;
@@ -314,7 +315,7 @@ div {
                     }
                     
                     span {
-                        background-position: 19px 0;
+                        background-position: 9px 1px;
                     }
                 }
             }
@@ -329,7 +330,7 @@ div {
                         @include background-image(linear-gradient(top, #804aac 47%,#471a6c 100%));
                     }
                     span {
-                        background-position: -151px 0;
+                        background-position: 9px -208px;
                     }
                 }
             }
@@ -345,7 +346,7 @@ div {
                     }
                     
                     span {
-                        background-position: -233px 0;
+                        background-position: 9px -313px;
                     }
                 }
             }
@@ -361,14 +362,14 @@ div {
                     }
                     
                     span {
-                        background-position: -61px 0;
+                        background-position: 9px -102px;
                     }
                 }
             }
         }
     }
     
-    &.login-thirdparty-inner {
+    &.login-thirdparty-inner, &.linked-accounts-add-inner {
         padding: $gutter/2 0;
     }
     
@@ -381,6 +382,127 @@ div {
     
     &.content-footer {
         clear: both;
+    }
+    
+    &.subdomains {
+        li {
+            list-style-type: square;
+            margin: 0 0 0.6em 20px;
+        }
+        
+        p {
+            color: $lightgrey;
+            margin: 0 0 0.2em 0;
+            
+            &.link {
+                font-size: 1.3em;
+            }
+        }
+        
+        a {
+            color: $white;
+            text-decoration: none;
+            
+            &:hover {
+                color: $hovercolour;
+                text-decoration: underline;
+            }
+        }
+    }
+    
+    &.user-details, &.linked-accounts {
+        padding: 1em 0 0 0;
+    }
+    
+    &.user-details {
+        p {
+            font-size: 0.9em;
+            margin: 0;
+            
+            &.account-email {
+                color: $lightgrey;
+            }
+        }
+    }
+    
+    &.linked-accounts {
+        a {
+            color: $lightgrey;
+            text-decoration: none;
+            
+            &:hover {
+                color: $hovercolour;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+        
+        ul {
+            margin: 0 0 1em 0;
+        }
+        
+        li {
+            background-image: url('../img/auth-logos.png');
+            background-repeat: no-repeat;
+            color: $white;
+            font-size: 0.9em;
+            list-style: none;
+            margin: 0 0 0.3em 0;
+            padding: 2px 0 2px 24px;
+            
+            a {
+                color: $white;
+            }
+            
+            form, fieldset {
+                display: inline;
+                margin: 0;
+                padding: 0;
+            }
+            
+            button {
+                background: none;
+                @include background-image(none);
+                @include border-radius(0px);
+                @include box-shadow(none);
+                border: 0px none;
+                color: $lightgrey;
+                font-size: 0.9em;
+                margin: 0 0 0 0.3em;
+                padding: 0;
+                width: auto;
+                
+                &:hover {
+                    background: none;
+                    @include background-image(none);
+                    border: 0px none;
+                    color: $hovercolour;
+                    cursor: pointer; 
+                    text-decoration: underline;
+                }
+            }
+            
+            &.google {                
+                background-position: -130px 1px;
+            }
+            
+            &.yahoo {                
+                background-position: -130px -209px;
+            }
+            
+            &.facebook {
+                background-position: -130px -314px;
+            }
+            
+            &.twitter {
+                background-position: -130px -102px;
+            }
+        }
+    }
+    
+    &.linked-accounts-add {
+        clear: both;
+        display: none;
     }
     
     &.footer {
@@ -402,7 +524,7 @@ div {
             text-decoration: none;
             
             &:hover {
-                color: $white;
+                color: $hovercolour;
                 text-decoration: underline;
             }
         }  

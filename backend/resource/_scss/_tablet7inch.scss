@@ -23,10 +23,28 @@ div {
         width: $cols5;
     }
     
-    &.login-thirdparty {        
+    &.login-thirdparty, &.linked-accounts-add {        
         ul {
             width: ($third-party-button-size * 4) + (10px * 4)
         }
+    }
+    
+    &.subdomains {
+        float: left;
+        width: $cols5;
+    }
+    
+    &.user-details, &.linked-accounts {
+        clear: right;
+        float: right;
+        width: $cols3;
+    }
+    
+    &.linked-accounts-add {
+        margin: 0 0 0 $cols2 + $gutter;
+        position: absolute;
+        top: 90px;        
+        width: $cols6;
     }
 }
 

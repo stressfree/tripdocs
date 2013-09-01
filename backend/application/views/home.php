@@ -3,8 +3,23 @@
 <?php echo $this->load->view('header', array('current' => 'home')); ?>
 
 <?php if ($this->authentication->is_signed_in()) : ?>
-<div class="subdomains">
 
+<div class="subdomains">
+    <h1><?php echo lang('home_subdomains'); ?></h1>
+    <?php if (count($subdomains) > 0) : ?>
+        <ul>
+        <?php foreach ($subdomains as $subdomain) : ?>
+            <li>
+                <p class="link"><?php echo anchor($subdomain['url'], $subdomain['url']); ?></p>
+                <?php if (!empty($subdomain['description'])) : ?>
+                <p class="description"><?php echo $subdomain['description'] ?></p>
+                <?php endif ?>    
+            </li>
+        <?php endforeach; ?>
+        </ul>
+    <?php else : ?>
+        <p><?php echo lang('home_subdomains_empty'); ?></p>
+    <?php endif; ?>
 </div>
 
 <div class="user-details">
@@ -67,16 +82,24 @@
                 <?php endforeach; ?>
 			<?php endif; ?>
 		<?php endif; ?>
+        </ul>
+        <p><a class="add-account-link"><?php echo lang('home_add_linked_account_link'); ?></a></p>
     </div>
 </div>
 
 <div class="linked-accounts-add">
-    <h3><?php echo lang('home_add_linked_account') ?></h3>
-    <ul class="third_party">
-        <?php foreach ($this->config->item('third_party_auth_providers') as $provider) : ?>
-        <li class="third_party <?php echo $provider; ?>"><?php echo anchor('account/connect_'.$provider, lang('connect_' . $provider), array('title' => sprintf(lang('connect_with_x'), lang('connect_'.$provider)))); ?></li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="linked-accounts-add-inner">
+        <h3><?php echo lang('home_add_linked_account') ?></h3>
+        <ul class="third_party">
+            <?php foreach ($this->config->item('third_party_auth_providers') as $provider) : ?>
+            <li class="third_party <?php echo $provider; ?>"><?php echo anchor('account/connect_'.$provider, '<span>' . lang('connect_' . $provider) . '</span>', array('title' => sprintf(lang('connect_with_x'), lang('connect_'.$provider)))); ?></li>
+            <?php endforeach; ?>
+        </ul>
+        
+	    <div class="login-help">
+	        <p><?php echo lang('sign_in_help'); ?></p>
+        </div>
+    </div>
 </div>
 
 <?php echo $this->load->view('footer'); ?>

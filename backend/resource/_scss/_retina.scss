@@ -10,10 +10,17 @@ div {
                 a {
                     span {
                         background-image: url('../img/auth-logos@2x.png');
-                        background-size: 304px 50px;
+                        background-size: 150px 377px;
                     }
                 }
             }
+        }
+    }
+    
+    &.linked-accounts {        
+        li {
+            background-image: url('../img/auth-logos@2x.png');
+            background-size: 150px 377px;            
         }
     }    
 }

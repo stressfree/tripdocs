@@ -7,11 +7,11 @@ class Home extends CI_Controller {
 		parent::__construct();
 
 		// Load the necessary stuff...
-		$this->load->config('account/account');
+		$this->load->config('account/account', 'tripdocs');
 		$this->load->helper(array('language', 'url', 'form', 'account/ssl'));
-		$this->load->library(array('account/authentication', 'account/authorization'));
-		$this->load->model(array('account/account_model', 'account/account_details_model', 'account/account_facebook_model', 'account/account_twitter_model', 'account/account_openid_model'));
-		$this->load->language(array('home', 'account/connect_third_party'));
+		$this->load->library(array('account/authentication', 'account/authorization', 'typography'));
+		$this->load->model(array('tripdocs/acl_subdomain_model', 'account/account_model', 'account/account_details_model', 'account/account_facebook_model', 'account/account_twitter_model', 'account/account_openid_model'));
+		$this->load->language(array('home', 'account/connect_third_party', 'account/sign_in'));
 	}
 
 	function index()
@@ -27,7 +27,25 @@ class Home extends CI_Controller {
 
 		$data['account'] = $this->account_model->get_by_id($this->session->userdata('account_id'));
 		$data['account_details'] = $this->account_details_model->get_by_account_id($this->session->userdata('account_id'));
-
+        
+        // Get the subdomains for the user
+        $subdomains = $this->acl_subdomain_model->get_by_account_id($this->session->userdata('account_id'));
+        $protocol = $this->config->item('tripdocs_protocol');
+        $domain = $this->config->item('tripdocs_domain');
+        
+        $data['subdomains'] = array();
+        
+        foreach ( $subdomains as $sub )
+        {
+          $current_sub = array();
+          $current_sub['name'] = $sub->name;
+          $current_sub['description'] = $this->typography->nl2br_except_pre($sub->description);
+          $current_sub['url'] = strtolower($protocol . '://' . $sub->name . $domain);
+    
+          // Append to the array
+          $data['subdomains'][] = $current_sub;
+        }
+        
         // Check for linked accounts
 		$data['num_of_linked_accounts'] = 0;
 

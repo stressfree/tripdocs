@@ -14,6 +14,10 @@ div {
         margin: $gutter 0 $gutter $gutter;
         width: $cols6 - $gutter/2;
     }
+    
+    &.subdomains {
+        width: $cols7;
+    }
 }
 
 body.authenticated {
