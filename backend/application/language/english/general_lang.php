@@ -17,7 +17,7 @@ $lang['website_password'] = 'Password';
 $lang['website_home'] = 'Dashboard';
 $lang['website_manage'] = 'Administration';
 $lang['website_manage_users'] = 'Manage users';
-$lang['website_manage_subdomains'] = 'Manage review zones';
+$lang['website_manage_subdomains'] = 'Manage spaces';
 $lang['website_manage_permissions'] = 'Manage permissions';
 $lang['website_manage_roles'] = 'Manage roles';
 $lang['website_sign_out'] = 'Sign out';
@@ -26,7 +26,7 @@ $lang['website_sign_up'] = 'Sign up';
 $lang['website_connect_with_facebook'] = 'Connect with Facebook';
 $lang['website_page_rendered_in_x_seconds'] = 'Rendered in %s seconds';
 $lang['website_create'] = 'Create';
-$lang['website_update'] = 'Modify';
+$lang['website_update'] = 'Save';
 $lang['website_cancel'] = 'Cancel';
 
 

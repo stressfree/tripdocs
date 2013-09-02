@@ -41,16 +41,33 @@ button, input.submit {
     background: $brandcolour1;
     @include background-image(linear-gradient(top, $brandcolour1 47%,$brandcolour3 100%));
     @include border-radius(3px);
-    @include box-shadow(rgba($black, 1) 0 0 3px);
-    border: 1px solid $grey;
+    @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
+    border: 1px solid $lightgrey;
     padding: 0.3em 0;
     width: 100%;
     
     &:hover {
         background: $brandcolour2;
         @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour3 100%));
-        border: 1px solid $lightgrey;
+        border: 1px solid $lightestgrey;
         cursor: pointer; 
+    }
+}
+
+input {
+    &.submit {
+        float: right;
+        margin: 0 0 0 4px;
+    }
+        
+    &.btn-danger {
+        background: #eaa395;
+        @include background-image(linear-gradient(top, #eaa395 7%, #d77562 100%));
+        
+        &:hover {
+            background: #eaa395;
+            @include background-image(linear-gradient(top, #eaa395 47%, #dc6148 100%));        
+        }
     }
 }
 
@@ -239,7 +256,8 @@ div {
         padding: $gutter * 2 $gutter/2;
     }
     
-    &.welcome-introduction-inner, &.login-thirdparty-inner, &.linked-accounts-add-inner {
+    &.welcome-introduction-inner, &.login-thirdparty-inner, 
+    &.linked-accounts-add-inner, &.contact-details-edit-inner {
         margin: 0 $gutter/2;
     }
     
@@ -253,7 +271,7 @@ div {
         padding: $gutter/2 0 0 0;
     }
     
-    &.login-thirdparty, &.linked-accounts-add {
+    &.login-thirdparty, &.linked-accounts-add, &.contact-details-edit {
         background: $hovercolour;
         @include border-radius(5px);
         margin: $gutter 0 0 0; 
@@ -264,7 +282,9 @@ div {
             margin: 0 0 0.2em 0;
             padding: 0.2em 0 0 0;
         }
-        
+    }
+    
+    &.login-thirdparty, &.linked-accounts-add {        
         ul {
             margin: 1.2em auto 0 auto;
             width: ($third-party-button-size * 2) + (10px * 2)
@@ -369,7 +389,7 @@ div {
         }
     }
     
-    &.login-thirdparty-inner, &.linked-accounts-add-inner {
+    &.login-thirdparty-inner, &.linked-accounts-add-inner, &.contact-details-edit-inner {
         padding: $gutter/2 0;
     }
     
@@ -414,18 +434,7 @@ div {
         padding: 1em 0 0 0;
     }
     
-    &.user-details {
-        p {
-            font-size: 0.9em;
-            margin: 0;
-            
-            &.account-email {
-                color: $lightgrey;
-            }
-        }
-    }
-    
-    &.linked-accounts {
+    &.user-details, &.linked-accounts {
         a {
             color: $lightgrey;
             text-decoration: none;
@@ -436,7 +445,23 @@ div {
                 text-decoration: underline;
             }
         }
-        
+    }
+    
+    &.user-details {
+        p {
+            font-size: 0.9em;
+            
+            &.account-name {
+                margin: 0;
+            }
+            
+            &.account-email {
+                color: $lightgrey;
+            }
+        }
+    }
+    
+    &.linked-accounts {        
         ul {
             margin: 0 0 1em 0;
         }
@@ -468,7 +493,7 @@ div {
                 border: 0px none;
                 color: $lightgrey;
                 font-size: 0.9em;
-                margin: 0 0 0 0.3em;
+                margin: 0;
                 padding: 0;
                 width: auto;
                 
@@ -500,9 +525,16 @@ div {
         }
     }
     
-    &.linked-accounts-add {
+    &.linked-accounts-add, &.contact-details-edit {
         clear: both;
         display: none;
+    }
+    
+    &.linked-accounts-add {        
+        div.form-controls {
+            text-align: center;
+            margin: 0 0 0.5em 0;
+        }
     }
     
     &.footer {
@@ -538,7 +570,7 @@ div {
     &.form-controls {
         clear: left;
         padding: 0.4em 0 0 0;
-        margin: 0 0 1.5em 0;
+        margin: 0 0.5em 1em 0;
     }
     
     &.field-error {
@@ -561,6 +593,12 @@ div {
     }
 }
 
+span {
+    &.link-indicator {
+        color: $grey;
+        margin: 0 0.2em 0 0;
+    }
+}
 
 body.authenticated {
     div {

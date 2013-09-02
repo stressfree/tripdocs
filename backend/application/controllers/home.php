@@ -11,7 +11,7 @@ class Home extends CI_Controller {
 		$this->load->helper(array('language', 'url', 'form', 'account/ssl'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'typography'));
 		$this->load->model(array('tripdocs/acl_subdomain_model', 'account/account_model', 'account/account_details_model', 'account/account_facebook_model', 'account/account_twitter_model', 'account/account_openid_model'));
-		$this->load->language(array('home', 'account/connect_third_party', 'account/sign_in'));
+		$this->load->language(array('home', 'account/account_settings', 'account/connect_third_party', 'account/sign_in'));
 	}
 
 	function index()

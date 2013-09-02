@@ -18,6 +18,11 @@ div {
     &.subdomains {
         width: $cols7;
     }
+    
+    &.linked-accounts-add, &.contact-details-edit {
+        margin: 0 0 0 $cols2 + $gutter;      
+        width: $cols6;
+    }
 }
 
 body.authenticated {

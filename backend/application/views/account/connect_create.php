@@ -39,9 +39,9 @@
     				<?php endif; ?>
                 </div>
             </div>
-                
+            
             <div class="form-controls">
-    			<?php echo form_button(array('type' => 'submit', 'class' => 'button', 'content' => lang('connect_create_button'))); ?>
+    			<?php echo form_submit('connect_create', lang('connect_create_button'), 'class="submit"'); ?>
             </div>
         <?php echo form_fieldset_close(); ?>
     <?php echo form_close(); ?>

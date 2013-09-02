@@ -5,11 +5,11 @@
 | Settings
 |--------------------------------------------------------------------------
 */
-$lang['settings_page_name'] = 'Account Settings';
+$lang['settings_page_name'] = 'Update your details';
 $lang['settings_privacy_statement'] = 'The information we collect on this page is private and will not be shown anywhere on this website or shared with third parties without your explicit permission. For more information, read our %s.';
 $lang['settings_privacy_policy'] = 'privacy policy';
 $lang['settings_email'] = 'Email';
-$lang['settings_fullname'] = 'Full Name';
+$lang['settings_fullname'] = 'Name';
 $lang['settings_firstname'] = 'First Name';
 $lang['settings_lastname'] = 'Last Name';
 $lang['settings_dateofbirth'] = 'Date of Birth';
@@ -18,7 +18,8 @@ $lang['settings_postalcode'] = 'Postal Code / Zip Code';
 $lang['settings_country'] = 'Country';
 $lang['settings_language'] = 'Language';
 $lang['settings_timezone'] = 'Timezone';
-$lang['settings_save'] = 'Save changes';
+$lang['settings_save'] = 'Save';
+$lang['settings_delete'] = 'Delete account';
 $lang['settings_email_exist'] = 'This Email is already registered.';
 $lang['settings_dateofbirth_incomplete'] = 'Date of Birth selection is incomplete.';
 $lang['settings_details_updated'] = 'Your account details have been updated.';

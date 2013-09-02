@@ -40,11 +40,31 @@ div {
         width: $cols3;
     }
     
-    &.linked-accounts-add {
-        margin: 0 0 0 $cols2 + $gutter;
+    &.linked-accounts-add, &.contact-details-edit {
+        margin: 0 0 0 $cols1 + (2 * $gutter);
         position: absolute;
-        top: 90px;        
+        top: 90px;  
         width: $cols6;
+    }
+    
+    &.contact-details-edit {
+        label {
+            color: $darkgrey;
+        }
+        
+        input.text {
+            width: $cols6 - (2 * $gutter);
+        }
+    }
+    
+    &.connect-create {
+        form {
+            width: $cols6;
+            
+            input.text {
+                width: $cols6 - $gutter;
+            }
+        }
     }
 }
 
