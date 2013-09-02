@@ -16,7 +16,7 @@ class Connect_openid extends CI_Controller {
 		$this->load->helper(array('language', 'account/ssl', 'url', 'account/openid'));
 		$this->load->library(array('account/authentication', 'account/authorization'));
 		$this->load->model(array('account/account_model', 'account/account_openid_model'));
-		$this->load->language(array('general', 'account/sign_in', 'account/account_linked', 'account/connect_third_party'));
+		$this->load->language(array('general', 'account/sign_in', 'account/linked', 'account/connect_third_party'));
 	}
 
 	function index()
@@ -84,7 +84,7 @@ class Connect_openid extends CI_Controller {
 						$this->session->set_userdata('connect_create', array(array('provider' => 'openid', 'provider_id' => $response->getDisplayIdentifier(), 'username' => isset($username) ? $username : NULL, 'email' => isset($email) ? $email : NULL), $openid_all));
 
 						// Create a3m account
-						redirect('account/connect_create');
+						redirect('account/create');
 					}
 					else
 					{

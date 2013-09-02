@@ -36,7 +36,7 @@ class Manage_subdomains extends CI_Controller {
     // Redirect unauthorized users to account profile page
     if ( ! $this->authorization->is_permitted('retrieve_subdomains'))
     {
-      redirect('account/account_profile');
+      redirect('');
     }
 
     // Retrieve sign in user

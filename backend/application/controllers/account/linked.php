@@ -2,7 +2,7 @@
 /*
  * Account_linked Controller
  */
-class Account_linked extends CI_Controller {
+class Linked extends CI_Controller {
 
 	/**
 	 * Constructor
@@ -16,7 +16,7 @@ class Account_linked extends CI_Controller {
 		$this->load->helper(array('language', 'account/ssl', 'url'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'form_validation'));
 		$this->load->model(array('account/account_model', 'account/account_facebook_model', 'account/account_twitter_model', 'account/account_openid_model'));
-		$this->load->language(array('general', 'account/account_linked', 'account/connect_third_party'));
+		$this->load->language(array('general', 'account/linked', 'account/connect_third_party'));
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Account_linked extends CI_Controller {
 		// Redirect unauthenticated users to signin page
 		if ( ! $this->authentication->is_signed_in())
 		{
-			redirect('account/sign_in/?continue='.urlencode(base_url().'account/account_linked'));
+			redirect('');
 		}
 
 		// Retrieve sign in user

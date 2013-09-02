@@ -16,7 +16,7 @@ class Connect_facebook extends CI_Controller {
 		$this->load->helper(array('language', 'account/ssl', 'url'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'account/facebook_lib'));
 		$this->load->model(array('account/account_model', 'account/account_facebook_model'));
-		$this->load->language(array('general', 'account/sign_in', 'account/account_linked', 'account/connect_third_party'));
+		$this->load->language(array('general', 'account/sign_in', 'account/linked', 'account/connect_third_party'));
 	}
 
 	function index()
@@ -57,7 +57,7 @@ class Connect_facebook extends CI_Controller {
 					)));
 
 					// Create a3m account
-					redirect('account/connect_create');
+					redirect('account/create');
 				}
 				else
 				{

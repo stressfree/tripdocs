@@ -2,7 +2,7 @@
 /*
  * Connect_create Controller
  */
-class Connect_create extends CI_Controller {
+class Create extends CI_Controller {
 
 	/**
 	 * Constructor
@@ -91,7 +91,7 @@ class Connect_create extends CI_Controller {
 			}
 		}
 
-		$this->load->view('account/connect_create', isset($data) ? $data : NULL);
+		$this->load->view('account/create', isset($data) ? $data : NULL);
 	}
 	
 	/**

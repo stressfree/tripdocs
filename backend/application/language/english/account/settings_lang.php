@@ -5,11 +5,11 @@
 | Settings
 |--------------------------------------------------------------------------
 */
-$lang['settings_page_name'] = 'Update your details';
+$lang['settings_page_name'] = 'Update or delete your Tripdocs account';
 $lang['settings_privacy_statement'] = 'The information we collect on this page is private and will not be shown anywhere on this website or shared with third parties without your explicit permission. For more information, read our %s.';
 $lang['settings_privacy_policy'] = 'privacy policy';
-$lang['settings_email'] = 'Email';
-$lang['settings_fullname'] = 'Name';
+$lang['settings_email'] = 'Contact email';
+$lang['settings_fullname'] = 'Contact name';
 $lang['settings_firstname'] = 'First Name';
 $lang['settings_lastname'] = 'Last Name';
 $lang['settings_dateofbirth'] = 'Date of Birth';
@@ -45,4 +45,4 @@ $lang['gender_female'] = 'Female';
 
 
 /* End of file account_settings_lang.php */
-/* Location: ./application/language/english/account/account_settings_lang.php */
+/* Location: ./application/language/english/account/settings_lang.php */

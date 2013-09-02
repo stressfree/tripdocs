@@ -16,7 +16,7 @@ class Connect_twitter extends CI_Controller {
 		$this->load->helper(array('language', 'account/ssl', 'url'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'account/twitter_lib'));
 		$this->load->model(array('account/account_model', 'account/account_twitter_model'));
-		$this->load->language(array('general', 'account/sign_in', 'account/account_linked', 'account/connect_third_party'));
+		$this->load->language(array('general', 'account/sign_in', 'account/linked', 'account/connect_third_party'));
 	}
 
 	function index()
@@ -62,7 +62,7 @@ class Connect_twitter extends CI_Controller {
 					$this->session->set_userdata('connect_create', array(array('provider' => 'twitter', 'provider_id' => $twitter_info['id'], 'username' => $twitter_info['screen_name'], 'token' => $twitter_token->oauth_token, 'secret' => $twitter_token->oauth_token_secret), array('fullname' => $twitter_info['name'], 'picture' => $twitter_info['profile_image_url'])));
 
 					// Create a3m account
-					redirect('account/connect_create');
+					redirect('account/create');
 				}
 				else
 				{

@@ -1,6 +1,6 @@
 <?php echo $this->load->view('head', array('title' => lang('connect_create_account'))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'account/connect_create')); ?>
+<?php echo $this->load->view('header', array('current' => 'account/create')); ?>
 
 <div class="connect-create">
     <h1><?php echo lang('connect_create_heading'); ?></h1>
