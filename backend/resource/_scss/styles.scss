@@ -36,7 +36,8 @@ $brandcolour3: #25adcb;
 $focuscolour: #fafaee;
 $errorcolour: #f7f7dd;
 $hovercolour: $brandcolour2;
-$border: 1px solid #535353;
+$bordercolour: #535353;
+$border: 1px solid $bordercolour;
 
 $title-height: 74px;
 $third-party-button-size: 70px;

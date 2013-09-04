@@ -105,7 +105,10 @@ class Authentication {
 		
 		$cookie_value = hash('ripemd160', $_SERVER['SERVER_ADDR'] . '_' . $this->CI->session->userdata('session_id'));
 		
+    	$this->CI->load->model('account/account_model');
     	$this->CI->load->model('tripdocs/acl_subdomain_model');
+    	
+    	$account = $this->CI->account_model->get_by_id($account_id);
     	$subdomains = $this->CI->acl_subdomain_model->get_by_account_id($account_id);
     			
 		$ds = DIRECTORY_SEPARATOR;
@@ -128,7 +131,7 @@ class Authentication {
 		}
 		
 		// Store the cookie details
-		$cookie = array(
+		$auth_cookie = array(
     		'name'   => 'tripdocs_login',
     		'value'  => $cookie_value,
     		'expire' => $this->CI->config->item('tripdocs_expire'),
@@ -136,8 +139,19 @@ class Authentication {
     		'path'   => '/',
     		'prefix' => '',
     		'secure' => FALSE
+		);		
+		$this->CI->input->set_cookie($auth_cookie);
+		
+		$id_cookie = array(
+    		'name'   => 'tripdocs_id',
+    		'value'  => $account->username,
+    		'expire' => $this->CI->config->item('tripdocs_expire'),
+    		'domain' => $this->CI->config->item('tripdocs_domain'),
+    		'path'   => '/',
+    		'prefix' => '',
+    		'secure' => FALSE
 		);
-		$this->CI->input->set_cookie($cookie);
+		$this->CI->input->set_cookie($id_cookie);
     }
     
     function tripdocs_logout()
@@ -165,7 +179,7 @@ class Authentication {
     	}
     	
     	// Expire the cookie
-		$cookie = array(
+		$auth_cookie = array(
     		'name'   => 'tripdocs_login',
     		'value'  => '',
     		'expire' => '',
@@ -174,7 +188,18 @@ class Authentication {
     		'prefix' => '',
     		'secure' => FALSE
 		);
-		$this->CI->input->set_cookie($cookie);	 	
+		$this->CI->input->set_cookie($auth_cookie);
+				
+        $id_cookie = array(
+    		'name'   => 'tripdocs_id',
+    		'value'  => '',
+    		'expire' => '',
+    		'domain' => $this->CI->config->item('tripdocs_domain'),
+    		'path'   => '/',
+    		'prefix' => '',
+    		'secure' => FALSE
+		);
+		$this->CI->input->set_cookie($id_cookie);
     }
 
 }

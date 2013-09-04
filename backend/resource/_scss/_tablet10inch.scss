@@ -23,6 +23,10 @@ div {
         margin: 0 0 0 $cols2 + $gutter;      
         width: $cols6;
     }
+    
+    &.alert {
+        width: $cols6;
+    }
 }
 
 body.authenticated {

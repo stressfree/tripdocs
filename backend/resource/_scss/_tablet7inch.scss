@@ -23,6 +23,18 @@ div {
         width: $cols5;
     }
     
+    &.usermenu-inner {
+        margin: 0;
+        
+        span {
+            display: inline;
+        }
+    }
+    
+    &.content {
+        padding: $gutter * 2 $gutter/2;
+    }
+    
     &.login-thirdparty, &.linked-accounts-add {        
         ul {
             width: ($third-party-button-size * 4) + (10px * 4)
@@ -65,6 +77,19 @@ div {
                 width: $cols6 - $gutter;
             }
         }
+    }
+    
+    &.alert {
+        width: $cols5;
+    }
+    
+    &.alert-info, &.alert-error {
+        position: absolute;
+        width: $cols5;
+    }
+    
+    &.dialog-visible {
+        display: inherit!important;
     }
 }
 

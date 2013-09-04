@@ -53,7 +53,7 @@ class Settings extends CI_Controller {
 
 		// Setup form validation
 		$this->form_validation->set_error_delimiters('<span class="field_error">', '</span>');
-		$this->form_validation->set_rules(array(array('field' => 'settings_email', 'label' => 'lang:settings_email', 'rules' => 'trim|required|valid_email|max_length[160]'), array('field' => 'settings_fullname', 'label' => 'lang:settings_fullname', 'rules' => 'trim|max_length[160]')));
+		$this->form_validation->set_rules(array(array('field' => 'settings_email', 'label' => 'lang:settings_email', 'rules' => 'trim|required|valid_email|max_length[160]'), array('field' => 'settings_fullname', 'label' => 'lang:settings_fullname', 'rules' => 'trim|required|max_length[160]')));
 
 		// Run form validation
 		if ($this->form_validation->run())
@@ -61,7 +61,7 @@ class Settings extends CI_Controller {
 			// If user is changing email and new email is already taken
 			if (strtolower($this->input->post('settings_email', TRUE)) != strtolower($data['account']->email) && $this->email_check($this->input->post('settings_email', TRUE)) === TRUE)
 			{
-                $this->session->set_flashdata('flash_info', lang('settings_email_exist'));
+                $this->session->set_flashdata('flash_error', lang('settings_email_exist'));
                 $this->session->set_flashdata('flash_contact_details_error', true);
 			}
 			else
@@ -75,6 +75,10 @@ class Settings extends CI_Controller {
 
                 $this->session->set_flashdata('flash_info', lang('settings_details_updated'));
 			}
+		}
+		
+		if (validation_errors()) {
+		    $this->session->set_flashdata('flash_error', validation_errors());   		
 		}
 
 		redirect('');
