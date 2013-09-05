@@ -4,7 +4,7 @@
             <h3><?php echo anchor('', lang('website_title')); ?></h3>
         </div>
         
-        <?php echo $this->load->view('menu', array('current' => $current)); ?>
+        <?php echo $this->load->view('_subviews/menu', array('current' => $current)); ?>
     </div>    
 </div>
 

@@ -1,6 +1,6 @@
-<?php echo $this->load->view('head', array('title' => lang('permissions_page_name'))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => lang('permissions_page_name'))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'admin/manage_permissions')); ?>
+<?php echo $this->load->view('_subviews/header', array('current' => 'admin/manage_permissions')); ?>
 
 <div class="container">
   <div class="row">
@@ -51,7 +51,7 @@
               </td>
               <td>
                 <?php if( $this->authorization->is_permitted('update_permissions') ): ?>
-                  <?php echo anchor('admin/manage_permissions/save/'.$perm['id'], lang('website_update'), 'class="btn btn-small"'); ?>
+                  <?php echo anchor('admin/manage_permissions/save/'.$perm['id'], lang('website_modify'), 'class="btn btn-small"'); ?>
                 <?php endif; ?>
               </td>
             </tr>
@@ -63,6 +63,6 @@
   </div>
 </div>
 
-<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('_subviews/footer'); ?>
 
-<?php echo $this->load->view('foot', array('javascript' => true)); ?>
+<?php echo $this->load->view('_subviews/foot', array('javascript' => true)); ?>

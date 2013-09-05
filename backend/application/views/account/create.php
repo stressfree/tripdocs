@@ -1,6 +1,6 @@
-<?php echo $this->load->view('head', array('title' => lang('connect_create_account'))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => lang('connect_create_account'))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'account/create')); ?>
+<?php echo $this->load->view('_subviews/header', array('current' => 'account/create')); ?>
 
 <div class="connect-create">
     <h1><?php echo lang('connect_create_heading'); ?></h1>
@@ -47,6 +47,6 @@
     <?php echo form_close(); ?>
 </div>
 
-<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('_subviews/footer'); ?>
 
-<?php echo $this->load->view('foot', array('javascript' => false)); ?>
+<?php echo $this->load->view('_subviews/foot', array('javascript' => false)); ?>

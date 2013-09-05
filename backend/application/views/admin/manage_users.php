@@ -1,6 +1,6 @@
-<?php echo $this->load->view('head', array('title' => lang('users_page_name'))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => lang('users_page_name'))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'admin/manage_users')); ?>
+<?php echo $this->load->view('_subviews/header', array('current' => 'admin/manage_users')); ?>
 
 <div class="container">
   <div class="row">
@@ -22,11 +22,7 @@
               <th><?php echo lang('settings_email'); ?></th>
               <th><?php echo lang('settings_firstname'); ?></th>
               <th><?php echo lang('settings_lastname'); ?></th>
-              <th>
-                <?php if( $this->authorization->is_permitted('create_users') ): ?>
-                  <a href="admin/manage_users/save" class="btn btn-primary btn-small"><?php echo lang('website_create'); ?><a>
-                <?php endif; ?>
-              </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -47,7 +43,7 @@
                 <td><?php echo $acc['lastname']; ?></td>
                 <td>
                   <?php if( $this->authorization->is_permitted('update_users') ): ?>
-                    <a href="admin/manage_users/save/<?php echo $acc['id']; ?>" class="btn btn-small"><?php echo lang('website_update'); ?><a>
+                    <a href="admin/manage_users/save/<?php echo $acc['id']; ?>" class="btn btn-small"><?php echo lang('website_modify'); ?><a>
                   <?php endif; ?>
                 </td>
               </tr>
@@ -60,6 +56,6 @@
   </div>
 </div>
 
-<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('_subviews/footer'); ?>
 
-<?php echo $this->load->view('foot', array('javascript' => true)); ?>
+<?php echo $this->load->view('_subviews/foot', array('javascript' => true)); ?>

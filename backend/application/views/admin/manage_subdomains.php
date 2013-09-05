@@ -1,6 +1,6 @@
-<?php echo $this->load->view('head', array('title' => lang('subdomains_page_name'))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => lang('subdomains_page_name'))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'admin/manage_subdomains')); ?>
+<?php echo $this->load->view('_subviews/header', array('current' => 'admin/manage_subdomains')); ?>
 
 <div class="container">
   <div class="row">
@@ -22,7 +22,7 @@
               <th><?php echo lang('subdomains_access'); ?></th>
               <th>
                 <?php if( $this->authorization->is_permitted('create_subdomains') ): ?>
-                  <a href="admin/manage_subdomains/save" class="btn btn-primary btn-small"><?php echo lang('website_create'); ?><a>
+                  <?php echo anchor('admin/manage_subdomains/save', lang('website_create'), 'class="btn btn-small"'); ?>
                 <?php endif; ?>
               </th>
             </tr>
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                   <?php if( $this->authorization->is_permitted('update_subdomains') ): ?>
-                    <a href="admin/manage_subdomains/save/<?php echo $sub['id']; ?>" class="btn btn-small"><?php echo lang('website_update'); ?><a>
+                    <?php echo anchor('admin/manage_subdomains/save/'.$sub['id'], lang('website_modify'), 'class="btn btn-small"'); ?>
                   <?php endif; ?>
                 </td>
               </tr>
@@ -55,6 +55,6 @@
   </div>
 </div>
 
-<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('_subviews/footer'); ?>
 
-<?php echo $this->load->view('foot', array('javascript' => true)); ?>
+<?php echo $this->load->view('_subviews/foot', array('javascript' => true)); ?>

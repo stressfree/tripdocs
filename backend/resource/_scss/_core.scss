@@ -72,7 +72,9 @@ input {
             @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour3 100%));
         }
     }
-        
+}
+
+button, input {
     &.btn-danger {
         background: #eaa395;
         @include background-image(linear-gradient(top, #eaa395 7%, #d77562 100%));
@@ -300,6 +302,12 @@ div {
             font-size: 1.2em;
             margin: 0 0 0.2em 0;
             padding: 0.2em 0 0 0;
+        }
+        
+        p {
+            color: $darkestgrey;
+            font-size: 1.2em;
+            margin: 0 $gutter/2 $gutter $gutter/2;
         }
     }
     
@@ -586,10 +594,14 @@ div {
         margin: 0 0 1em 0; 
     }
     
-    &.form-controls {
+    &.form-controls, &.form-controls-confirm {
         clear: left;
         padding: 0.4em 0 0 0;
         margin: 0 0.5em 1em 0;
+    }
+    
+    &.form-controls-confirm {
+        display: none;
     }
     
     &.field-error {

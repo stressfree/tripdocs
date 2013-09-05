@@ -94,6 +94,30 @@ class Account_model extends CI_Model {
 	}
 
 	// --------------------------------------------------------------------
+	
+	/**
+	 * Delete an account
+	 *
+	 * @access public
+	 * @param int $account_id
+	 */
+	function delete($account_id)
+	{
+	    // Delete the associated account details, linked accounts, roles, and subdomains
+        $this->db->delete('a3m_account_details', array('account_id' => $account_id));
+        $this->db->delete('a3m_account_facebook', array('account_id' => $account_id));
+        $this->db->delete('a3m_account_openid', array('account_id' => $account_id));
+        $this->db->delete('a3m_account_twitter', array('account_id' => $account_id));
+        $this->db->delete('a3m_rel_account_permission', array('account_id' => $account_id));
+        $this->db->delete('a3m_rel_account_role', array('account_id' => $account_id));
+        $this->db->delete('tripdocs_rel_account_subdomain', array('account_id' => $account_id));
+	    
+        // Delete the actual account entry
+        $this->db->delete('a3m_account', array('id' => $account_id));
+	}
+
+	// --------------------------------------------------------------------
+
 
 	/**
 	 * Change account username

@@ -1,6 +1,6 @@
-<?php echo $this->load->view('head', array('title' => sprintf(lang('connect_with_x'), lang('connect_openid')))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => sprintf(lang('connect_with_x'), lang('connect_openid')))); ?>
 
-<?php echo $this->load->view('header', array('current' => 'account/connect_openid')); ?>
+<?php echo $this->load->view('_subviews/header', array('current' => 'account/connect_openid')); ?>
 
 <div class="container">
     <div class="row">
@@ -48,6 +48,6 @@
     </div>
 </div>
 
-<?php echo $this->load->view('footer'); ?>
+<?php echo $this->load->view('_subviews/footer'); ?>
 
-<?php echo $this->load->view('foot', array('javascript' => true)); ?>
+<?php echo $this->load->view('_subviews/foot', array('javascript' => true)); ?>
