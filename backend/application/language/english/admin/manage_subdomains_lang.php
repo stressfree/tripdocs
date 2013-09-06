@@ -7,7 +7,7 @@
 */
 
 $lang['subdomains_page_name'] = 'Manage spaces';
-$lang['subdomains_description'] = 'Create, update, or delete review spaces.';
+$lang['subdomains_description'] = 'Create, modify or delete review spaces.';
 $lang['subdomains_update_page_name'] = 'Update review space';
 $lang['subdomains_update_description'] = 'Update the details for this space';
 $lang['subdomains_create_page_name'] = 'Create a new review space';

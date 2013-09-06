@@ -29,6 +29,7 @@ $lang['website_create'] = 'Create';
 $lang['website_update'] = 'Save';
 $lang['website_modify'] = 'Modify';
 $lang['website_cancel'] = 'Cancel';
+$lang['website_none'] = 'None';
 
 
 /* End of file general_lang.php */

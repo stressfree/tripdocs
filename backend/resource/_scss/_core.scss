@@ -623,6 +623,114 @@ div {
         }
     }
     
+    &.administration {
+        table {
+            border-collapse: collapse;
+            border-bottom: 1px solid $darkgrey;
+            margin: 0.8em 0;
+            
+            th {
+                color: $grey;
+                font-weight: 400;
+                padding: 0.5em 0.8em;
+                text-align: left;
+                
+                &.id {
+                    text-align: center;
+                }
+            }
+            
+            td {
+                color: $darkgrey;
+                background: $brandcolour1;
+                padding: 0.5em 1.5em 0.5em 0.8em;
+                text-align: left;
+                vertical-align: top;
+                
+                &.id {
+                    text-align: right;
+                }
+                
+                &.name {
+                    color: $darkestgrey;
+                    font-weight: 700;
+                }
+                
+                &.users {
+                    text-align: center;
+                    
+                    a {
+                        color: $darkgrey;
+                        text-decoration: none;
+                        
+                        &:hover {
+                            color: $hoveraltcolour;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+                
+                &.permissions, &.roles {
+                    li {
+                        list-style: none;
+                    }
+                    
+                    a {
+                        color: $darkgrey;
+                        text-decoration: none;
+                        
+                        &:hover {
+                            color: $hoveraltcolour;
+                            text-decoration: underline;
+                        }
+                    }
+                    
+                    span.link-indicator {
+                        color: $darkgrey;
+                    }
+                }
+                
+                &.first-child {
+                    border-left: 1px solid $darkgrey;
+                }
+                
+                &.last-child {
+                    border-right: 1px solid $darkgrey;
+                }
+            }
+            
+            tr.even {
+                td {
+                    background: $brandcolour3;
+                }
+            }
+            
+            th.action, td.action {
+                padding-right: 0.5em;
+                
+                a {
+                    background: $brandcolour1;
+                    @include background-image(linear-gradient(top, $brandcolour1 47%,$brandcolour3 100%));
+                    @include border-radius(2px);
+                    @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
+                    border: 1px solid $lightgrey;
+                    color: $darkestgrey;
+                    font-size: 0.9em;
+                    padding: 0.2em 0.5em;
+                    position: relative;
+                    text-decoration: none;
+            
+                    &:hover {
+                        background: $brandcolour2;
+                        @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour3 100%));
+                        border: 1px solid $lightestgrey;
+                        cursor: pointer; 
+                    }
+                }
+            }
+        }
+    }
+    
     &.alert {
         font-size: 1.3em;
         margin: 0 auto;
