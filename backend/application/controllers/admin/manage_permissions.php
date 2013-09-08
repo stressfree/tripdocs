@@ -56,7 +56,6 @@ class Manage_permissions extends CI_Controller {
       $current['key'] = $perm->key;
       $current['description'] = $perm->description;
       $current['role_list'] = array();
-      $current['is_disabled'] = isset( $perm->suspendedon );
 
       foreach( $role_permissions as $rperm )
       {
@@ -125,7 +124,6 @@ class Manage_permissions extends CI_Controller {
       $data['role_permissions'] = $this->rel_role_permission_model->get_by_permission_id($id);
       $data['action'] = 'update';
       $data['is_system'] = ($data['permission']->is_system == 1);
-      $data['is_disabled'] = isset( $data['permission']->suspendedon );
     }
 
     // Setup form validation
@@ -149,7 +147,8 @@ class Manage_permissions extends CI_Controller {
       $name_taken = $this->name_check($this->input->post('permission_key', TRUE));
 
       
-      if ( (! empty($id) && strtolower($this->input->post('permission_key', TRUE)) != strtolower($data['permission']->key) && $name_taken) || (empty($id) && $name_taken) )
+      if ( (! empty($id) && strtolower($this->input->post('permission_key', TRUE)) != strtolower($data['permission']->key)
+        && $name_taken) || (empty($id) && $name_taken) )
       {
         $data['permission_key_error'] = lang('permissions_name_taken');
       }
@@ -165,38 +164,38 @@ class Manage_permissions extends CI_Controller {
         }
 
         $attributes['description'] = $this->input->post('permission_description', TRUE) ? $this->input->post('permission_description', TRUE) : NULL;
-        $id = $this->acl_permission_model->update($id, $attributes);
       
 
-        // Check if the permission should be disabled
-        if( $this->authorization->is_permitted('delete_permissions') ) 
+        $permission_delete = $this->input->post('manage_permission_delete', TRUE);
+
+        if ( !empty($permission_delete) ) 
         {
-          $permission_ban = $this->input->post('manage_permission_ban', TRUE);
-          if( !empty($permission_ban) ) 
-          {
-            $this->acl_permission_model->update_suspended_datetime($id);
-          }
-          else
-          {
-            $this->acl_permission_model->remove_suspended_datetime($id);
-          }
+            if( ! empty($id) && $this->authorization->is_permitted('delete_permissions') ) 
+            {
+                $this->acl_permission_model->delete($id);
+            }
+        }
+        else
+        {
+            //Update the permission
+            $id = $this->acl_permission_model->update($id, $attributes);
+            
+            // Apply to the checked roles
+            $perms = array();
+            foreach( $data['roles'] as $role )
+            {
+                if( $this->input->post("role_permission_{$role->id}", TRUE) )
+                {
+                    $this->rel_role_permission_model->update($role->id, $id);
+                }
+                else
+                {
+                    $this->rel_role_permission_model->delete($role->id, $id);
+                }
+            }
         }
 
-        // Apply to the checked roles
-        $perms = array();
-        foreach( $data['roles'] as $role )
-        {
-          if( $this->input->post("role_permission_{$role->id}", TRUE) )
-          {
-            $this->rel_role_permission_model->update($role->id, $id);
-          }
-          else
-          {
-            $this->rel_role_permission_model->delete($role->id, $id);
-          }
-        }
-
-        if( $is_new )
+        if ( $is_new )
         {
           // Redirect to view the newly created role
           redirect("admin/manage_permissions/save/{$id}");

@@ -41,7 +41,7 @@ class Acl_permission_model extends CI_Model {
     $this->db->from('a3m_acl_permission');
     $this->db->join('a3m_rel_role_permission', 'a3m_acl_permission.id = a3m_rel_role_permission.permission_id');
     $this->db->join('a3m_rel_account_role', 'a3m_rel_role_permission.role_id = a3m_rel_account_role.role_id');
-    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_permission.suspendedon IS NULL");
+    $this->db->where("a3m_rel_account_role.account_id = $account_id");
     
     return $this->db->get()->result();
   }
@@ -76,7 +76,7 @@ class Acl_permission_model extends CI_Model {
     $this->db->from('a3m_acl_permission');
     $this->db->join('a3m_rel_role_permission', 'a3m_acl_permission.id = a3m_rel_role_permission.permission_id');
     $this->db->join('a3m_rel_account_role', 'a3m_rel_role_permission.role_id = a3m_rel_account_role.role_id');
-    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_permission.suspendedon IS NULL AND a3m_acl_permission.key = $permission_key");
+    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_permission.key = $permission_key");
 
     return ($this->db->count_all_results() > 0);
   }
@@ -112,36 +112,6 @@ class Acl_permission_model extends CI_Model {
   // --------------------------------------------------------------------
 
   /**
-   * Update permission suspended datetime
-   *
-   * @access public
-   * @param int $permission_id
-   * @return void
-   */
-  function update_suspended_datetime($permission_id)
-  {
-    $this->load->helper('date');
-
-    $this->db->update('a3m_acl_permission', array('suspendedon' => mdate('%Y-%m-%d %H:%i:%s', now())), array('id' => $permission_id));
-  }
-
-  // --------------------------------------------------------------------
-  
-  /**
-   * Remove permission suspended datetime
-   *
-   * @access public
-   * @param int $permission_id
-   * @return void
-   */
-  function remove_suspended_datetime($permission_id)
-  {
-    $this->db->update('a3m_acl_permission', array('suspendedon' => NULL), array('id' => $permission_id));
-  }
-
-  // --------------------------------------------------------------------
-
-  /**
    * Delete permission details
    *
    * @access public
@@ -150,6 +120,8 @@ class Acl_permission_model extends CI_Model {
    */
   function delete($permission_id)
   {
+    $this->db->delete('a3m_rel_account_permission', array('permission_id' => $permission_id));
+    $this->db->delete('a3m_rel_role_permission', array('permission_id' => $permission_id));
     $this->db->delete('a3m_acl_permission', array('id' => $permission_id));
   }
 }

@@ -27,9 +27,6 @@
                     <td class="id first-child"><?php echo $perm['id']; ?></td>
                     <td class="name">
                         <?php echo $perm['key']; ?>
-                        <?php if( $perm['is_disabled'] ): ?>
-                        <span class="label label-important"><?php echo lang('permissions_banned'); ?></span>
-                        <?php endif; ?>
                     </td>
                     <td class="description"><?php echo $perm['description']; ?></td>
                     <td class="roles">

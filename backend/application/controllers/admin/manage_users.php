@@ -57,17 +57,14 @@ class Manage_users extends CI_Controller {
       $current_user['id'] = $acc->id;
       $current_user['username'] = $acc->username;
       $current_user['email'] = $acc->email;
-      $current_user['firstname'] = '';
-      $current_user['lastname'] = '';
+      $current_user['fullname'] = '';
       $current_user['is_admin'] = FALSE;
-      $current_user['is_banned'] = isset( $acc->suspendedon );
 
       foreach( $all_account_details as $det ) 
       {
         if( $det->account_id == $acc->id ) 
         {
-          $current_user['firstname'] = $det->firstname;
-          $current_user['lastname'] = $det->lastname;
+          $current_user['fullname'] = $det->fullname;
         }
       }
 
@@ -89,13 +86,10 @@ class Manage_users extends CI_Controller {
   }
 
   /**
-   * Create/Update Users
+   * Update Users
    */
   function save($id=null)
   {
-    // Keep track if this is a new user
-    $is_new = empty($id);
-
     // Enable SSL?
     maintain_ssl($this->config->item("ssl_enabled"));
 
@@ -109,6 +103,12 @@ class Manage_users extends CI_Controller {
     if ( ! $this->authorization->is_permitted('update_users') && ! empty($id) )
     {
       redirect('admin/manage_users');
+    }
+    
+    // Only support updating users, as it is assumed new users will always self register.
+    if ( empty($id) )
+    {
+      redirect('admin/manage_users');        
     }
 
     // Check if they are allowed to Create Users
@@ -133,23 +133,16 @@ class Manage_users extends CI_Controller {
     $data['action'] = 'create';
 
     // Get the account to update
-    if( ! $is_new )
-    {
-      $data['update_account'] = $this->account_model->get_by_id($id);
-      $data['update_account_details'] = $this->account_details_model->get_by_account_id($id);
-      $data['update_account_roles'] = $this->acl_role_model->get_by_account_id($id);
-      $data['update_account_subdomains'] = $this->acl_subdomain_model->get_by_account_id($id);
-      $data['action'] = 'update';
-    }
+    $data['update_account'] = $this->account_model->get_by_id($id);
+    $data['update_account_details'] = $this->account_details_model->get_by_account_id($id);
+    $data['update_account_roles'] = $this->acl_role_model->get_by_account_id($id);
+    $data['update_account_subdomains'] = $this->acl_subdomain_model->get_by_account_id($id);
+    $data['action'] = 'update';
 
     // Setup form validation
     $this->form_validation->set_error_delimiters('<div class="field_error">', '</div>');
     $this->form_validation->set_rules(
       array(
-        array(
-          'field' => 'users_username',
-          'label' => 'lang:profile_username',
-          'rules' => 'trim|required|alpha_dash|min_length[2]|max_length[24]'),
         array(
           'field' => 'users_email', 
           'label' => 'lang:settings_email', 
@@ -158,125 +151,70 @@ class Manage_users extends CI_Controller {
           'field' => 'users_fullname', 
           'label' => 'lang:settings_fullname', 
           'rules' => 'trim|max_length[160]'), 
-        array(
-          'field' => 'users_firstname', 
-          'label' => 'lang:settings_firstname', 
-          'rules' => 'trim|max_length[80]'), 
-        array(
-          'field' => 'users_lastname', 
-          'label' => 'lang:settings_lastname', 
-          'rules' => 'trim|max_length[80]'),
-        array(
-          'field' => 'users_new_password', 
-          'label' => 'lang:password_new_password', 
-          'rules' => 'trim|'.($is_new?'required':'optional').'|min_length[6]'),
-        array(
-          'field' => 'users_retype_new_password', 
-          'label' => 'lang:password_retype_new_password', 
-          'rules' => 'trim|'.($is_new?'required':'optional').'|matches[users_new_password]')
-      ));
+        ));
 
     // Run form validation
     if ($this->form_validation->run())
     {
-
-      $email_taken = $this->email_check($this->input->post('users_email', TRUE));
-      $username_taken = $this->username_check($this->input->post('users_username'));
-
-      // If user is changing email and new email is already taken OR
-      // if this is a new user, just check if it's been taken already.
-      if ( (! empty($id) && strtolower($this->input->post('users_email', TRUE)) != strtolower($data['update_account']->email) && $email_taken) || (empty($id) && $email_taken) )
-      {
-        $data['users_email_error'] = lang('settings_email_exist');
-      }
-      // Check if user name is taken
-      elseif ( (! empty($id) && strtolower($this->input->post('users_username', TRUE)) != strtolower($data['update_account']->username) && $username_taken) || (empty($id) && $username_taken) )
-      {
-        $data['users_username_error'] = lang('sign_up_username_taken');
-      }
-      else
-      {
-
-        // Create a new user
-        if( empty($id) ) {
-          $id = $this->account_model->create(
-            $this->input->post('users_username', TRUE), 
-            $this->input->post('users_email', TRUE), 
-            $this->input->post('users_new_password', TRUE));
-        }
-        // Update existing user information
-        else 
+        $email_taken = $this->email_check($this->input->post('users_email', TRUE));
+        
+        // If user is changing email and new email is already taken OR
+        // if this is a new user, just check if it's been taken already.
+        if ( (strtolower($this->input->post('users_email', TRUE)) != strtolower($data['update_account']->email) 
+            && $email_taken) || (empty($id) && $email_taken) )
         {
-          // Update account username
-          $this->account_model->update_username($id, 
-            $this->input->post('users_username', TRUE) ? $this->input->post('users_username', TRUE) : NULL);
-
-          // Update account email
-          $this->account_model->update_email($id, 
-            $this->input->post('users_email', TRUE) ? $this->input->post('users_email', TRUE) : NULL);
-
-          // Update password
-          $pass = $this->input->post('users_new_password', TRUE) ? $this->input->post('users_new_password', TRUE) : NULL;
-          if( ! empty($pass) )
-          {
-            $this->account_model->update_password($id, $pass);
-          }
-
-          // Check if the user should be suspended
-          if( $this->authorization->is_permitted('ban_users') ) 
-          {
-            $ban = $this->input->post('manage_user_ban', TRUE); 
-            if( empty($ban) )
+            $data['users_email_error'] = lang('settings_email_exist');
+        }
+        else
+        {
+            $user_delete = $this->input->post('manage_user_delete', TRUE);
+        
+            if ( !empty($user_delete) )
             {
-              $this->account_model->remove_suspended_datetime($id);
+                // Delete the user if allowed
+                if( !empty($id) && $this->authorization->is_permitted('delete_users') )
+                {
+                    $this->account_model->delete($id);
+                }
             }
             else
             {
-              $this->account_model->update_suspended_datetime($id);
-            }
-          }
-        }
-
-        // Update account details
-        $attributes = array();
-        $attributes['fullname'] = $this->input->post('users_fullname', TRUE) ? $this->input->post('users_fullname', TRUE) : NULL;
-        $attributes['firstname'] = $this->input->post('users_firstname', TRUE) ? $this->input->post('users_firstname', TRUE) : NULL;
-        $attributes['lastname'] = $this->input->post('users_lastname', TRUE) ? $this->input->post('users_lastname', TRUE) : NULL;
-        $this->account_details_model->update($id, $attributes);
-
-        // Apply roles
-        $roles = array();
-        foreach($data['roles'] as $r)
-        {
-          if( $this->input->post("account_role_{$r->id}", TRUE) )
-          {
-            $roles[] = $r->id;
-          }
-        }
-        $this->rel_account_role_model->delete_update_batch($id, $roles);
+                // Create or modify a user
+                
+                // Update account email
+                $this->account_model->update_email($id, 
+                    $this->input->post('users_email', TRUE) ? $this->input->post('users_email', TRUE) : NULL);
         
-        // Apply subdomains
-        $subdomains = array();
-        foreach($data['restricted_subdomains'] as $s)
-        {
-          if( $this->input->post("account_subdomain_{$s->id}", TRUE) )
-          {
-            $subdomains[] = $s->id;
-          }
+                // Update account details
+                $attributes = array();
+                $attributes['fullname'] = $this->input->post('users_fullname', TRUE) ? $this->input->post('users_fullname', TRUE) : NULL;
+                $this->account_details_model->update($id, $attributes);
+        
+                // Apply roles
+                $roles = array();
+                foreach($data['roles'] as $r)
+                {
+                  if( $this->input->post("account_role_{$r->id}", TRUE) )
+                  {
+                    $roles[] = $r->id;
+                  }
+                }
+                $this->rel_account_role_model->delete_update_batch($id, $roles);
+                
+                // Apply subdomains
+                $subdomains = array();
+                foreach($data['restricted_subdomains'] as $s)
+                {
+                  if( $this->input->post("account_subdomain_{$s->id}", TRUE) )
+                  {
+                    $subdomains[] = $s->id;
+                  }
+                }
+                $this->rel_account_subdomain_model->delete_update_batch($id, $subdomains);
+            }
+            // Redirect to view the manage users page
+            redirect("admin/manage_users");
         }
-        $this->rel_account_subdomain_model->delete_update_batch($id, $subdomains);
-
-        if( $is_new )
-        {
-          // Redirect to view the newly created user
-          redirect("admin/manage_users/save/{$id}");
-        }
-        else
-        {          
-          // Redirect to view the manage users page
-          redirect("admin/manage_users");
-        }
-      }
     }
 
     // Load manage users view

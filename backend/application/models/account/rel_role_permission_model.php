@@ -25,7 +25,7 @@ class Rel_role_permission_model extends CI_Model {
     $this->db->select('a3m_acl_permission.*');
     $this->db->from('a3m_rel_role_permission');
     $this->db->join('a3m_acl_permission', 'a3m_rel_role_permission.permission_id = a3m_acl_permission.id');
-    $this->db->where("a3m_rel_role_permission.role_id = $role_id AND a3m_acl_permission.suspendedon IS NULL");
+    $this->db->where("a3m_rel_role_permission.role_id = $role_id");
 
     return $this->db->get()->result();
 
@@ -46,7 +46,7 @@ class Rel_role_permission_model extends CI_Model {
     $this->db->select('a3m_acl_role.*');
     $this->db->from('a3m_rel_role_permission');
     $this->db->join('a3m_acl_role', 'a3m_rel_role_permission.role_id = a3m_acl_role.id');
-    $this->db->where("a3m_rel_role_permission.permission_id = $permission_id AND a3m_acl_role.suspendedon IS NULL");
+    $this->db->where("a3m_rel_role_permission.permission_id = $permission_id");
 
     return $this->db->get()->result();
   }

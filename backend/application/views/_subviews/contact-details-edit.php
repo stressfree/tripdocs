@@ -30,18 +30,19 @@
                     </div>
                 </div>
                 
-                <div class="form-controls">
-    			    <button class="cancel"><?php echo lang('website_cancel'); ?></button>
-    			    <?php echo form_submit('settings_update', lang('settings_save'), 'class="submit"'); ?>
-    			    <button class="btn-danger"><?php echo lang('settings_delete'); ?></button>
-                </div>
-                
-                <div class="form-controls-confirm">
-                    <p><?php echo lang('settings_delete_question'); ?></p>
-    			    <button class="cancel"><?php echo lang('website_cancel'); ?></button>
-    			    <?php echo form_submit('settings_delete', lang('settings_delete_confirm'), 'class="submit btn-danger"'); ?>                    
-                </div>
             <?php echo form_fieldset_close(); ?>
+            
+            <div class="form-controls">
+			    <button class="cancel"><?php echo lang('website_cancel'); ?></button>
+			    <?php echo form_submit('settings_update', lang('settings_save'), 'class="submit"'); ?>
+			    <button class="btn-danger"><?php echo lang('settings_delete'); ?></button>
+            </div>
+            
+            <div class="form-controls-confirm">
+                <p><?php echo lang('settings_delete_question'); ?></p>
+			    <button class="cancel"><?php echo lang('website_cancel'); ?></button>
+			    <?php echo form_submit('settings_delete', lang('settings_delete_confirm'), 'class="submit btn-danger"'); ?>                    
+            </div>
         <?php echo form_close(); ?>
     </div>
 </div>

@@ -55,7 +55,7 @@ class Acl_role_model extends CI_Model {
     $this->db->select('a3m_acl_role.*');
     $this->db->from('a3m_acl_role');
     $this->db->join('a3m_rel_account_role', 'a3m_acl_role.id = a3m_rel_account_role.role_id');
-    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_role.suspendedon IS NULL");
+    $this->db->where("a3m_rel_account_role.account_id = $account_id");
     
     return $this->db->get()->result();
   }
@@ -95,7 +95,7 @@ class Acl_role_model extends CI_Model {
     $this->db->select('a3m_acl_role.*');
     $this->db->from('a3m_acl_role');
     $this->db->join('a3m_rel_account_role', 'a3m_acl_role.id = a3m_rel_account_role.role_id');
-    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_role.suspendedon IS NULL AND a3m_acl_role.name = `$role_name`");
+    $this->db->where("a3m_rel_account_role.account_id = $account_id AND a3m_acl_role.name = `$role_name`");
     
     return ($this->db->count_all_results() > 0);
   }
@@ -131,36 +131,6 @@ class Acl_role_model extends CI_Model {
   // --------------------------------------------------------------------
 
   /**
-   * Update role suspended datetime
-   *
-   * @access public
-   * @param int $role_id
-   * @return void
-   */
-  function update_suspended_datetime($role_id)
-  {
-    $this->load->helper('date');
-
-    $this->db->update('a3m_acl_role', array('suspendedon' => mdate('%Y-%m-%d %H:%i:%s', now())), array('id' => $role_id));
-  }
-
-  // --------------------------------------------------------------------
-  
-  /**
-   * Remove role suspended datetime
-   *
-   * @access public
-   * @param int $role_id
-   * @return void
-   */
-  function remove_suspended_datetime($role_id)
-  {
-    $this->db->update('a3m_acl_role', array('suspendedon' => NULL), array('id' => $role_id));
-  }
-
-  // --------------------------------------------------------------------
-
-  /**
    * Delete role
    *
    * @access public
@@ -169,6 +139,8 @@ class Acl_role_model extends CI_Model {
    */
   function delete($role_id)
   {
+    $this->db->delete('a3m_rel_role_permission', array('role_id' => $role_id));
+    $this->db->delete('a3m_rel_account_role', array('role_id' => $role_id));
     $this->db->delete('a3m_acl_role', array('id' => $role_id));
   }
 }

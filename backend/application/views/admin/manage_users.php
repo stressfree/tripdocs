@@ -10,24 +10,26 @@
           <thead>
             <tr>
               <th class="id first-child">#</th>
-              <th class="name"><?php echo lang('users_username'); ?></th>
+              <th class="name"><?php echo lang('users_fullname'); ?></th>
               <th class="email"><?php echo lang('settings_email'); ?></th>
               <th class="action last-child"></th>
             </tr>
           </thead>
           <tbody>
-            <?php $class = 'even'; ?>
+            <?php 
+                $class = 'even';
+            ?>
             <?php foreach( $all_accounts as $acc ) : ?>
-                <?php $class = ($class=='even' ? 'odd' : 'even'); ?>
+                <?php 
+                    $class = ($class=='even' ? 'odd' : 'even');                   
+                ?>                
                 <tr class="<?php echo $class ?>">
                     <td class="id first-child"><?php echo $acc['id']; ?></td>
                     <td class="name">
-                        <?php echo $acc['username']; ?>
-                        <?php if( $acc['is_banned'] ): ?>
-                            <span class="label label-important"><?php echo lang('users_banned'); ?></span>
-                        <?php elseif( $acc['is_admin'] ): ?>
-                            <span class="label label-info"><?php echo lang('users_admin'); ?></span>
-                        <?php endif; ?>
+                        <p><?php echo $acc['fullname']; ?></p>
+                        <p class="info">
+                            <?php echo $acc['username']; ?>
+                        </p>
                     </td>
                     <td class="email"><?php echo $acc['email']; ?></td>
                     <td class="action last-child">

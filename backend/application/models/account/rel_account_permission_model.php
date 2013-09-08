@@ -25,7 +25,7 @@ class Rel_account_permission_model extends CI_Model {
     $this->db->select('a3m_acl_permission.*');
     $this->db->from('a3m_rel_account_permission');
     $this->db->join('a3m_acl_permission', 'a3m_rel_account_permission.permission_id = a3m_acl_permission.id');
-    $this->db->where("a3m_rel_account_permission.account_id = $account_id AND a3m_acl_permission.suspendedon IS NULL");
+    $this->db->where("a3m_rel_account_permission.account_id = $account_id");
 
     return $this->db->get()->result();
   }

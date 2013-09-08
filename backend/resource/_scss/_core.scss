@@ -37,11 +37,13 @@ input {
     }
 }
 
-button, input.submit {
+button, input.submit, a.button {
     @include border-radius(2px);
     @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
     border: 1px solid $lightgrey;
+    color: $darkestgrey;
     padding: 0.3em 0;
+    text-decoration: none;
     width: 100%;
     
     &:hover {
@@ -50,7 +52,7 @@ button, input.submit {
     }
 }
 
-button {
+button, a.button {
     background: $brandcolour2;
     @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour1 100%));
     
@@ -231,11 +233,11 @@ div {
                         border-top: $border;
                         border-left: $border;
                         border-right: $border;
-                        color: $grey;
+                        color: $white;
                         cursor: default;
                         
                         &:hover {
-                            color: $grey;
+                            color: $white;
                             text-decoration: none;
                         }
                     }
@@ -254,12 +256,12 @@ div {
                         
                         &.active {
                             a {
-                                color: $grey;
+                                color: $white;
                                 cursor: default;
                                 font-weight: 700;
                                 
                                 &:hover {
-                                    color: $grey;
+                                    color: $white;
                                     text-decoration: none;
                                 }                              
                             }
@@ -278,7 +280,8 @@ div {
     }
     
     &.welcome-introduction-inner, &.login-thirdparty-inner, 
-    &.linked-accounts-add-inner, &.contact-details-edit-inner {
+    &.linked-accounts-add-inner, &.contact-details-edit-inner,
+    &.administration-form form {
         margin: 0 $gutter/2;
     }
     
@@ -292,22 +295,30 @@ div {
         padding: $gutter/2 0 0 0;
     }
     
-    &.login-thirdparty, &.linked-accounts-add, &.contact-details-edit {
+    &.login-thirdparty, &.linked-accounts-add, 
+    &.contact-details-edit, &.administration-form {
         background: $hovercolour;
         @include border-radius(4px);
         margin: $gutter 0 0 0; 
         
         h1, h3 {
             color: $darkestgrey;
-            font-size: 1.2em;
             margin: 0 0 0.2em 0;
             padding: 0.2em 0 0 0;
+        }
+        
+        h3 {
+            font-size: 1.2em;
         }
         
         p {
             color: $darkestgrey;
             font-size: 1.2em;
             margin: 0 $gutter/2 $gutter $gutter/2;
+        }
+        
+        label {
+            color: $darkgrey;
         }
     }
     
@@ -416,7 +427,8 @@ div {
         }
     }
     
-    &.login-thirdparty-inner, &.linked-accounts-add-inner, &.contact-details-edit-inner {
+    &.login-thirdparty-inner, &.linked-accounts-add-inner, 
+    &.contact-details-edit-inner, &.administration-form {
         padding: $gutter/2 0;
     }
     
@@ -560,7 +572,8 @@ div {
     &.linked-accounts-add {        
         div.form-controls {
             text-align: center;
-            margin: 0 0 0.5em 0;
+            margin: 0;
+            padding: 0 0 0.5em 0;
         }
     }
     
@@ -596,8 +609,8 @@ div {
     
     &.form-controls, &.form-controls-confirm {
         clear: left;
-        padding: 0.4em 0 0 0;
-        margin: 0 0.5em 1em 0;
+        padding: 0.4em 0 1em 0;
+        margin: 0 0.5em 0 0;
     }
     
     &.form-controls-confirm {
@@ -628,6 +641,7 @@ div {
             border-collapse: collapse;
             border-bottom: 1px solid $darkgrey;
             margin: 0.8em 0;
+            width: 100%;
             
             th {
                 color: $grey;
@@ -638,11 +652,16 @@ div {
                 &.id {
                     text-align: center;
                 }
+                
+                &.action {
+                    font-size: 0.9em;
+                }
             }
             
             td {
                 color: $darkgrey;
                 background: $brandcolour1;
+                font-size: 0.9em;
                 padding: 0.5em 1.5em 0.5em 0.8em;
                 text-align: left;
                 vertical-align: top;
@@ -654,6 +673,15 @@ div {
                 &.name {
                     color: $darkestgrey;
                     font-weight: 700;
+                    
+                    p {
+                        margin: 0;
+                        
+                        &.info {
+                            font-size: 0.8em;
+                            font-weight: 400;
+                        }
+                    }
                 }
                 
                 &.users {
@@ -671,6 +699,8 @@ div {
                 }
                 
                 &.permissions, &.roles {
+                    white-space: nowrap;
+                    
                     li {
                         list-style: none;
                     }
@@ -707,6 +737,7 @@ div {
             
             th.action, td.action {
                 padding-right: 0.5em;
+                text-align: right;
                 
                 a {
                     background: $brandcolour1;
@@ -715,7 +746,6 @@ div {
                     @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
                     border: 1px solid $lightgrey;
                     color: $darkestgrey;
-                    font-size: 0.9em;
                     padding: 0.2em 0.5em;
                     position: relative;
                     text-decoration: none;

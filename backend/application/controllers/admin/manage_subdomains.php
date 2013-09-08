@@ -105,10 +105,10 @@ class Manage_subdomains extends CI_Controller {
       $data['action'] = 'update';
     }
     
-    $delete = $this->input->post('manage_subdomain_delete', TRUE); 
-    if( ! empty($id) && ! empty($delete) )
+    $delete_domain = $this->input->post('manage_subdomain_delete', TRUE); 
+    if( ! empty($delete_domain) )
     {
-        if( $this->authorization->is_permitted('delete_subdomains') ) 
+        if( ! empty($id) && $this->authorization->is_permitted('delete_subdomains') ) 
         {
         	// Delete the subdomain
         	$this->acl_subdomain_model->delete($id);

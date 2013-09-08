@@ -25,7 +25,7 @@ class Rel_account_role_model extends CI_Model {
     $this->db->select('a3m_acl_role.*');
     $this->db->from('a3m_rel_account_role');
     $this->db->join('a3m_acl_role', 'a3m_rel_account_role_model.role_id = a3m_acl_role.id');
-    $this->db->where("a3m_rel_account_role_model.account_id = $account_id AND a3m_acl_role.suspendedon IS NULL");
+    $this->db->where("a3m_rel_account_role_model.account_id = $account_id");
 
     return $this->db->get()->result();
   }

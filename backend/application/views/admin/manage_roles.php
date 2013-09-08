@@ -27,9 +27,6 @@
                     <td class="id first-child"><?php echo $role['id']; ?></td>
                     <td class="name">
                         <?php echo $role['name']; ?>
-                        <?php if( $role['is_disabled'] ): ?>
-                            <span class="label label-important"><?php echo lang('roles_banned'); ?></span>
-                        <?php endif; ?>
                     </td>
                     <td class="users">
                         <?php if( $role['user_count'] > 0 ) : ?>

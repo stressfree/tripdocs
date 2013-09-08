@@ -57,7 +57,6 @@ class Manage_roles extends CI_Controller {
       $current_role['description'] = $role->description;
       $current_role['perm_list'] = array();
       $current_role['user_count'] = $this->acl_role_model->get_user_count($role->id);
-      $current_role['is_disabled'] = isset( $role->suspendedon );
 
       foreach( $role_permissions as $rperm )
       {
@@ -164,32 +163,32 @@ class Manage_roles extends CI_Controller {
         }
 
         $attributes['description'] = $this->input->post('role_description', TRUE) ? $this->input->post('role_description', TRUE) : NULL;
-        $id = $this->acl_role_model->update($id, $attributes);
 
-        // Check if the user should be suspended
-        if( $this->authorization->is_permitted('delete_roles') ) 
-        {
-          $permission_ban = $this->input->post('manage_role_ban', TRUE);
-          if( !empty($permission_ban) )
-          {
-            $this->acl_role_model->update_suspended_datetime($id);
-          }
-          else
-          {
-            $this->acl_role_model->remove_suspended_datetime($id);
-          }
-        }
 
-        // Apply the checked permissions
-        $perms = array();
-        foreach( $data['permissions'] as $perm )
+        $role_delete = $this->input->post('manage_role_delete', TRUE);
+        
+        if( !empty($role_delete) )
         {
-          if( $this->input->post("role_permission_{$perm->id}", TRUE) )
-          {
-            $perms[] = $perm->id;
-          }
+            if( ! empty($id) && $this->authorization->is_permitted('delete_roles') ) 
+            {
+                $id = $this->acl_role_model->delete($id);
+            }
         }
-        $this->rel_role_permission_model->delete_update_batch($id, $perms);
+        else
+        {
+            $id = $this->acl_role_model->update($id, $attributes);
+
+            // Apply the checked permissions
+            $perms = array();
+            foreach( $data['permissions'] as $perm )
+            {
+              if( $this->input->post("role_permission_{$perm->id}", TRUE) )
+              {
+                $perms[] = $perm->id;
+              }
+            }
+            $this->rel_role_permission_model->delete_update_batch($id, $perms);
+        }
 
         if( $is_new )
         {

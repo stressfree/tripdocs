@@ -43,12 +43,18 @@ $(function() {
             $('div.linked-accounts-add').hide();
         },
         
-        confirmAccountDelete: function(event) {
-            // Display the delete account confirmation message
+        confirmDelete: function(type, event) {
+            // Display the delete confirmation message
             
             event.preventDefault();
-            $('div.contact-details-edit div.form-controls').hide();
-            $('div.contact-details-edit div.form-controls-confirm').show();
+            
+            if (type === 'admin') {
+                $('div.administration-form div.form-controls').hide();
+                $('div.administration-form div.form-controls-confirm').show();
+            } else {
+                $('div.contact-details-edit div.form-controls').hide();
+                $('div.contact-details-edit div.form-controls-confirm').show();
+            }
         },
         
         closeAlert: function(element, event) {
@@ -79,7 +85,7 @@ $(function() {
     
     // Edit user details dialog delete confirm 
     $('div.contact-details-edit div.form-controls button.btn-danger').click(function(event) {
-        tripDocs.confirmAccountDelete(event);
+        tripDocs.confirmDelete('account', event);
     });
     
     // Edit user details dialog delete confirm cancel 
@@ -100,5 +106,10 @@ $(function() {
     // Alert dialog button close function
     $('div.alert button.close').click(function(event) {
         tripDocs.closeAlert(this, event);
+    });
+    
+    // Administration delete confirm 
+    $('div.administration-form div.form-controls button.btn-danger').click(function(event) {
+        tripDocs.confirmDelete('admin', event);
     });
 });

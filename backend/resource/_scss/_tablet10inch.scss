@@ -27,6 +27,12 @@ div {
     &.alert {
         width: $cols6;
     }
+    
+    &.administration {
+        table {
+            width: $cols8;
+        }
+    }
 }
 
 body.authenticated {
