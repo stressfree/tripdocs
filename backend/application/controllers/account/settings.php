@@ -46,28 +46,22 @@ class Settings extends CI_Controller {
             
             // Setup form validation
     		$this->form_validation->set_error_delimiters('<span class="field_error">', '</span>');
-    		$this->form_validation->set_rules(array(array('field' => 'settings_email', 'label' => 'lang:settings_email', 'rules' => 'trim|required|valid_email|max_length[160]'), array('field' => 'settings_fullname', 'label' => 'lang:settings_fullname', 'rules' => 'trim|required|max_length[160]')));
+    		$this->form_validation->set_rules(array(
+    		    array('field' => 'settings_email', 'label' => 'lang:settings_email', 'rules' => 'trim|required|valid_email|max_length[160]|edit_unique[a3m_account.email.'. $account_id .']'), 
+    		    array('field' => 'settings_fullname', 'label' => 'lang:settings_fullname', 'rules' => 'trim|required|max_length[160]'))
+            );
     
     		// Run form validation
     		if ($this->form_validation->run())
     		{
-    			// If user is changing email and new email is already taken
-    			if (strtolower($this->input->post('settings_email', TRUE)) != strtolower($data['account']->email) && $this->email_check($this->input->post('settings_email', TRUE)) === TRUE)
-    			{
-                    $this->session->set_flashdata('flash_error', lang('settings_email_exist'));
-                    $this->session->set_flashdata('flash_contact_details_error', true);
-    			}
-    			else
-    			{
-    				// Update account email
-    				$this->account_model->update_email($data['account']->id, $this->input->post('settings_email', TRUE) ? $this->input->post('settings_email', TRUE) : NULL);
-    
-    				// Update account details
-    				$attributes['fullname'] = $this->input->post('settings_fullname', TRUE) ? $this->input->post('settings_fullname', TRUE) : NULL;
-    				$this->account_details_model->update($data['account']->id, $attributes);
-    
-                    $this->session->set_flashdata('flash_info', lang('settings_details_updated'));
-    			}
+    			// Update account email
+                $this->account_model->update_email($data['account']->id, $this->input->post('settings_email', TRUE) ? $this->input->post('settings_email', TRUE) : NULL);
+
+				// Update account details
+				$attributes['fullname'] = $this->input->post('settings_fullname', TRUE) ? $this->input->post('settings_fullname', TRUE) : NULL;
+				$this->account_details_model->update($data['account']->id, $attributes);
+
+                $this->session->set_flashdata('flash_info', lang('settings_details_updated'));
     		}
     		
     		if (validation_errors()) {
@@ -87,19 +81,6 @@ class Settings extends CI_Controller {
 
 		redirect('');
 	}
-
-	/**
-	 * Check if an email exist
-	 *
-	 * @access public
-	 * @param string
-	 * @return bool
-	 */
-	function email_check($email)
-	{
-		return $this->account_model->get_by_email($email) ? TRUE : FALSE;
-	}
-
 }
 
 

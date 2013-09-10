@@ -94,7 +94,7 @@ $(function() {
     });
     
     // Add linked account dialog display 
-    $('div.linked-accounts a.add-account-link').click(function() {
+    $('div.linked-accounts a.add-account-link').click(function(event) {
         tripDocs.openHomeDialog('account', event);
     });
     

@@ -13,12 +13,9 @@
                 <div class="field-label">
                     <?php echo form_label(lang('settings_fullname'), 'users_fullname'); ?>
                 </div>
-                <?php echo form_error('settings_fullname'); ?>
-                <div class="field-value <?php if (isset($users_fullname_error)) : ?>field-error<?php endif; ?>">
+                <div class="field-value <?php if (form_error('users_fullname')) : ?>field-error<?php endif; ?>">
     				<?php echo form_input(array('name' => 'users_fullname', 'id' => 'users_fullname', 'value' => set_value('users_fullname') ? set_value('users_fullname') : (isset($update_account_details->fullname) ? $update_account_details->fullname : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
-    				<?php if (isset($users_fullname_error)) : ?>
-                    <span class="help-text"><?php echo $users_fullname_error; ?></span>
-    				<?php endif; ?>
+    				<?php echo form_error('users_fullname'); ?>
                 </div>
             </div>
             
@@ -26,12 +23,9 @@
                 <div class="field-label">
                     <?php echo form_label(lang('settings_email'), 'users_email'); ?>
                 </div>
-                <?php echo form_error('users_email'); ?>
-                <div class="field-value <?php if (isset($users_email_error)) : ?>field-error<?php endif; ?>">
+                <div class="field-value <?php if (form_error('users_email')) : ?>field-error<?php endif; ?>">
     				<?php echo form_input(array('name' => 'users_email', 'id' => 'users_email', 'value' => set_value('users_email') ? set_value('users_email') : (isset($update_account->email) ? $update_account->email : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
-    				<?php if (isset($users_email_error)) : ?>
-                    <span class="help-text"><?php echo $users_email_error; ?></span>
-    				<?php endif; ?>
+    				<?php echo form_error('users_email'); ?>
                 </div>
             </div>
             
@@ -97,7 +91,9 @@
                 </div>
                 <div class="field-value">
                     <?php foreach($unrestricted_subdomains as $subdomain) : ?>
-                    <p><?php echo $subdomain->name; ?></p>
+                    <div class="field-checkbox">
+                        <p><?php echo $subdomain->name; ?></p>
+                    </div>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -105,14 +101,14 @@
         <?php echo form_fieldset_close(); ?>
       
         <div class="form-controls">
-            <?php echo anchor('admin/manage_users', lang('website_cancel'), 'class="button"'); ?>
+            <?php echo anchor('admin/manage_users', lang('website_cancel'), 'class="btn"'); ?>
             <?php echo form_submit('manage_user_update', lang('settings_save'), 'class="submit"'); ?>
             <button class="btn-danger"><?php echo lang('users_delete'); ?></button>
         </div>
     
         <div class="form-controls-confirm">
               <p><?php echo lang('users_delete_question'); ?></p>
-              <?php echo anchor('admin/manage_users', lang('website_cancel'), 'class="button"'); ?>
+              <?php echo anchor('admin/manage_users', lang('website_cancel'), 'class="btn"'); ?>
               <?php echo form_submit('manage_user_delete', lang('users_delete_confirm'), 'class="submit btn-danger"'); ?>                    
         </div>
 

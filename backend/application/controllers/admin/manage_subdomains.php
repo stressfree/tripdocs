@@ -14,9 +14,9 @@ class Manage_subdomains extends CI_Controller {
     // Load the necessary stuff...
     $this->load->config('account/account');
     $this->load->helper(array('date', 'language', 'account/ssl', 'url'));
-    $this->load->library(array('account/authentication', 'account/authorization', 'form_validation', 'typography'));
+    $this->load->library(array('account/authentication', 'account/authorization', 'typography', 'form_validation'));
     $this->load->model(array('account/account_model', 'tripdocs/acl_subdomain_model'));
-    $this->load->language(array('general', 'admin/manage_subdomains'));
+    $this->load->language(array('general', 'admin/manage_subdomains', 'account/settings'));
   }
 
   /**
@@ -101,7 +101,7 @@ class Manage_subdomains extends CI_Controller {
     // Get the subdomain to update
     if( ! $is_new )
     {
-      $data['update_subdomain'] = $this->acl_subdomain_model->get_by_id($id);
+      $data['subdomain'] = $this->acl_subdomain_model->get_by_id($id);
       $data['action'] = 'update';
     }
     
@@ -112,6 +112,8 @@ class Manage_subdomains extends CI_Controller {
         {
         	// Delete the subdomain
         	$this->acl_subdomain_model->delete($id);
+        	
+        	$this->session->set_flashdata('flash_info', lang('subdomains_delete_success'));
         	
 			// Redirect to view the manage subdomain page
 			redirect("admin/manage_subdomains");
@@ -125,43 +127,33 @@ class Manage_subdomains extends CI_Controller {
 		$this->form_validation->set_rules(
 		  array(
 			array(
-			  'field' => 'subdomains_name',
+			  'field' => 'subdomain_name',
 			  'label' => 'lang:subdomains_name',
-			  'rules' => 'trim|required|max_length[50]')
+			  'rules' => 'trim|required|max_length[50]|edit_unique[tripdocs_acl_subdomain.name.'. $id .']')
 		  ));
 
 		// Run form validation
 		if ($this->form_validation->run())
 		{
-
-		  $subdomain_taken = $this->subdomain_check($this->input->post('subdomains_name', TRUE));
-
-		  // If this is a new subdomain, just check if it's name has been taken already.
-		  if ( (! empty($id) && strtolower($this->input->post('subdomains_name', TRUE)) != strtolower($data['update_subdomain']->name) && $subdomain_taken) || (empty($id) && $subdomain_taken) )
-		  {
-			$data['subdomains_name_error'] = lang('subdomains_name_taken');
-		  }
-		  else
-		  {
-			// Update or create the subdomain record
+            // Update or create the subdomain record
 			$attributes = array(
-				'name' => $this->input->post('subdomains_name', TRUE),
-				'description' => $this->input->post('subdomains_description', TRUE), 
-				'all_access' => $this->input->post('subdomains_all_access'),       	
+				'name' => $this->input->post('subdomain_name', TRUE),
+				'description' => $this->input->post('subdomain_description', TRUE), 
+				'all_access' => $this->input->post('subdomain_all_access'),       	
 			);
 			$id = $this->acl_subdomain_model->update($id, $attributes);
 		
-			if( $is_new )
-			{
-			  // Redirect to view the newly created subdomain
-			  redirect("admin/manage_subdomains/save/{$id}");
-			}
-			else
-			{
-			  // Redirect to view the manage subdomain page
-			  redirect("admin/manage_subdomains");
-			}
-		  }
+            if ( $is_new )
+            {
+                $this->session->set_flashdata('flash_info', lang('subdomains_create_success'));
+            }
+            else
+            {
+                $this->session->set_flashdata('flash_info', lang('subdomains_update_success'));
+            }
+            
+			// Redirect to view the manage subdomain page
+            redirect("admin/manage_subdomains");
 		}
 	}
 
@@ -180,18 +172,6 @@ class Manage_subdomains extends CI_Controller {
   function filter($type=null,$id=null)
   {
     $this->index();
-  }
-
-  /**
-   * Check if a subdomain name exists
-   *
-   * @access public
-   * @param string
-   * @return bool
-   */
-  function subdomain_check($subdomain)
-  {
-    return $this->acl_subdomain_model->get_by_name($subdomain) ? TRUE : FALSE;
   }
 }
 

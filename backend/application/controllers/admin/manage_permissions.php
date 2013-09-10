@@ -133,50 +133,44 @@ class Manage_permissions extends CI_Controller {
         array(
           'field' => 'permission_key',
           'label' => 'lang:permissions_key',
-          'rules' => 'trim|required|max_length[80]'),
+          'rules' => 'trim|required|max_length[80]|edit_unique[a3m_acl_permission.key.' . $id . ']'),
         array(
           'field' => 'permission_description',
           'label' => 'lang:permissions_description',
           'rules' => 'trim|optional|max_length[160]')
       ));
+      
 
-    // Run form validation
-    if ($this->form_validation->run())
+    $permission_delete = $this->input->post('manage_permission_delete', TRUE);
+
+    if ( !empty($permission_delete) ) 
     {
-      
-      $name_taken = $this->name_check($this->input->post('permission_key', TRUE));
-
-      
-      if ( (! empty($id) && strtolower($this->input->post('permission_key', TRUE)) != strtolower($data['permission']->key)
-        && $name_taken) || (empty($id) && $name_taken) )
-      {
-        $data['permission_key_error'] = lang('permissions_name_taken');
-      }
-      else
-      {
-        // Create/Update role
-        $attributes = array();
-
-        // Not allowed to update keys for System Permissions
-        if( ! $data['is_system'] )
+        if( ! empty($id) && $this->authorization->is_permitted('delete_permissions') ) 
         {
-          $attributes['key'] = $this->input->post('permission_key', TRUE) ? $this->input->post('permission_key', TRUE) : NULL;
+            $this->acl_permission_model->delete($id);
+            
+        	$this->session->set_flashdata('flash_info', lang('permissions_delete_success'));
+            
+            // Redirect to view the manage permissions page
+            redirect("admin/manage_permissions");
         }
-
-        $attributes['description'] = $this->input->post('permission_description', TRUE) ? $this->input->post('permission_description', TRUE) : NULL;
-      
-
-        $permission_delete = $this->input->post('manage_permission_delete', TRUE);
-
-        if ( !empty($permission_delete) ) 
+    }
+    else
+    {
+        // Run form validation
+        if ($this->form_validation->run())
         {
-            if( ! empty($id) && $this->authorization->is_permitted('delete_permissions') ) 
+            // Create/Update role
+            $attributes = array();
+    
+            // Not allowed to update keys for System Permissions
+            if( ! $data['is_system'] )
             {
-                $this->acl_permission_model->delete($id);
+              $attributes['key'] = $this->input->post('permission_key', TRUE) ? $this->input->post('permission_key', TRUE) : NULL;
             }
-        }
-        else
-        {
+    
+            $attributes['description'] = $this->input->post('permission_description', TRUE) ? $this->input->post('permission_description', TRUE) : NULL;
+          
             //Update the permission
             $id = $this->acl_permission_model->update($id, $attributes);
             
@@ -193,34 +187,22 @@ class Manage_permissions extends CI_Controller {
                     $this->rel_role_permission_model->delete($role->id, $id);
                 }
             }
-        }
-
-        if ( $is_new )
-        {
-          // Redirect to view the newly created role
-          redirect("admin/manage_permissions/save/{$id}");
-        }
-        else
-        {
-          // Redirect to view the manage permissions page
-          redirect("admin/manage_permissions");
-        }
-      }
+            
+            if ( $is_new )
+            {
+                $this->session->set_flashdata('flash_info', lang('permissions_create_success'));
+            }
+            else
+            {
+                $this->session->set_flashdata('flash_info', lang('permissions_update_success'));
+            }
+            
+            // Redirect to view the manage permissions page
+            redirect("admin/manage_permissions");
+          }
     }
     // Load manage permissions view
     $this->load->view('admin/manage_permissions_save', $data);
-  }
-
-  /**
-   * Check if the permission name exists
-   *
-   * @access public
-   * @param string
-   * @return bool
-   */
-  function name_check($permission_name)
-  {
-    return $this->acl_permission_model->get_by_name($permission_name) ? TRUE : FALSE;
   }
 }
 

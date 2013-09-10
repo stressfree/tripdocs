@@ -1,103 +1,83 @@
-<?php echo $this->load->view('_subviews/head', array('title' => lang('users_page_name'))); ?>
+<?php echo $this->load->view('_subviews/head', array('title' => lang('roles_page_name'))); ?>
 
 <?php echo $this->load->view('_subviews/header', array('current' => 'admin/manage_roles')); ?>
 
-<div class="container">
-  <div class="row">
+<div class="administration administration-form">
+      <?php echo form_open(uri_string()); ?>
 
-    <div class="span10">
+      <h1><?php echo lang("roles_{$action}_page_name"); ?></h1>
+      
+      <?php echo form_fieldset(); ?>
 
-      <h2><?php echo lang("roles_{$action}_page_name"); ?></h2>
-
-      <div class="well">
-        <?php echo lang("roles_{$action}_description"); ?>
-      </div>
-
-      <?php echo form_open(uri_string(), 'class="form-horizontal"'); ?>
-
-      <div class="control-group <?php echo (form_error('role_name') || isset($role_name_error)) ? 'error' : ''; ?>">
-          <label class="control-label" for="role_name"><?php echo lang('roles_name'); ?></label>
-
-          <div class="controls">
-            <?php if( $is_system ) : ?>
-              <?php echo form_hidden('role_name', set_value('role_name') ? set_value('role_name') : (isset($role->name) ? $role->name : '')); ?>
-
-              <span class="input uneditable-input"><?php echo $role->name; ?></span><span class="help-block"><?php echo lang('roles_system_name'); ?></span>
-            <?php else : ?>
-              <?php echo form_input(array('name' => 'role_name', 'id' => 'role_name', 'value' => set_value('role_name') ? set_value('role_name') : (isset($role->name) ? $role->name : ''), 'maxlength' => 80)); ?>
-
-              <?php if (form_error('role_name') || isset($role_name_error)) : ?>
-                <span class="help-inline">
-                <?php
-                  echo form_error('role_name');
-                  echo isset($role_name_error) ? $role_name_error : '';
-                ?>
-                </span>
-              <?php endif; ?>
-            <?php endif; ?>
-          </div>
-      </div>
-
-      <div class="control-group <?php echo form_error('role_description') ? 'error' : ''; ?>">
-          <label class="control-label" for="role_description"><?php echo lang('roles_description'); ?></label>
-
-          <div class="controls">
-            <?php echo form_textarea(array('name' => 'role_description', 'id' => 'role_description', 'value' => set_value('role_description') ? set_value('role_description') : (isset($role->description) ? $role->description : ''), 'maxlength' => 160, 'rows'=>'4')); ?>
-
-            <?php if (form_error('role_description') || isset($role_name_error)) : ?>
-              <span class="help-inline">
-              <?php
-                echo form_error('role_description');
-              ?>
-              </span>
-            <?php endif; ?>
-          </div>
-      </div>
-
-      <div class="control-group">
-          <label class="control-label" for="settings_lastname"><?php echo lang('roles_permission'); ?></label>
-
-          <div class="controls">
-            <?php foreach( $permissions as $perm ) : ?>
-              <?php
-                $check_it = FALSE;
-
-                if( isset($role_permissions) )
-                {
-                  foreach( $role_permissions as $rperm )
-                  {
-                    if( $rperm->id == $perm->id )
-                    {
-                      $check_it = TRUE; break;
-                    }
-                  }
-                }
-              ?>
-              <label class="checkbox">
-                <?php echo form_checkbox("role_permission_{$perm->id}", 'apply', $check_it); ?>
-                <?php echo $perm->key; ?>
-              </label>
-            <?php endforeach; ?>
-          </div>
-      </div>
-
-      <div class="form-actions">
-        <?php echo form_submit('manage_role_submit', lang('settings_save'), 'class="btn btn-primary"'); ?>
-        <?php echo anchor('admin/manage_roles', lang('website_cancel'), 'class="btn"'); ?>
-        <?php if( $this->authorization->is_permitted('delete_roles') && $action == 'update' && ! $is_system ): ?>
-          <span><?php echo lang('admin_or');?></span>
-          <?php if( isset($role->suspendedon) ): ?>
-            <?php echo form_submit('manage_role_unban', lang('roles_unban'), 'class="btn btn-danger"'); ?>
-          <?php else: ?>
-            <?php echo form_submit('manage_role_ban', lang('roles_ban'), 'class="btn btn-danger"'); ?>
-          <?php endif; ?>
-        <?php endif; ?>
-      </div>
+            <div class="field-row">
+                <div class="field-label">
+                    <?php echo form_label(lang('roles_name'), 'role_name'); ?>
+                </div>
+                <div class="field-value <?php if (form_error('role_name')) : ?>field-error<?php endif; ?>">
+                    <?php if( $is_system ) : ?>
+                        <?php echo form_hidden('role_name', set_value('role_name') ? set_value('role_name') : (isset($role->name) ? $role->name : '')); ?>
+                        <p><?php echo $role->name; ?></p>
+                        <p class="help-text"><?php echo lang('roles_system_name'); ?></p>
+                    <?php else : ?>                
+        				<?php echo form_input(array('name' => 'role_name', 'id' => 'role_name', 'value' => set_value('role_name') ? set_value('role_name') : (isset($role->name) ? $role->name : ''), 'class' => 'text', 'size' => '45', 'maxlength' => 80)); ?>
+        				<?php echo form_error('role_name'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">
+                    <?php echo form_label(lang('roles_description'), 'role_description'); ?>
+                </div>
+                <div class="field-value <?php if (form_error('role_description')) : ?>field-error<?php endif; ?>">
+                    <?php echo form_textarea(array('name' => 'role_description', 'id' => 'role_description', 'value' => set_value('role_description') ? set_value('role_description') : (isset($role->description) ? $role->description : ''), 'maxlength' => 160, 'rows'=>'4')); ?>
+                    <?php echo form_error('role_description'); ?>
+                </div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">
+                    <?php echo form_label(lang('roles_permission')); ?>
+                </div>
+                <div class="field-value">
+                    <?php foreach( $permissions as $perm ) : ?>
+                    <?php
+                        $check_it = FALSE;
+        
+                        if( isset($role_permissions) )
+                        {
+                          foreach( $role_permissions as $rperm )
+                          {
+                            if( $rperm->id == $perm->id )
+                            {
+                              $check_it = TRUE; break;
+                            }
+                          }
+                        }
+                      ?>
+                      <div class="field-checkbox">
+                        <?php echo form_checkbox('role_permission_' . $perm->id, 'apply', $check_it); ?>
+                        <?php echo form_label( $perm->key, 'role_permission_' . $perm->id ); ?>
+                      </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            
+            <?php echo form_fieldset_close(); ?>
+      
+        <div class="form-controls">
+            <?php echo anchor('admin/manage_roles', lang('website_cancel'), 'class="btn"'); ?>
+            <?php echo form_submit('manage_role_update', lang('settings_save'), 'class="submit"'); ?>
+            <button class="btn-danger"><?php echo lang('roles_delete'); ?></button>
+        </div>
+    
+        <div class="form-controls-confirm">
+              <p><?php echo lang('roles_delete_question'); ?></p>
+              <?php echo anchor('admin/manage_roles', lang('website_cancel'), 'class="btn"'); ?>
+              <?php echo form_submit('manage_role_delete', lang('roles_delete_confirm'), 'class="submit btn-danger"'); ?>                    
+        </div>
 
       <?php echo form_close(); ?>
-
-    </div>
-  </div>
 </div>
 
 <?php echo $this->load->view('_subviews/footer'); ?>

@@ -22,22 +22,20 @@ input, select, textarea, button {
     font-family: 'Arial', sans-serif;
 }
 
-input {
-    &.text {
-        background: $white;
-        border: 1px solid $darkestgrey;
-        @include border-radius(2px);
-        color: $darkestgrey;
-        padding: 0.2em 0;
-        width: 100%;
-        
-        &:focus {
-            background: $focuscolour;
-        }
+input.text, textarea {
+    background: $white;
+    border: 1px solid $darkestgrey;
+    @include border-radius(2px);
+    color: $darkestgrey;
+    padding: 0.2em 0;
+    width: 100%;
+    
+    &:focus {
+        background: $focuscolour;
     }
 }
 
-button, input.submit, a.button {
+button, input.submit, a.btn {
     @include border-radius(2px);
     @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
     border: 1px solid $lightgrey;
@@ -52,7 +50,7 @@ button, input.submit, a.button {
     }
 }
 
-button, a.button {
+button, a.btn {
     background: $brandcolour2;
     @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour1 100%));
     
@@ -303,12 +301,9 @@ div {
         
         h1, h3 {
             color: $darkestgrey;
+            font-size: 1.2em;
             margin: 0 0 0.2em 0;
             padding: 0.2em 0 0 0;
-        }
-        
-        h3 {
-            font-size: 1.2em;
         }
         
         p {
@@ -577,6 +572,43 @@ div {
         }
     }
     
+    &.administration-form {
+        h1 {
+            font-size: 1.6em;
+        }
+        
+        div {
+            &.field-value {
+                p {
+                    margin-bottom: 0.1em;
+                    
+                    &.help-text {
+                        @include info-message;
+                    }
+                }
+            }
+            
+            &.field-value-inline {
+                float: left;
+                margin: 0.3em 0.5em 0 0.3em;
+            }
+                   
+            &.field-checkbox {
+                margin: 0 0 $gutter/2 $gutter/2;
+                
+                label {
+                    font-family: 'Arial', sans-serif;
+                    font-size: 1em;
+                }
+                
+                p {
+                    font-size: 1em;
+                    margin: 0;
+                }
+            }
+        }
+    }
+    
     &.footer {
         border-top: $border;
         color: $grey;
@@ -629,10 +661,8 @@ div {
             }         
         }
     
-        span.help-text {
-            color: $brandcolour2;
-            display: block;
-            padding: 0.5em;        
+        div.field_error {
+            @include info-message;       
         }
     }
     
@@ -784,9 +814,7 @@ div {
     }
     
     &.alert-info, &.alert-error {
-        border-left: $border;
-        border-right: $border;
-        border-bottom: $border;
+        border: $border;
         padding: 0.5em 0.5em 0.5em 0.7em;
     }
     

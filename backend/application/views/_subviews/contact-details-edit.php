@@ -8,12 +8,9 @@
                     <div class="field-label">
                         <?php echo form_label(lang('settings_fullname'), 'settings_fullname'); ?>
                     </div>
-                    <?php echo form_error('settings_fullname'); ?>
-                    <div class="field-value <?php if (isset($settings_fullname_error)) : ?>field-error<?php endif; ?>">
+                    <div class="field-value <?php if (form_error('settings_fullname')) : ?>field-error<?php endif; ?>">
         				<?php echo form_input(array('name' => 'settings_fullname', 'id' => 'settings_fullname', 'value' => set_value('settings_fullname') ? set_value('settings_fullname') : (isset($account_details->fullname) ? $account_details->fullname : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
-        				<?php if (isset($settings_fullname_error)) : ?>
-                        <span class="help-text"><?php echo $settings_fullname_error; ?></span>
-        				<?php endif; ?>
+        				<?php echo form_error('settings_fullname'); ?>
                     </div>
                 </div>
                 
@@ -21,12 +18,9 @@
                     <div class="field-label">
                         <?php echo form_label(lang('settings_email'), 'settings_email'); ?>
                     </div>
-                    <?php echo form_error('settings_email'); ?>
-                    <div class="field-value <?php if (isset($settings_email_error)) : ?>field-error<?php endif; ?>">
+                    <div class="field-value <?php if (form_error('settings_email')) : ?>field-error<?php endif; ?>">
         				<?php echo form_input(array('name' => 'settings_email', 'id' => 'settings_email', 'value' => set_value('settings_email') ? set_value('settings_email') : (isset($account->email) ? $account->email : ''), 'class' => 'text', 'size' => '45', 'maxlength' => '160')); ?>
-        				<?php if (isset($settings_email_error)) : ?>
-                        <span class="help-text"><?php echo $settings_email_error; ?></span>
-        				<?php endif; ?>
+        				<?php echo form_error('settings_email'); ?>
                     </div>
                 </div>
                 

@@ -135,49 +135,47 @@ class Manage_roles extends CI_Controller {
         array(
           'field' => 'role_name',
           'label' => 'lang:roles_name',
-          'rules' => 'trim|required|max_length[80]'),
+          'rules' => 'trim|required|max_length[80]|edit_unique[a3m_acl_role.name.' . $id . ']'),
         array(
           'field' => 'role_description',
           'label' => 'lang:roles_description',
           'rules' => 'trim|max_length[160]')
       ));
-
-    // Run form validation
-    if ($this->form_validation->run())
+      
+      
+    $role_delete = $this->input->post('manage_role_delete', TRUE);
+    
+    if( !empty($role_delete) )
     {
-      $name_taken = $this->name_check($this->input->post('role_name', TRUE));
-
-      if ( (! empty($id) && strtolower($this->input->post('role_name', TRUE)) != strtolower($data['role']->name) && $name_taken) || (empty($id) && $name_taken) )
-      {
-        $data['role_name_error'] = lang('roles_name_taken');
-      }
-      else
-      {
-        // Create/Update role
-        $attributes = array();
-
-        // Now allowed to update the Admin role name
-        if( ! $data['is_system'] )
+        if( ! empty($id) && $this->authorization->is_permitted('delete_roles') ) 
         {
-          $attributes['name'] = $this->input->post('role_name', TRUE) ? $this->input->post('role_name', TRUE) : NULL;
+            $id = $this->acl_role_model->delete($id);
+            
+            $this->session->set_flashdata('flash_info', lang('roles_delete_success'));
+            
+            // Redirect to view the manage roles page
+            redirect("admin/manage_roles");
         }
+    }
+    else
+    {
 
-        $attributes['description'] = $this->input->post('role_description', TRUE) ? $this->input->post('role_description', TRUE) : NULL;
-
-
-        $role_delete = $this->input->post('manage_role_delete', TRUE);
-        
-        if( !empty($role_delete) )
+        // Run form validation
+        if ($this->form_validation->run())
         {
-            if( ! empty($id) && $this->authorization->is_permitted('delete_roles') ) 
+            // Create/Update role
+            $attributes = array();
+    
+            // Now allowed to update the Admin role name
+            if( ! $data['is_system'] )
             {
-                $id = $this->acl_role_model->delete($id);
+              $attributes['name'] = $this->input->post('role_name', TRUE) ? $this->input->post('role_name', TRUE) : NULL;
             }
-        }
-        else
-        {
+    
+            $attributes['description'] = $this->input->post('role_description', TRUE) ? $this->input->post('role_description', TRUE) : NULL;
+    
             $id = $this->acl_role_model->update($id, $attributes);
-
+    
             // Apply the checked permissions
             $perms = array();
             foreach( $data['permissions'] as $perm )
@@ -188,35 +186,22 @@ class Manage_roles extends CI_Controller {
               }
             }
             $this->rel_role_permission_model->delete_update_batch($id, $perms);
+            
+            if ( $is_new )
+            {
+                $this->session->set_flashdata('flash_info', lang('roles_create_success'));
+            }
+            else
+            {
+                $this->session->set_flashdata('flash_info', lang('roles_update_success'));
+            }
+    
+            // Redirect to view the manage roles page
+            redirect("admin/manage_roles");
         }
-
-        if( $is_new )
-        {
-          // Redirect to view the newly created role
-          redirect("admin/manage_roles/save/{$id}");
-        }
-        else
-        {
-          // Redirect to view the manage roles page
-          redirect("admin/manage_roles");
-        }
-      }
     }
-
     // Load manage roles view
     $this->load->view('admin/manage_roles_save', $data);
-  }
-
-  /**
-   * Check if the role name exist
-   *
-   * @access public
-   * @param string
-   * @return bool
-   */
-  function name_check($role_name)
-  {
-    return $this->acl_role_model->get_by_name($role_name) ? TRUE : FALSE;
   }
 }
 

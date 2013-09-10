@@ -146,72 +146,68 @@ class Manage_users extends CI_Controller {
         array(
           'field' => 'users_email', 
           'label' => 'lang:settings_email', 
-          'rules' => 'trim|required|valid_email|max_length[160]'), 
+          'rules' => 'trim|required|valid_email|max_length[160]|edit_unique[a3m_account.email.'. $id .']'), 
         array(
           'field' => 'users_fullname', 
           'label' => 'lang:settings_fullname', 
           'rules' => 'trim|max_length[160]'), 
         ));
 
-    // Run form validation
-    if ($this->form_validation->run())
+    $user_delete = $this->input->post('manage_user_delete', TRUE);
+    
+    if ( !empty($user_delete) )
     {
-        $email_taken = $this->email_check($this->input->post('users_email', TRUE));
-        
-        // If user is changing email and new email is already taken OR
-        // if this is a new user, just check if it's been taken already.
-        if ( (strtolower($this->input->post('users_email', TRUE)) != strtolower($data['update_account']->email) 
-            && $email_taken) || (empty($id) && $email_taken) )
+        // Delete the user if allowed
+        if( !empty($id) && $this->authorization->is_permitted('delete_users') )
         {
-            $data['users_email_error'] = lang('settings_email_exist');
+            $this->account_model->delete($id);
+            
+            $this->session->set_flashdata('flash_info', lang('users_delete_success'));
+                    
+            // Redirect to view the manage users page
+            redirect("admin/manage_users");
         }
-        else
+    }
+    else
+    {
+        // Run form validation
+        if ($this->form_validation->run())
         {
-            $user_delete = $this->input->post('manage_user_delete', TRUE);
-        
-            if ( !empty($user_delete) )
+            // Modify the user
+            
+            // Update account email
+            $this->account_model->update_email($id, 
+                $this->input->post('users_email', TRUE) ? $this->input->post('users_email', TRUE) : NULL);
+    
+            // Update account details
+            $attributes = array();
+            $attributes['fullname'] = $this->input->post('users_fullname', TRUE) ? $this->input->post('users_fullname', TRUE) : NULL;
+            $this->account_details_model->update($id, $attributes);
+    
+            // Apply roles
+            $roles = array();
+            foreach($data['roles'] as $r)
             {
-                // Delete the user if allowed
-                if( !empty($id) && $this->authorization->is_permitted('delete_users') )
-                {
-                    $this->account_model->delete($id);
-                }
+              if( $this->input->post("account_role_{$r->id}", TRUE) )
+              {
+                $roles[] = $r->id;
+              }
             }
-            else
+            $this->rel_account_role_model->delete_update_batch($id, $roles);
+            
+            // Apply subdomains
+            $subdomains = array();
+            foreach($data['restricted_subdomains'] as $s)
             {
-                // Create or modify a user
-                
-                // Update account email
-                $this->account_model->update_email($id, 
-                    $this->input->post('users_email', TRUE) ? $this->input->post('users_email', TRUE) : NULL);
-        
-                // Update account details
-                $attributes = array();
-                $attributes['fullname'] = $this->input->post('users_fullname', TRUE) ? $this->input->post('users_fullname', TRUE) : NULL;
-                $this->account_details_model->update($id, $attributes);
-        
-                // Apply roles
-                $roles = array();
-                foreach($data['roles'] as $r)
-                {
-                  if( $this->input->post("account_role_{$r->id}", TRUE) )
-                  {
-                    $roles[] = $r->id;
-                  }
-                }
-                $this->rel_account_role_model->delete_update_batch($id, $roles);
-                
-                // Apply subdomains
-                $subdomains = array();
-                foreach($data['restricted_subdomains'] as $s)
-                {
-                  if( $this->input->post("account_subdomain_{$s->id}", TRUE) )
-                  {
-                    $subdomains[] = $s->id;
-                  }
-                }
-                $this->rel_account_subdomain_model->delete_update_batch($id, $subdomains);
+              if( $this->input->post("account_subdomain_{$s->id}", TRUE) )
+              {
+                $subdomains[] = $s->id;
+              }
             }
+            $this->rel_account_subdomain_model->delete_update_batch($id, $subdomains);
+            
+            $this->session->set_flashdata('flash_info', lang('users_update_success'));
+        
             // Redirect to view the manage users page
             redirect("admin/manage_users");
         }
@@ -234,29 +230,6 @@ class Manage_users extends CI_Controller {
     $this->index();
   }
 
-  /**
-   * Check if a username exist
-   *
-   * @access public
-   * @param string
-   * @return bool
-   */
-  function username_check($username)
-  {
-    return $this->account_model->get_by_username($username) ? TRUE : FALSE;
-  }
-
-  /**
-   * Check if an email exist
-   *
-   * @access public
-   * @param string
-   * @return bool
-   */
-  function email_check($email)
-  {
-    return $this->account_model->get_by_email($email) ? TRUE : FALSE;
-  }
 }
 
 /* End of file manage_users.php */

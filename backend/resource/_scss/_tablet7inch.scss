@@ -1,15 +1,13 @@
-label, input, select, textarea, button, a.button {
+label, input, select, textarea, button, a.btn {
     font-size: 1.2em;
 }
 
-input {
-    &.text {
-        padding: 0.3em 0.5em;
-        width: auto;
-    }
+input.text, textarea {
+    padding: 0.3em $gutter/2;
+    width: auto;
 }
 
-button, input.submit, a.button {
+button, input.submit, a.btn {
     padding: 0.3em 1em;
     width: auto;
 }
@@ -81,6 +79,7 @@ div {
     
     &.alert-info, &.alert-error {
         position: absolute;
+        margin-top: -1px;
         width: $cols5;
     }
     
@@ -89,16 +88,14 @@ div {
     }
     
     &.administration-form {
-        margin: $gutter auto 0 auto;
+        margin: $gutter/2 auto 0 auto;
         width: $cols7;
         
-        input {
-            &.text {
-                width: $cols7 - $gutter * 2;
-            }
+        input.text, textarea {
+            width: $cols7 - $gutter * 2;
         }
         
-        div {
+        div {            
             &.field-checkbox {
                 float: left;
                 margin: 0 $gutter/2 $gutter/2 $gutter/2;

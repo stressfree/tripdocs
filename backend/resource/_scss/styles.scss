@@ -43,6 +43,16 @@ $border: 1px solid $bordercolour;
 $title-height: 74px;
 $third-party-button-size: 70px;
 
+@mixin info-message {
+    background: $brandcolour1;
+    @include border-radius(4px);
+    color: $darkestgrey;
+    font-size: 1em;
+    padding: 0.4em $gutter/2;
+    margin: 2px 0 0 0;
+}
+
+
 @import "frameless";
 
 @import "core";

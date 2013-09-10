@@ -2,60 +2,55 @@
 
 <?php echo $this->load->view('_subviews/header', array('current' => 'admin/manage_subdomains')); ?>
 
-<div class="container">
-  <div class="row">
+<div class="administration administration-form">
+      <?php echo form_open(uri_string()); ?>
 
-    <div class="span10">
-
-      <h2><?php echo lang("subdomains_{$action}_page_name"); ?></h2>
-
-      <div class="well">
-        <?php echo lang("subdomains_{$action}_description"); ?>
-      </div>
-
-      <?php echo form_open(uri_string(), 'class="form-horizontal"'); ?>
-
-      <div class="control-group <?php echo (form_error('subdomains_name') || isset($subdomains_name_error)) ? 'error' : ''; ?>">
-          <label class="control-label" for="subdomains_name"><?php echo lang('subdomains_name'); ?></label>
-
-          <div class="controls">
-            <?php echo form_input(array('name' => 'subdomains_name', 'id' => 'subdomains_name', 'value' => set_value('subdomains_name') ? set_value('subdomains_name') : (isset($update_subdomain->name) ? $update_subdomain->name : ''), 'maxlength' => 50)); ?>
-
-            <?php if (form_error('subdomains_name') || isset($subdomains_name_error)) : ?>
-              <span class="help-inline">
-              <?php
-                echo form_error('subdomains_name');
-                echo isset($subdomains_name_error) ? $subdomains_name_error : '';
-              ?>
-              </span>
-            <?php endif; ?>
-          </div>
-      </div>
-
-      <div class="control-group">
-          <label class="control-label" for="subdomains_description"><?php echo lang('subdomains_about'); ?></label>
-
-          <div class="controls">
-            <?php echo form_textarea(array('name' => 'subdomains_description', 'id' => 'subdomains_description', 'value' => set_value('subdomains_description') ? set_value('subdomains_description') : (isset($update_subdomain->description) ? $update_subdomain->description : ''), 'cols' => 50, 'rows' => 5)); ?>
-          </div>
-      </div>
+      <h1><?php echo lang("subdomains_{$action}_page_name"); ?></h1>
       
-      <div class="control-group">
-          <label class="control-label" for="subdomains_all_access"><?php echo lang('subdomains_all_access'); ?></label>
+      <?php echo form_fieldset(); ?>
 
-          <div class="controls">
-            <?php echo form_checkbox(array('name' => 'subdomains_all_access', 'id' => 'subdomains_all_access', 'value' => '1', 'checked' => $update_subdomain->all_access)); ?>
-          </div>
-      </div>
-
-      <div class="form-actions">
-        <?php echo form_submit('manage_subdomain_submit', lang('settings_save'), 'class="btn btn-primary"'); ?>
-        <?php echo anchor('admin/manage_subdomains', lang('website_cancel'), 'class="btn"'); ?>
-        <?php if( $this->authorization->is_permitted('delete_subdomains') && $action == 'update' ): ?>
-          <span><?php echo lang('admin_or');?></span>
-          <?php echo form_submit('manage_subdomain_delete', lang('subdomains_delete_description'), 'class="btn btn-danger"'); ?>
-        <?php endif; ?>
-      </div>
+            <div class="field-row">
+                <div class="field-label">
+                    <?php echo form_label(lang('subdomains_name'), 'subdomain_name'); ?>
+                </div>                    
+                <div class="field-value <?php if (form_error('subdomain_name')) : ?>field-error<?php endif; ?>">              
+    				<?php echo form_input(array('name' => 'subdomain_name', 'id' => 'subdomain_name', 'value' => set_value('subdomain_name') ? set_value('subdomain_name') : (isset($subdomain->name) ? $subdomain->name : ''), 'class' => 'text', 'size' => '45', 'maxlength' => 50)); ?>
+    				<?php echo form_error('subdomain_name'); ?>
+                </div>
+            </div>
+            
+            <div class="field-row">
+                <div class="field-label">
+                    <?php echo form_label(lang('subdomains_description'), 'subdomain_description'); ?>
+                </div>
+                <div class="field-value <?php if (form_error('subdomain_description')) : ?>field-error<?php endif; ?>">
+                    <?php echo form_textarea(array('name' => 'subdomain_description', 'id' => 'subdomain_description', 'value' => set_value('subdomain_description') ? set_value('subdomain_description') : (isset($subdomain->description) ? $subdomain->description : ''), 'maxlength' => 160, 'rows'=>'4')); ?>
+                    <?php echo form_error('subdomain_description'); ?>
+                </div>
+            </div>
+        
+            <div class="field-row">
+                <div class="field-value field-value-inline">
+                    <?php echo form_checkbox(array('name' => 'subdomain_all_access', 'id' => 'subdomain_all_access', 'value' => '1', 'checked' => set_value('subdomain_all_access') ? set_value('subdomain_all_access') : (isset($subdomain->all_access) ? $subdomain->all_access : ''))); ?>
+                </div>
+                <div class="field-label">
+                    <?php echo form_label(lang('subdomains_all_access'), 'subdomain_all_access'); ?>
+                </div>
+            </div>
+            
+            <?php echo form_fieldset_close(); ?>
+      
+        <div class="form-controls">
+            <?php echo anchor('admin/manage_subdomains', lang('website_cancel'), 'class="btn"'); ?>
+            <?php echo form_submit('manage_subdomain_update', lang('settings_save'), 'class="submit"'); ?>
+            <button class="btn-danger"><?php echo lang('subdomains_delete'); ?></button>
+        </div>
+    
+        <div class="form-controls-confirm">
+              <p><?php echo lang('subdomains_delete_question'); ?></p>
+              <?php echo anchor('admin/manage_subdomains', lang('website_cancel'), 'class="btn"'); ?>
+              <?php echo form_submit('manage_subdomain_delete', lang('subdomains_delete_confirm'), 'class="submit btn-danger"'); ?>                    
+        </div>
 
       <?php echo form_close(); ?>
 
