@@ -3,4 +3,6 @@
 log-*.php
 .DS_Store
 .sass-cache
+.classpath
+.project
 application/cache/*

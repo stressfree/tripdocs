@@ -1,5 +1,5 @@
 div {
-    &.navigation, &.content-inner, &.footer-inner {   
+    &.navigation, &.navigation-inner ul li ul, &.content-inner, &.footer-inner {   
         width: $cols10;
     }
     
