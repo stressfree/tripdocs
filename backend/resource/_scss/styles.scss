@@ -85,3 +85,7 @@ html.ie {
     @import "tablet10inch";
     @import "desktop";
 }
+
+html.ie6 {
+    @import "ie6";
+}

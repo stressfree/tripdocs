@@ -1,0 +1,22 @@
+div {    
+    &.title {
+        background-image: url('../img/logo.gif');
+    }
+    
+    &.login-thirdparty, &.linked-accounts-add {        
+        ul {
+            margin: 1.2em auto 0 auto;
+            width: ($third-party-button-size * 2) + (10px * 2)
+        }
+        
+        li {
+            &.third_party {
+                a { 
+                    span {
+                        background-image: url('../img/auth-logos.gif');
+                    }
+                }
+            }
+        }
+    }
+}
