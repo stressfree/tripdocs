@@ -73,16 +73,6 @@ div {
         }
     }
     
-    &.alert {
-        width: $cols5;
-    }
-    
-    &.alert-info, &.alert-error {
-        position: absolute;
-        margin-top: -1px;
-        width: $cols5;
-    }
-    
     &.dialog-visible {
         display: inherit!important;
     }

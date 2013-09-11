@@ -1,13 +1,3 @@
-<div class="header">
-    <div class="header-inner">
-        <div class="title">
-            <h3><?php echo anchor('', lang('website_title')); ?></h3>
-        </div>
-        
-        <?php echo $this->load->view('_subviews/menu', array('current' => $current)); ?>
-    </div>    
-</div>
-
 <?php if ($this->session->flashdata('flash_info') || $this->session->flashdata('flash_error')) : ?>
 <div class="alert">
     <?php if ($this->session->flashdata('flash_info')) : ?>
@@ -25,6 +15,16 @@
     <?php endif; ?>
 </div>
 <?php endif; ?>
+
+<div class="header">
+    <div class="header-inner">
+        <div class="title">
+            <h3><?php echo anchor('', lang('website_title')); ?></h3>
+        </div>
+        
+        <?php echo $this->load->view('_subviews/menu', array('current' => $current)); ?>
+    </div>    
+</div>
 
 <div class="content">
     <div class="content-inner">

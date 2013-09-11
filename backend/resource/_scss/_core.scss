@@ -791,61 +791,45 @@ div {
     }
     
     &.alert {
+        border-bottom: 1px solid $darkestgrey;
+        color: $darkestgrey;
         font-size: 1.3em;
-        margin: 0 auto;
+        margin: 0;
         
         button {
             background: none;
             @include background-image(none);
+            border: 1px solid $darkestgrey;
             @include box-shadow(none);
+            color: $darkestgrey; 
             float: right;
             font-size: 1.3em;
             font-weight: 700;
             line-height: 1;
+            margin: -0.1em 5px 0 0;
             padding: 2px 5px 1px 5px;
             width: auto;
             
             &:hover {
                 background: none;
                 @include background-image(none);
-            }
-        }
-    }
-    
-    &.alert-info, &.alert-error {
-        border: $border;
-        padding: 0.5em 0.5em 0.5em 0.7em;
-    }
-    
-    &.alert-info {
-        background: $darkestgrey;
-        color: $lightestgrey;
-        
-        
-        button {
-            border: $border;
-            color: $bordercolour;
-               
-            &:hover {
                 border: 1px solid $white;
                 color: $white;
             }
         }
     }
     
+    &.alert-info, &.alert-error {
+        padding: 0.4em 0;
+        text-align: center;
+    }
+    
+    &.alert-info {
+        background: $lightgrey;
+    }
+    
     &.alert-error {
         background: $errorcolour;
-        color: $darkestgrey;
-        
-        button {
-            border: 1px solid $grey;
-            color: $grey;        
-            
-            &:hover {
-                border: 1px solid $darkestgrey;
-                color: $darkestgrey;
-            }
-        }
     }
     
     &.dialog-visible {
