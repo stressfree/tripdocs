@@ -79,3 +79,9 @@ $third-party-button-size: 70px;
        only screen and (min-device-pixel-ratio: 2) {
        @import "retina";
 }
+
+html.ie {
+    @import "tablet7inch";
+    @import "tablet10inch";
+    @import "desktop";
+}
