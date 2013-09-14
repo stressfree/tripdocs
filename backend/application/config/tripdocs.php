@@ -10,4 +10,6 @@ $config['tripdocs_cookiedir']    = "/Users/david/Desktop/temp";
 
 $config['tripdocs_subdomaindir'] = "/Users/david/Desktop/temp";
 
+$config['tripdocs_upload_server'] = "sftp://127.0.0.1:22";
+
 ?>

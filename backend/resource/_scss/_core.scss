@@ -439,16 +439,34 @@ div {
     
     &.subdomains {
         li {
-            list-style-type: square;
-            margin: 0 0 0.6em 20px;
+            background: $darkgrey;
+            border: $border;
+            list-style-type: none;
+            margin: 0 0 $gutter/2 0;
+            
         }
         
         p {
             color: $lightgrey;
-            margin: 0 0 0.2em 0;
+            margin: 0 $gutter/2 0.4em $gutter/2;
             
             &.link {
                 font-size: 1.3em;
+                margin: 0.5em 0 0 $gutter/2;
+            }
+        }
+        
+        div {
+            &.upload-details {
+                background: $darkestgrey;
+                font-size: 0.9em;
+                padding: 0.5em 0;
+            }
+            
+            p {
+                span {
+                    color: $grey;
+                }
             }
         }
         

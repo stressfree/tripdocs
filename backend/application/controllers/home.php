@@ -32,6 +32,9 @@ class Home extends CI_Controller {
         $subdomains = $this->acl_subdomain_model->get_by_account_id($this->session->userdata('account_id'));
         $protocol = $this->config->item('tripdocs_protocol');
         $domain = $this->config->item('tripdocs_domain');
+        $subdomaindir = $this->config->item('tripdocs_subdomaindir');        
+        
+        $data['upload_server'] = $this->config->item('tripdocs_upload_server');
         
         $data['subdomains'] = array();
         
@@ -41,7 +44,8 @@ class Home extends CI_Controller {
           $current_sub['name'] = $sub->name;
           $current_sub['description'] = $this->typography->nl2br_except_pre($sub->description);
           $current_sub['url'] = strtolower($protocol . '://' . $sub->name . $domain);
-    
+          $current_sub['dir'] = $subdomaindir . DIRECTORY_SEPARATOR . $sub->name;
+              
           // Append to the array
           $data['subdomains'][] = $current_sub;
         }

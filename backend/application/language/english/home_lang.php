@@ -12,6 +12,8 @@ $lang['home_contact_edit'] = 'Edit details';
 $lang['home_linked_accounts'] = 'Linked accounts';
 $lang['home_add_linked_account_link'] = 'Add another account';
 $lang['home_add_linked_account'] = 'Sign in with an additional account';
+$lang['home_server'] = 'Upload server';
+$lang['home_path'] = 'Upload path';
 
 
 /* End of file home_lang.php */
