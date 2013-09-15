@@ -129,7 +129,7 @@ class Manage_subdomains extends CI_Controller {
 			array(
 			  'field' => 'subdomain_name',
 			  'label' => 'lang:subdomains_name',
-			  'rules' => 'trim|required|max_length[50]|edit_unique[tripdocs_acl_subdomain.name.'. $id .']')
+			  'rules' => 'trim|required|alpha_dash|max_length[50]|edit_unique[tripdocs_acl_subdomain.name.'. $id .']')
 		  ));
 
 		// Run form validation

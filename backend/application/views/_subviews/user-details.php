@@ -40,7 +40,7 @@
 						<?php echo form_fieldset(); ?>
 						<?php echo form_hidden('twitter_id', $twitter_link->twitter_id); ?>
 						<span class="link-indicator">&raquo;</span>
-						<?php echo form_button(array('type' => 'submit', 'class' => 'btn', 'content' => lang('connect_remove'))); ?>
+						<?php echo form_button(array('type' => 'submit', 'content' => lang('connect_remove'))); ?>
 						<?php echo form_fieldset_close(); ?>
 						<?php echo form_close(); ?>
                     <?php endif; ?>
@@ -57,7 +57,7 @@
 						<?php echo form_fieldset(); ?>
 						<?php echo form_hidden('openid', $openid_link->openid); ?>
 						<span class="link-indicator">&raquo;</span>
-						<?php echo form_button(array('type' => 'submit', 'class' => 'btn', 'content' => lang('connect_remove'))); ?>
+						<?php echo form_button(array('type' => 'submit', 'content' => lang('connect_remove'))); ?>
 						<?php echo form_fieldset_close(); ?>
 						<?php echo form_close(); ?>
                     <?php endif; ?>

@@ -14,7 +14,7 @@
             <th class="roles"><?php echo lang('permissions_column_inroles'); ?></th>
             <th class="action last-child">
               <?php if( $this->authorization->is_permitted('create_users') ): ?>
-                <?php echo anchor('admin/manage_permissions/save', lang('website_create')); ?>
+                <?php echo anchor('admin/manage_permissions/save', lang('website_create'), 'class="btn btn-small"'); ?>
               <?php endif; ?>
             </th>
           </tr>
@@ -45,7 +45,7 @@
                     </td>
                     <td class="action last-child">
                         <?php if( $this->authorization->is_permitted('update_permissions') ): ?>
-                            <?php echo anchor('admin/manage_permissions/save/'.$perm['id'], lang('website_modify')); ?>
+                            <?php echo anchor('admin/manage_permissions/save/'.$perm['id'], lang('website_modify'), 'class="btn btn-small"'); ?>
                         <?php endif; ?>
                     </td>
                 </tr>

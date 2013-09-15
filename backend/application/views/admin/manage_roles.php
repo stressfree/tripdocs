@@ -14,7 +14,7 @@
             <th class="permissions"><?php echo lang('roles_permission'); ?></th>
             <th class="action last-child">
               <?php if( $this->authorization->is_permitted('create_roles') ): ?>
-                <?php echo anchor('admin/manage_roles/save', lang('website_create'), 'class="btn btn-primary btn-small"'); ?>
+                <?php echo anchor('admin/manage_roles/save', lang('website_create'), 'class="btn btn-small"'); ?>
               <?php endif; ?>
             </th>
           </tr>

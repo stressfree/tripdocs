@@ -25,14 +25,18 @@ class Home extends CI_Controller {
 			redirect('account/sign_in/?continue='.urlencode(base_url()));
 		}
 
-		$data['account'] = $this->account_model->get_by_id($this->session->userdata('account_id'));
-		$data['account_details'] = $this->account_details_model->get_by_account_id($this->session->userdata('account_id'));
+        $account_id = $this->session->userdata('account_id');
+        
+		$data['account'] = $this->account_model->get_by_id($account_id);
+		$data['account_details'] = $this->account_details_model->get_by_account_id($account_id);
         
         // Get the subdomains for the user
-        $subdomains = $this->acl_subdomain_model->get_by_account_id($this->session->userdata('account_id'));
+        $subdomains = $this->acl_subdomain_model->get_by_account_id($account_id);
         $protocol = $this->config->item('tripdocs_protocol');
         $domain = $this->config->item('tripdocs_domain');
-        $subdomaindir = $this->config->item('tripdocs_subdomaindir');        
+        $subdomaindir = $this->config->item('tripdocs_subdomaindir');
+        $salt = $this->config->item('tripdocs_salt');  
+        $secret = $this->config->item('tripdocs_secret');
         
         $data['upload_server'] = $this->config->item('tripdocs_upload_server');
         
@@ -41,10 +45,12 @@ class Home extends CI_Controller {
         foreach ( $subdomains as $sub )
         {
           $current_sub = array();
+          $current_sub['id'] = $sub->id;
           $current_sub['name'] = $sub->name;
           $current_sub['description'] = $this->typography->nl2br_except_pre($sub->description);
           $current_sub['url'] = strtolower($protocol . '://' . $sub->name . $domain);
           $current_sub['dir'] = $subdomaindir . DIRECTORY_SEPARATOR . $sub->name;
+          $current_sub['shareUrl'] = base_url('share/key/' . $this->acl_subdomain_model->generateShareKey($sub->id, $account_id, $salt, $secret));
               
           // Append to the array
           $data['subdomains'][] = $current_sub;
@@ -54,7 +60,7 @@ class Home extends CI_Controller {
 		$data['num_of_linked_accounts'] = 0;
 
 		// Get Facebook accounts
-		if ($data['facebook_links'] = $this->account_facebook_model->get_by_account_id($this->session->userdata('account_id')))
+		if ($data['facebook_links'] = $this->account_facebook_model->get_by_account_id($account_id))
 		{
 			foreach ($data['facebook_links'] as $index => $facebook_link)
 			{
@@ -63,7 +69,7 @@ class Home extends CI_Controller {
 		}
 
 		// Get Twitter accounts
-		if ($data['twitter_links'] = $this->account_twitter_model->get_by_account_id($this->session->userdata('account_id')))
+		if ($data['twitter_links'] = $this->account_twitter_model->get_by_account_id($account_id))
 		{
 			$this->load->config('account/twitter');
 			$this->load->helper('account/twitter');
@@ -76,7 +82,7 @@ class Home extends CI_Controller {
 		}
 
 		// Get OpenID accounts
-		if ($data['openid_links'] = $this->account_openid_model->get_by_account_id($this->session->userdata('account_id')))
+		if ($data['openid_links'] = $this->account_openid_model->get_by_account_id($account_id))
 		{
 			foreach ($data['openid_links'] as $index => $openid_link)
 			{

@@ -34,7 +34,7 @@
                     <td class="email"><?php echo $acc['email']; ?></td>
                     <td class="action last-child">
                         <?php if( $this->authorization->is_permitted('update_users') ): ?>
-                        <?php echo anchor('admin/manage_users/save/'.$acc['id'], lang('website_modify')); ?>
+                        <?php echo anchor('admin/manage_users/save/'.$acc['id'], lang('website_modify'), 'class="btn btn-small"'); ?>
                         <?php endif; ?>
                     </td>
                 </tr>

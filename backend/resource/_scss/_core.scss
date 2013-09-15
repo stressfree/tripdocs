@@ -41,12 +41,11 @@ button, input.submit, a.btn {
     border: 1px solid $lightgrey;
     color: $darkestgrey;
     padding: 0.3em 0;
-    text-decoration: none;
     width: 100%;
     
     &:hover {
         border: 1px solid $lightestgrey;
-        cursor: pointer; 
+        cursor: pointer;
     }
 }
 
@@ -57,6 +56,16 @@ button, a.btn {
     &:hover {
         background: $brandcolour2;
         @include background-image(linear-gradient(top, $brandcolour2-highlight 47%,$brandcolour1 100%));        
+    }
+}
+
+a.btn {
+    color: $darkestgrey!important;
+    text-decoration: none!important;
+    
+    &:hover {   
+        color: $darkestgrey!important;
+        text-decoration: none!important;
     }
 }
 
@@ -84,6 +93,10 @@ button, input {
             @include background-image(linear-gradient(top, #eaa395 47%, #dc6148 100%));        
         }
     }
+}
+
+input.btn-small, button.btn-small, a.btn-small {
+    font-size: 0.9em!important;
 }
 
 label {
@@ -446,6 +459,12 @@ div {
             
         }
         
+        div.action {
+            float: right;
+            margin: 0 0.5em 0 0;
+            padding: 1em 0 0 0;
+        }
+        
         p {
             color: $lightgrey;
             margin: 0 $gutter/2 0.4em $gutter/2;
@@ -699,10 +718,6 @@ div {
                 &.id {
                     text-align: center;
                 }
-                
-                &.action {
-                    font-size: 0.9em;
-                }
             }
             
             td {
@@ -783,27 +798,9 @@ div {
             }
             
             th.action, td.action {
+                font-size: 1em;
                 padding-right: 0.5em;
-                text-align: right;
-                
-                a {
-                    background: $brandcolour1;
-                    @include background-image(linear-gradient(top, $brandcolour1 47%,$brandcolour3 100%));
-                    @include border-radius(2px);
-                    @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
-                    border: 1px solid $lightgrey;
-                    color: $darkestgrey;
-                    padding: 0.2em 0.5em;
-                    position: relative;
-                    text-decoration: none;
-            
-                    &:hover {
-                        background: $brandcolour2;
-                        @include background-image(linear-gradient(top, $brandcolour2 47%,$brandcolour3 100%));
-                        border: 1px solid $lightestgrey;
-                        cursor: pointer; 
-                    }
-                }
+                text-align: right;                
             }
         }
     }

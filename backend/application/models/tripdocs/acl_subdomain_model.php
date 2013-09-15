@@ -3,6 +3,56 @@
 class Acl_subdomain_model extends CI_Model {
 
   /**
+   * Get the share key for the supplied subdomain id and username
+   *
+   * @access public
+   * @param int subdomain_id
+   * @param int account_id
+   * @param string secret hash
+   * @param string initialisation vector (16 characters)
+   *
+   * @return string of the share key
+   */
+  function generateShareKey($subdomain_id, $account_id, $secretHash, $iv)
+  {
+      $encryptedKey = openssl_encrypt($subdomain_id . "_|_" . $account_id, "AES-256-CBC", $secretHash, true, $iv);
+
+      return str_replace(array('+', '/', '='), array(',', '-', ''), base64_encode($encryptedKey));
+  }
+  
+  /**
+   * Decrypt the supplied share key
+   *
+   * @access public
+   * @param string share key
+   * @param string secret hash
+   * @param string initialisation vector (16 characters)
+   *
+   * @return array of subdomain and account id
+   */
+  function decryptShareKey($shareKey, $secretHash, $iv)
+  {
+      $decryptedKey = openssl_decrypt(base64_decode(str_replace(array(',', '-'), array('+', '/'), $shareKey)), 
+        "AES-256-CBC", $secretHash, true, $iv);
+      
+      $subdomain_id = 0;
+      $account_id = 0;
+      
+      if (strpos($decryptedKey,'_|_') !== false)
+      {
+        list($subdomain_id, $account_id) = explode("_|_", $decryptedKey);
+      }
+
+      $result = array();
+      
+      $result['subdomain_id'] = $subdomain_id;
+      $result['account_id'] = $account_id;
+      
+      return $result;
+  }
+  
+
+  /**
    * Get all subdomains
    *
    * @access public
@@ -307,13 +357,17 @@ class Acl_subdomain_model extends CI_Model {
       // Create the directory      
       mkdir($newpath);
     }
+    
+    chown($newpath, $this->config->item('tripdocs_subdomaindir_user'));
+    chgrp($newpath, $this->config->item('tripdocs_subdomaindir_group'));
+    chmod($newpath, 0775);
   }
   
   function rename_subdomain_dir( $existing, $updated )
   {
     $this->load->config('tripdocs');
     
-  	$path = $this->config->item('tripdocs_subdomaindir');  
+  	$path = $this->config->item('tripdocs_subdomaindir');
   	
   	$updatedpath = $path . DIRECTORY_SEPARATOR . $updated;
   	$existingpath = $path . DIRECTORY_SEPARATOR . $existing;
@@ -343,6 +397,10 @@ class Acl_subdomain_model extends CI_Model {
       // Create the UPDATED DIRECTORY
       mkdir($updatedpath);
     }
+    
+    chown($updatedpath, $this->config->item('tripdocs_subdomaindir_user'));
+    chgrp($updatedpath, $this->config->item('tripdocs_subdomaindir_group'));
+    chmod($updatedpath, 0775);
   }
   
   function rrmdir($dir)

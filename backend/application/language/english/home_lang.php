@@ -14,6 +14,9 @@ $lang['home_add_linked_account_link'] = 'Add another account';
 $lang['home_add_linked_account'] = 'Sign in with an additional account';
 $lang['home_server'] = 'Upload server';
 $lang['home_path'] = 'Upload path';
+$lang['home_share'] = 'Share';
+$lang['home_share_subject'] = 'Tripdocs review space invitation';
+$lang['home_share_body'] = 'To access the review space for this project open the following URL in your web browser:';
 
 
 /* End of file home_lang.php */

@@ -12,6 +12,10 @@ button, input.submit, a.btn {
     width: auto;
 }
 
+input.btn-small, button.btn-small, a.btn-small {
+    padding: 0.3em 0.6em;
+}
+
 div {
     &.navigation, &.navigation-inner ul li ul, &.content-inner, &.footer-inner {   
         width: $cols8;
