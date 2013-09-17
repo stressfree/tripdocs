@@ -9,11 +9,25 @@ input.text, textarea {
 
 button, input.submit, a.btn {
     padding: 0.3em 1em;
+    margin: 0;
     width: auto;
 }
 
 input.btn-small, button.btn-small, a.btn-small {
     padding: 0.3em 0.6em;
+}
+
+a.btn {
+    display: inline;
+    text-align: left;
+    width: auto;
+}
+
+input {
+    &.submit {
+        float: right;
+        margin: 0 0 0 4px;
+    }
 }
 
 div {
@@ -31,10 +45,6 @@ div {
         span {
             display: inline;
         }
-    }
-    
-    &.content {
-        padding: $gutter * 2 $gutter/2;
     }
     
     &.login-thirdparty, &.linked-accounts-add {        
@@ -94,6 +104,16 @@ div {
                 float: left;
                 margin: 0 $gutter/2 $gutter/2 $gutter/2;
                 width: $cols3;
+            }
+        }
+    }
+    
+    &.administration {
+        table {            
+            th, td {                
+                &.id, &.description, &.email, &.roles, &.permissions {
+                    display: table-cell;
+                }
             }
         }
     }

@@ -19,4 +19,14 @@ div {
             }
         }
     }
+
+    &.administration {
+        table {            
+            th, td {                
+                &.id, &.description, &.email, &.roles, &.permissions {
+                    display: block;
+                }
+            }
+        }
+    }
 }

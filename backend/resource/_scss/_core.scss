@@ -17,7 +17,7 @@ p {
     margin: 0 0 1em 0;
 }
 
-input, select, textarea, button {
+input, select, textarea, button, a.btn {
     font-size: 16pt;
     font-family: 'Arial', sans-serif;
 }
@@ -40,7 +40,8 @@ button, input.submit, a.btn {
     @include box-shadow(rgba($darkestgrey, 1) 0 0 1px);
     border: 1px solid $lightgrey;
     color: $darkestgrey;
-    padding: 0.3em 0;
+    margin: 0.6em 0 0 0;
+    padding: 0.5em 0;
     width: 100%;
     
     &:hover {
@@ -61,7 +62,11 @@ button, a.btn {
 
 a.btn {
     color: $darkestgrey!important;
+    display: block;
+    padding: 0.3em 0;
     text-decoration: none!important;
+    text-align: center;
+    width: 99%;
     
     &:hover {   
         color: $darkestgrey!important;
@@ -73,8 +78,6 @@ input {
     &.submit {
         background: $brandcolour1;
         @include background-image(linear-gradient(top, $brandcolour1 47%,$brandcolour3 100%));
-        float: right;
-        margin: 0 0 0 4px;
         
         &:hover {
             background: $brandcolour2;
@@ -97,6 +100,13 @@ button, input {
 
 input.btn-small, button.btn-small, a.btn-small {
     font-size: 0.9em!important;
+    padding: 0.5em 0.6em;
+}
+
+a.btn-small {
+    display: inline;
+    text-align: left;
+    width: auto;
 }
 
 label {
@@ -117,7 +127,6 @@ div {
     
     &.header-inner {
         height: $title-height;
-        width: $cols4;
     }
     
     &.title {
@@ -211,6 +220,7 @@ div {
                     display: none;
                     position: absolute;
                     margin: 40px 0 0 0;
+                    width: 100%;
                 }
                 
                 li {
@@ -222,7 +232,7 @@ div {
                         display: inline;
                         float: none;
                         font-weight: 400;
-                        margin: 0 0 0 $gutter/2;
+                        margin: 0 $gutter/2 0 0;
                         text-align: left;
                         width: auto;
                         
@@ -286,7 +296,7 @@ div {
         background: $darkestgrey;
         clear: both;
         font-size: 1.4em;
-        padding: $gutter $gutter/2;
+        padding: $gutter * 2 $gutter/2;
     }
     
     &.welcome-introduction-inner, &.login-thirdparty-inner, 
@@ -462,7 +472,7 @@ div {
         div.action {
             float: right;
             margin: 0 0.5em 0 0;
-            padding: 1em 0 0 0;
+            padding: 0.7em 0;
         }
         
         p {
@@ -476,6 +486,10 @@ div {
         }
         
         div {
+            &.subdomain-footer {
+                clear: right;
+            }
+            
             &.upload-details {
                 background: $darkestgrey;
                 font-size: 0.9em;
@@ -716,7 +730,20 @@ div {
                 text-align: left;
                 
                 &.id {
+                    display: none;
                     text-align: center;
+                }
+                
+                &.description {
+                    display: none;
+                }
+                
+                &.email {
+                    display: none;
+                }
+                
+                &.permissions, &.roles {
+                    display: none;
                 }
             }
             
@@ -729,6 +756,7 @@ div {
                 vertical-align: top;
                 
                 &.id {
+                    display: none;
                     text-align: right;
                 }
                 
@@ -746,6 +774,14 @@ div {
                     }
                 }
                 
+                &.description {
+                    display: none;
+                }
+                
+                &.email {
+                    display: none;
+                }
+                
                 &.users {
                     text-align: center;
                     
@@ -761,6 +797,7 @@ div {
                 }
                 
                 &.permissions, &.roles {
+                    display: none;
                     white-space: nowrap;
                     
                     li {

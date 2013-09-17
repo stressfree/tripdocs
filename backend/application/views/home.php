@@ -20,12 +20,14 @@
                 <?php if (!empty($subdomain['description'])) : ?>
                 <p class="description"><?php echo $subdomain['description'] ?></p>
                 <?php endif ?>
-                <?php if ($this->authorization->is_permitted('retrieve_subdomains')): ?>
-                <div class="upload-details">
-                    <p class="server"><span><?php echo lang('home_server') ?>:</span> <?php echo $upload_server ?></p>
-                    <p class="path"><span><?php echo lang('home_path') ?>:</span> <?php echo $subdomain['dir'] ?></p>
+                <div class="subdomain-footer">
+                    <?php if ($this->authorization->is_permitted('retrieve_subdomains')): ?>
+                    <div class="upload-details">
+                        <p class="server"><span><?php echo lang('home_server') ?>:</span> <?php echo $upload_server ?></p>
+                        <p class="path"><span><?php echo lang('home_path') ?>:</span> <?php echo $subdomain['dir'] ?></p>
+                    </div>
+                    <?php endif; ?>
                 </div>
-                <?php endif; ?>
             </li>
         <?php endforeach; ?>
         </ul>
