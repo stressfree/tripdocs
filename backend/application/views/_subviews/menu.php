@@ -8,11 +8,11 @@
         </div>
     </div>
           
-    <?php if ($this->authorization->is_permitted( 
-        array('retrieve_users', 'retrieve_subdomains', 'retrieve_roles', 'retrieve_permissions') )) : ?>  
     <div class="navigation">
         <div class="navigation-inner">
             <ul>
+                <?php if ($this->authorization->is_permitted( 
+                        array('retrieve_users', 'retrieve_subdomains', 'retrieve_roles', 'retrieve_permissions') )) : ?>  
                 <li class="<?php echo (strpos($current, 'admin/') === 0) ? 'active' : ''; ?>">
                     <a class="admin-link"><?php echo lang('website_manage'); ?></a>
                     <ul>
@@ -38,11 +38,11 @@
                         <?php endif; ?>
                     </ul>
                 </li>
+                <?php endif; ?>
                 <li class="<?php echo ($current == 'home') ? 'active' : ''; ?>">
                     <?php echo anchor('', lang('website_home')); ?>
                 </li>
             </ul>
         </div>
     </div>
-    <?php endif; ?>
 <?php endif; ?>

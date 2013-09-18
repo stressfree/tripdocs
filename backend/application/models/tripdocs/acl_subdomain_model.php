@@ -17,7 +17,7 @@ class Acl_subdomain_model extends CI_Model {
   {
       $encryptedKey = openssl_encrypt($subdomain_id . "_|_" . $account_id, "AES-256-CBC", $secretHash, true, $iv);
 
-      return str_replace(array('+', '/', '='), array(',', '-', ''), base64_encode($encryptedKey));
+      return str_replace(array('+', '/', '='), array('~', '-', ''), base64_encode($encryptedKey));
   }
   
   /**
@@ -32,7 +32,7 @@ class Acl_subdomain_model extends CI_Model {
    */
   function decryptShareKey($shareKey, $secretHash, $iv)
   {
-      $decryptedKey = openssl_decrypt(base64_decode(str_replace(array(',', '-'), array('+', '/'), $shareKey)), 
+      $decryptedKey = openssl_decrypt(base64_decode(str_replace(array('~', '-'), array('+', '/'), $shareKey)), 
         "AES-256-CBC", $secretHash, true, $iv);
       
       $subdomain_id = 0;
@@ -360,7 +360,7 @@ class Acl_subdomain_model extends CI_Model {
     
     chown($newpath, $this->config->item('tripdocs_subdomaindir_user'));
     chgrp($newpath, $this->config->item('tripdocs_subdomaindir_group'));
-    chmod($newpath, 0775);
+    chmod($newpath, 02775);
   }
   
   function rename_subdomain_dir( $existing, $updated )

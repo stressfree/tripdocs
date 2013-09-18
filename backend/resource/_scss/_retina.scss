@@ -1,7 +1,7 @@
 div {    
     &.title {
-        background: url('../img/logo@2x.png') 0 -23px no-repeat;
-        background-size: 89px 120px;
+        background-image: url('../img/logo@2x.png');
+        background-size: 95px 230px;
     }
     
     &.login-thirdparty {

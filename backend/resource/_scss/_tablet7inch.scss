@@ -31,11 +31,22 @@ input {
 }
 
 div {
+    &.title {
+        background-position: 0 -23px;
+        padding: 0 0 0 100px;
+        
+        h3 {
+            font-size: 3.6em;
+            line-height: $title-height;
+        }
+    }
+
     &.navigation, &.navigation-inner ul li ul, &.content-inner, &.footer-inner {   
         width: $cols8;
     }
     
     &.header-inner {
+        height: $title-height;
         width: $cols5;
     }
     

@@ -37,7 +37,7 @@ class Connect_twitter extends CI_Controller {
 				$twitter_info = $this->twitter_lib->etw->get_accountVerify_credentials()->response;
 			} catch (Exception $e)
 			{
-				$this->authentication->is_signed_in() ? redirect('') : redirect('account/sign_up');
+				redirect('');
 			}
 
 			// Check if user has connect twitter to a3m

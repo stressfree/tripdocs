@@ -126,21 +126,21 @@ div {
     }
     
     &.header-inner {
-        height: $title-height;
+        height: 50px;
     }
     
     &.title {
-        background: url('../img/logo.png') 0 -23px no-repeat;
+        background: url('../img/logo.png') $gutter/2 -164px no-repeat;
         float: left;
         height: $title-height + 30;
-        padding: 0 0 0 100px;
+        padding: 0 0 0 80px;
         position: absolute;
         width: $cols4 - 100;
         
         h3 {
-            font-size: 3.6em;
+            font-size: 2.4em;
             font-weight: 300;
-            line-height: $title-height;
+            line-height: $title-height - 24px;
             
             a {
                 color: $white;
@@ -296,7 +296,7 @@ div {
         background: $darkestgrey;
         clear: both;
         font-size: 1.4em;
-        padding: $gutter * 2 $gutter/2;
+        padding: $gutter + 10 $gutter/2 $gutter * 2 $gutter/2;
     }
     
     &.welcome-introduction-inner, &.login-thirdparty-inner, 
@@ -899,6 +899,7 @@ span {
 body.authenticated {
     div {
         &.header-inner {
+            height: $title-height;
             width: 100%;
         }
     }

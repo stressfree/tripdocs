@@ -98,7 +98,7 @@ class Connect_openid extends CI_Controller {
 			// Auth_OpenID_CANCEL or Auth_OpenID_FAILURE or anything else
 			else
 			{
-				$this->authentication->is_signed_in() ? redirect('') : redirect('account/sign_up');
+				redirect('');
 			}
 		}
 
