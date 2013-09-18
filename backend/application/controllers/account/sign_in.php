@@ -37,7 +37,11 @@ class Sign_in extends CI_Controller {
 			$this->session->set_userdata('sign_in_redirect', $redirect);
 		}
 		
-		if ($this->authentication->is_signed_in()) redirect($redirect);
+		if ($this->authentication->is_signed_in()) 
+		{
+		    $account_id = $this->session->userdata('account_id');
+		    $this->tripdocs->redirect($redirect_name, $account_id);
+		}
 
 		// Set default recaptcha pass
 		$recaptcha_pass = $this->session->userdata('sign_in_failed_attempts') < $this->config->item('sign_in_recaptcha_offset') ? TRUE : FALSE;

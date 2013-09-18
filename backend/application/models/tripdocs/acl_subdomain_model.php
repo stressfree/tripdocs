@@ -171,7 +171,7 @@ class Acl_subdomain_model extends CI_Model {
     $this->db->select('tripdocs_acl_subdomain.*');
     $this->db->from('tripdocs_acl_subdomain');
     $this->db->join('tripdocs_rel_account_subdomain', 'tripdocs_acl_subdomain.id = tripdocs_rel_account_subdomain.subdomain_id');
-    $this->db->where("tripdocs_rel_account_subdomain.account_id = $account_id AND tripdocs_acl_subdomain.name = `$subdomain_name`");
+    $this->db->where(array('tripdocs_rel_account_subdomain.account_id' => $account_id, 'tripdocs_acl_subdomain.name' => $subdomain_name));
     
     return ($this->db->count_all_results() > 0);
   }

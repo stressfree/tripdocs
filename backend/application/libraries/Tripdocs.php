@@ -12,8 +12,29 @@ class Tripdocs {
 		// Obtain a reference to the ci super object
 		$this->CI =& get_instance();
 		
-		$this->CI->load->library('session');
     	$this->CI->load->config('tripdocs');
+		$this->CI->load->library('session');
+		$this->CI->load->model('tripdocs/acl_subdomain_model');
+	}
+	
+	function redirect($redirect_name = NULL, $account_id = NULL)
+	{
+    	if (isset($redirect_name) && isset($account_id))
+    	{
+    	    if ($this->CI->acl_subdomain_model->has_subdomain($redirect_name, $account_id))
+            {
+    	        // The user has been granted access to this subdomain
+                $redirect = $this->CI->config->item("tripdocs_protocol") . "://" . $redirect_name 
+                    . $this->CI->config->item("tripdocs_domain");
+                redirect($redirect);
+            }
+            else
+            {
+                // The user has not been granted access to this subdomain
+                $this->CI->session->set_flashdata('flash_error', lang('website_share_access_denied'));
+            }
+        }
+    	redirect('');
 	}
 
     function sign_in($account_id)

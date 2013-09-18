@@ -11,7 +11,7 @@
 <div class="login-thirdparty">
     <div class="login-thirdparty-inner">
     	<?php if ($this->config->item('third_party_auth_providers')) : ?>
-        <h1><?php echo sprintf(lang('sign_in_third_party_heading')); ?></h2>
+        <h1><?php echo sprintf(lang('sign_in_third_party_heading')); ?></h1>
         <ul>
     		<?php foreach ($this->config->item('third_party_auth_providers') as $provider) : ?>
             <li class="third_party <?php echo $provider; ?>"><?php echo anchor('account/connect_'.$provider, '<span>' . lang('connect_'.$provider) . '</span>', array('title' => sprintf(lang('sign_in_with'), lang('connect_'.$provider)))); ?></li>

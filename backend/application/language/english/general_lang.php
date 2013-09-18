@@ -30,6 +30,7 @@ $lang['website_update'] = 'Save';
 $lang['website_modify'] = 'Modify';
 $lang['website_cancel'] = 'Cancel';
 $lang['website_none'] = 'None';
+$lang['website_share_access_denied'] = 'Sorry, this review space does not exist, or you have not been granted access to it';
 
 
 /* End of file general_lang.php */
