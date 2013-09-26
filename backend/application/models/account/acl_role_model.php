@@ -10,7 +10,12 @@ class Acl_role_model extends CI_Model {
    */
   function get()
   {
-    return $this->db->get('a3m_acl_role')->result();
+    
+    $this->db->from('a3m_acl_role');
+    $this->db->order_by('name', 'asc');
+    $query = $this->db->get();
+    
+    return $query->result();
   }
 
   // --------------------------------------------------------------------
@@ -56,6 +61,7 @@ class Acl_role_model extends CI_Model {
     $this->db->from('a3m_acl_role');
     $this->db->join('a3m_rel_account_role', 'a3m_acl_role.id = a3m_rel_account_role.role_id');
     $this->db->where("a3m_rel_account_role.account_id = $account_id");
+    $this->db->order_by('a3m_acl_role.name', 'asc');
     
     return $this->db->get()->result();
   }

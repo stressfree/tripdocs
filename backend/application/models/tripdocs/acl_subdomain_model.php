@@ -60,7 +60,11 @@ class Acl_subdomain_model extends CI_Model {
    */
   function get()
   {
-    return $this->db->get('tripdocs_acl_subdomain')->result();
+    $this->db->from('tripdocs_acl_subdomain');
+    $this->db->order_by('name', 'asc');
+    $query = $this->db->get();
+    
+    return $query->result();
   }
   
   // --------------------------------------------------------------------
@@ -73,7 +77,12 @@ class Acl_subdomain_model extends CI_Model {
    */
   function get_unrestricted()
   {
-    return $this->db->get_where('tripdocs_acl_subdomain',  array('all_access' => TRUE))->result();
+    $this->db->where('all_access', TRUE);
+    $this->db->from('tripdocs_acl_subdomain');
+    $this->db->order_by('name', 'asc');
+    $query = $this->db->get();
+    
+    return $query->result();
   }
   
   // --------------------------------------------------------------------
@@ -86,7 +95,12 @@ class Acl_subdomain_model extends CI_Model {
    */
   function get_restricted()
   {
-    return $this->db->get_where('tripdocs_acl_subdomain',  array('all_access' => FALSE))->result();
+    $this->db->where('all_access', FALSE);
+    $this->db->from('tripdocs_acl_subdomain');
+    $this->db->order_by('name', 'asc');
+    $query = $this->db->get();
+    
+    return $query->result();
   }
   
   // --------------------------------------------------------------------
@@ -133,6 +147,7 @@ class Acl_subdomain_model extends CI_Model {
     $this->db->join('tripdocs_rel_account_subdomain', 'tripdocs_acl_subdomain.id = tripdocs_rel_account_subdomain.subdomain_id', 'left');
     $this->db->where("tripdocs_rel_account_subdomain.account_id = $account_id");
     $this->db->or_where("tripdocs_acl_subdomain.all_access", 1);
+    $this->db->order_by('tripdocs_acl_subdomain.name', 'asc');
     
     return $this->db->get()->result();
   }

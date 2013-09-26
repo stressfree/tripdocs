@@ -10,7 +10,11 @@ class Account_model extends CI_Model {
 	 */
 	function get()
 	{
-		return $this->db->get('a3m_account')->result();
+	    $this->db->from('a3m_account');
+        $this->db->order_by('email', 'asc');
+        $query = $this->db->get();
+    
+        return $query->result();
 	}
 
 	/**

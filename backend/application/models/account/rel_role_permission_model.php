@@ -26,8 +26,7 @@ class Rel_role_permission_model extends CI_Model {
     $this->db->from('a3m_rel_role_permission');
     $this->db->join('a3m_acl_permission', 'a3m_rel_role_permission.permission_id = a3m_acl_permission.id');
     $this->db->where("a3m_rel_role_permission.role_id = $role_id");
-
-    return $this->db->get()->result();
+    $this->db->order_by('a3m_acl_permission.key', 'asc');
 
     return $this->db->get()->result();
   }

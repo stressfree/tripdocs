@@ -10,7 +10,11 @@ class Acl_permission_model extends CI_Model {
    */
   function get()
   {
-    return $this->db->get('a3m_acl_permission')->result();
+    $this->db->from('a3m_acl_permission');
+    $this->db->order_by('key', 'asc');
+    $query = $this->db->get();
+    
+    return $query->result();
   }
 
   // --------------------------------------------------------------------
@@ -42,6 +46,7 @@ class Acl_permission_model extends CI_Model {
     $this->db->join('a3m_rel_role_permission', 'a3m_acl_permission.id = a3m_rel_role_permission.permission_id');
     $this->db->join('a3m_rel_account_role', 'a3m_rel_role_permission.role_id = a3m_rel_account_role.role_id');
     $this->db->where("a3m_rel_account_role.account_id = $account_id");
+    $this->db->order_by('a3m_acl_permission.key', 'asc');
     
     return $this->db->get()->result();
   }
