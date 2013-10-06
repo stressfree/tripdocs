@@ -8,7 +8,7 @@ class Home extends CI_Controller {
 
 		// Load the necessary stuff...
 		$this->load->config('account/account', 'tripdocs');
-		$this->load->helper(array('language', 'url', 'form', 'account/ssl'));
+		$this->load->helper(array('language', 'url', 'form'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'typography'));
 		$this->load->model(array('tripdocs/acl_subdomain_model', 'account/account_model', 'account/account_details_model', 'account/account_facebook_model', 'account/account_twitter_model', 'account/account_openid_model'));
 		$this->load->language(array('home', 'account/settings', 'account/connect_third_party', 'account/sign_in'));
@@ -16,9 +16,6 @@ class Home extends CI_Controller {
 
 	function index()
 	{
-		// Enable SSL?
-		maintain_ssl($this->config->item("ssl_enabled"));
-
 		// Redirect unauthenticated users to signin page
 		if ( ! $this->authentication->is_signed_in())
 		{

@@ -14,7 +14,7 @@ class Sign_in extends CI_Controller {
 		// Load the necessary stuff...
 		$this->load->config('account/account');
 		$this->load->config('tripdocs');
-		$this->load->helper(array('language', 'account/ssl', 'url'));
+		$this->load->helper(array('language', 'url'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'account/recaptcha', 'tripdocs', 'form_validation'));
 		$this->load->model(array('account/account_model'));
 		$this->load->language(array('account/sign_in', 'account/connect_third_party'));
@@ -28,9 +28,6 @@ class Sign_in extends CI_Controller {
 	 */
 	function index($redirect_name = NULL)
 	{
-		// Enable SSL?
-		maintain_ssl($this->config->item("ssl_enabled"));
-		
 		$redirect = '';
 		if (!empty($redirect_name)) {
 			$redirect = $this->config->item("tripdocs_protocol") . "://" . $redirect_name . $this->config->item("tripdocs_domain");
@@ -105,7 +102,7 @@ class Sign_in extends CI_Controller {
 		// Load recaptcha code
 		if ($this->config->item("sign_in_recaptcha_enabled") === TRUE)
 			if ($this->config->item('sign_in_recaptcha_offset') <= $this->session->userdata('sign_in_failed_attempts'))
-				$data['recaptcha'] = $this->recaptcha->load($recaptcha_result, $this->config->item("ssl_enabled"));
+				$data['recaptcha'] = $this->recaptcha->load($recaptcha_result, TRUE);
 
 		// Load sign in view
 		$this->load->view('sign_in', isset($data) ? $data : NULL);

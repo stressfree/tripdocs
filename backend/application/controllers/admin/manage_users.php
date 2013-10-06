@@ -13,7 +13,7 @@ class Manage_users extends CI_Controller {
 
     // Load the necessary stuff...
     $this->load->config('account/account');
-    $this->load->helper(array('date', 'language', 'account/ssl', 'url'));
+    $this->load->helper(array('date', 'language', 'url'));
     $this->load->library(array('account/authentication', 'account/authorization', 'form_validation'));
     $this->load->model(array('account/account_model', 'account/account_details_model', 'account/acl_permission_model', 'account/acl_role_model', 'account/rel_account_permission_model', 'account/rel_account_role_model', 'account/rel_role_permission_model', 'tripdocs/acl_subdomain_model', 'tripdocs/rel_account_subdomain_model'));
     $this->load->language(array('general', 'admin/manage_users', 'account/settings'));
@@ -24,9 +24,6 @@ class Manage_users extends CI_Controller {
    */
   function index()
   {
-    // Enable SSL?
-    maintain_ssl($this->config->item("ssl_enabled"));
-
     // Redirect unauthenticated users to signin page
     if ( ! $this->authentication->is_signed_in())
     {
@@ -90,9 +87,6 @@ class Manage_users extends CI_Controller {
    */
   function save($id=null)
   {
-    // Enable SSL?
-    maintain_ssl($this->config->item("ssl_enabled"));
-
     // Redirect unauthenticated users to signin page
     if ( ! $this->authentication->is_signed_in())
     {

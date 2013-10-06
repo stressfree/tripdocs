@@ -13,7 +13,7 @@ class Manage_subdomains extends CI_Controller {
 
     // Load the necessary stuff...
     $this->load->config('account/account');
-    $this->load->helper(array('date', 'language', 'account/ssl', 'url'));
+    $this->load->helper(array('date', 'language', 'url'));
     $this->load->library(array('account/authentication', 'account/authorization', 'typography', 'form_validation'));
     $this->load->model(array('account/account_model', 'tripdocs/acl_subdomain_model'));
     $this->load->language(array('general', 'admin/manage_subdomains', 'account/settings'));
@@ -24,9 +24,6 @@ class Manage_subdomains extends CI_Controller {
    */
   function index()
   {
-    // Enable SSL?
-    maintain_ssl($this->config->item("ssl_enabled"));
-
     // Redirect unauthenticated users to signin page
     if ( ! $this->authentication->is_signed_in())
     {
@@ -70,9 +67,6 @@ class Manage_subdomains extends CI_Controller {
   {
     // Keep track if this is a new subdomain
     $is_new = empty($id);
-
-    // Enable SSL?
-    maintain_ssl($this->config->item("ssl_enabled"));
 
     // Redirect unauthenticated users to signin page
     if ( ! $this->authentication->is_signed_in())

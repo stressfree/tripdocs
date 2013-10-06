@@ -13,7 +13,7 @@ class Settings extends CI_Controller {
 
 		// Load the necessary stuff...
 		$this->load->config('account/account');
-		$this->load->helper(array('date', 'language', 'account/ssl', 'url'));
+		$this->load->helper(array('date', 'language', 'url'));
 		$this->load->library(array('account/authentication', 'account/authorization', 'form_validation'));
 		$this->load->model(array('account/account_model', 'account/account_details_model', 'account/ref_country_model', 'account/ref_language_model', 'account/ref_zoneinfo_model'));
 		$this->load->language(array('general', 'account/settings'));
@@ -24,9 +24,6 @@ class Settings extends CI_Controller {
 	 */
 	function index()
 	{
-		// Enable SSL?
-		maintain_ssl($this->config->item("ssl_enabled"));
-
 		// Redirect unauthenticated users to signin page
 		if ( ! $this->authentication->is_signed_in())
 		{
