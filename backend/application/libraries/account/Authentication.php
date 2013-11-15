@@ -64,11 +64,6 @@ class Authentication {
 			$this->CI->session->unset_userdata('sign_in_redirect');
 			redirect($redirect);
 		}
-		// Redirect signed in user with GET continue
-		elseif ($this->CI->input->get('continue'))
-		{
-			redirect($this->CI->input->get('continue'));
-		}
 
 		redirect('');
 	}

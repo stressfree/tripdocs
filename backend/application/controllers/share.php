@@ -19,7 +19,7 @@ class Share extends CI_Controller {
 		// Redirect unauthenticated users to signin page
 		if ( ! $this->authentication->is_signed_in())
 		{
-			redirect('account/sign_in/?continue='.urlencode(base_url()));
+			redirect('account/sign_in/?continue='.urlencode(current_url()));
 		}
 
 		$account = $this->account_model->get_by_id($this->session->userdata('account_id'));

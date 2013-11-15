@@ -29,6 +29,12 @@ class Sign_in extends CI_Controller {
 	function index($redirect_name = NULL)
 	{
 		$redirect = '';
+		$continue = $this->input->get('continue');
+		
+		if (!empty($continue)) {
+    		$this->session->set_userdata('sign_in_redirect', $continue);
+		}
+		
 		if (!empty($redirect_name)) {
 			$redirect = $this->config->item("tripdocs_protocol") . "://" . $redirect_name . $this->config->item("tripdocs_domain");
 			$this->session->set_userdata('sign_in_redirect', $redirect);
